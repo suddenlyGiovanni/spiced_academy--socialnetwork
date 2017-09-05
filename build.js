@@ -17,7 +17,7 @@ if ( process.env.NODE_ENV == 'production' ) {
 }
 
 const conf = {
-    entry: [ 'babel-polyfill', __dirname + '/src/start.js' ],
+    entry: [ 'babel-polyfill', __dirname + '/src/shell.js' ],
     output: {
         path: __dirname + '/public/',
         filename: 'bundle.js'

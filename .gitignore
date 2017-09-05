@@ -5,3 +5,4 @@ package-lock.json
 secrets.json
 .tern-project
 .eslintrc.json
+/tests
