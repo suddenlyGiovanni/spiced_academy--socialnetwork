@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Link} from 'react-router';
 
 
 export default class Login extends React.Component {
@@ -65,7 +66,7 @@ export default class Login extends React.Component {
 
                     <button type='submit' onClick={e => this.submit(e)}>Log In</button>
                 </form>
-                <p>Not a member? <a href='/#/register'>register</a></p>
+                <p>Not a member? <Link to='/#/register'>Register</Link></p>
             </div>
         );
     }

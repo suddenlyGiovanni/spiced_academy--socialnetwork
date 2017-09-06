@@ -4,33 +4,30 @@ import { Router, Route, Link, IndexRoute, hashHistory } from 'react-router';
 
 // REACT Components
 import Welcome from './welcome';
-import Logo from './logo';
+import Registration from './registration';
 import Login from './login';
+import Logo from './logo';
 
 // REACT Router
 
-const router = (
-    <Router history={hashHistory}>
-        <Route path='/' component={Welcome}>
-            <Route path='/login' component={Login}/>
-            {/* <IndexRoute component={Registration}/> */}
-        </Route>
-    </Router>
-);
+let router;
 
 
-// let component;
-// if ( location.pathname === '/welcome' ) {
-//     component = <Welcome/>;
-// } else {
-//     component = <Logo/>;
-// }
-
-// class Shell extends React.Component {
-//     render() {
-//         return ( <div> {this.component} </div> );
-//     }
-// }
+if ( location.pathname === '/welcome/' ) {
+    console.log('welcome');
+    router = (
+        <Router history={hashHistory}>
+            <Route path='/' component={Welcome}>
+                <IndexRoute component={Registration}/>
+                <Route path='/login' component={Login}/>
+                <Route path='/logo' component={Logo}/>
+            </Route>
+        </Router>
+    );
+} else {
+    console.log('logo');
+    router = <Logo/>;
+}
 
 
 

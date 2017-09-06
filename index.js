@@ -45,7 +45,7 @@ app.use( express.static( path.join( __dirname, '/public' ) ) );
 
 // ROUTING _____________________________________________________________________
 //  Connect all our routes to our application
-app.use( '/', require( './routes/shell' ) );
+app.use( '/', require( './routes/root' ) );
 app.use( '/api/', require( './routes/api' ) );
 
 // if no route match then..

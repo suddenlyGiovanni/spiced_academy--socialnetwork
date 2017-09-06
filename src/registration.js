@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import {Link} from 'react-router';
 
 export default class Registration extends React.Component {
     constructor( props ) {
@@ -72,7 +72,10 @@ export default class Registration extends React.Component {
 
                     <button type='submit' onClick={e => this.submit(e)}>Register</button>
                 </form>
-                <p>Already a member? <a href='/#/login'>Log In</a></p>
+
+                {/* use the link component */}
+
+                <p>Already a member? <Link to='/#/login'>Log In</Link></p>
             </div>
         );
     }
