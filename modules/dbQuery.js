@@ -116,6 +116,25 @@ module.exports.getUserInfo = ( uid ) => {
 };
 
 
+// SET USER PROFILE PICTURE PROFILE
+module.exports.saveUserProfilePic = ( uid ) => {
+    console.log( 'fn: "saveUserProfilePic"' );
+
+    const query = '';
+
+    return db.query( query, [ uid ] )
+
+        .then( ( resp ) => {
+            console.log( resp );
+            return resp;
+        } )
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
+};
+
+
 
 
 

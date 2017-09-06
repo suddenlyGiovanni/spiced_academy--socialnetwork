@@ -1,12 +1,13 @@
 // REQUIRED MODULES_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 const express = require( 'express' ),
-    path = require( 'path' ),
     morgan = require( 'morgan' ),
+    path = require( 'path' ),
     bodyParser = require( 'body-parser' ),
     cookieSession = require( 'cookie-session' ),
     // session = require( 'express-session' ),
     compression = require( 'compression' );
-    // favicon = require( 'serve-favicon' );
+// favicon = require( 'serve-favicon' );
+
 
 // EXPRESS
 const app = express();
@@ -40,8 +41,6 @@ if ( process.env.NODE_ENV != 'production' ) {
 // set the public folder where client stuff lives
 // app.use( express.static( './public' ) );
 app.use( express.static( path.join( __dirname, '/public' ) ) );
-
-
 
 // ROUTING _____________________________________________________________________
 //  Connect all our routes to our application

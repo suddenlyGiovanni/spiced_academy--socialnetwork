@@ -13,7 +13,13 @@ export default class App extends React.Component {
         axios.get( '/api/getUserInfo' )
 
             .then( ( resp ) => {
-                console.log( resp );
+                console.log( resp.data );
+                this.setState( {
+                    uid: resp.data.uid,
+                    firstName: resp.data.firstName,
+                    lastName: resp.data.lastName,
+                    profilePic: resp.data.profilePic
+                } );
             } )
 
             .catch( ( err ) => {
@@ -27,6 +33,11 @@ export default class App extends React.Component {
                 border : 'thin dashed green'
             }}>
                 <p>App</p>
+                <p>uid: {this.state.uid}</p>
+                <p>firstName: {this.state.firstName}</p>
+                <p>lastName: {this.state.lastName}</p>
+                <p>profilePic: {this.state.profilePic}</p>
+
                 <Logo />
             </div>
         );

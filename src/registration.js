@@ -41,7 +41,7 @@ export default class Registration extends React.Component {
                         error: true
                     } );
                 } else {
-                    location.replace('/')
+                    location.replace('/');
                 }
             } )
 
