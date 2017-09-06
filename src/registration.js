@@ -40,6 +40,8 @@ export default class Registration extends React.Component {
                     this.setState( {
                         error: true
                     } );
+                } else {
+                    location.replace('/')
                 }
             } )
 
@@ -53,7 +55,9 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{
+                border: 'thin dotted red'
+            }}>
                 <h1>Join Us!</h1>
                 {this.state.error && <div className='error'>Something went wrong. Please try again!</div>}
                 <form>
@@ -73,9 +77,7 @@ export default class Registration extends React.Component {
                     <button type='submit' onClick={e => this.submit(e)}>Register</button>
                 </form>
 
-                {/* use the link component */}
-
-                <p>Already a member? <Link to='/#/login'>Log In</Link></p>
+                <p>Already a member? <Link to='/login'>Log In</Link></p>
             </div>
         );
     }

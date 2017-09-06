@@ -8,7 +8,9 @@ export default class Welcome extends React.Component {
     render() {
         console.log(this.props);
         return (
-            <div>
+            <div style={{
+                border: 'medium dotted purple'
+            }}>
                 <h1>Welcome Component</h1>
                 {this.props.children}
                 {/* <Registration /> */}

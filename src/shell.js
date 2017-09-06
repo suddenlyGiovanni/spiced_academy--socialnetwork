@@ -6,7 +6,7 @@ import { Router, Route, Link, IndexRoute, hashHistory } from 'react-router';
 import Welcome from './welcome';
 import Registration from './registration';
 import Login from './login';
-import Logo from './logo';
+import App from './app';
 
 // REACT Router
 
@@ -20,13 +20,15 @@ if ( location.pathname === '/welcome/' ) {
             <Route path='/' component={Welcome}>
                 <IndexRoute component={Registration}/>
                 <Route path='/login' component={Login}/>
-                <Route path='/logo' component={Logo}/>
             </Route>
         </Router>
     );
 } else {
-    console.log('logo');
-    router = <Logo/>;
+    router = (
+        <Router history={hashHistory}>
+            <Route path='/' component={App}/>
+        </Router>
+    );
 }
 
 

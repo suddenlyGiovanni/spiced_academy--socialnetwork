@@ -91,3 +91,36 @@ module.exports.checkUser = ( email, password ) => {
             console.error( err.stack );
         } );
 };
+
+// GET USER DATA
+module.exports.getUserInfo = ( uid ) => {
+    console.log( 'fn: "getUserData"' );
+
+    const query = `SELECT   uid,
+                            "firstName",
+                            "lastName",
+                            email,
+                            "profilePic"
+                    FROM users
+                    WHERE uid= $1;`;
+
+    return db.query( query, [ uid ] )
+
+        .then( ( results ) => {
+            return results.rows[ 0 ];
+        } )
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
+};
+
+
+
+
+
+
+
+
+
+//

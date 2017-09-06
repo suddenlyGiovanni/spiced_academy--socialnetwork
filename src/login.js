@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 
 export default class Login extends React.Component {
@@ -33,26 +33,26 @@ export default class Login extends React.Component {
 
             .then( resp => {
                 const data = resp.data;
-                console.log(data);
+                console.log( data );
 
                 if ( !data.success ) {
-                    this.setState( {
-                        error: true
-                    } );
+                    this.setState( { error: true } );
+                } else {
+                    location.replace( '/' );
                 }
             } )
 
             .catch( ( err ) => {
                 console.log( err );
-                this.setState( {
-                    error: true
-                } );
+                this.setState( { error: true } );
             } );
     }
 
     render() {
         return (
-            <div>
+            <div style={{
+                border: 'thin dotted red'
+            }}>
                 <h1>Log in</h1>
                 { this.state.error && <div className='error'>Something went wrong. Please try again!</div> }
                 <form>
@@ -66,7 +66,7 @@ export default class Login extends React.Component {
 
                     <button type='submit' onClick={e => this.submit(e)}>Log In</button>
                 </form>
-                <p>Not a member? <Link to='/#/register'>Register</Link></p>
+                <p>Not a member? <Link to='/register'>Register</Link></p>
             </div>
         );
     }
