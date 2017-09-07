@@ -2,9 +2,10 @@
 const router = require( 'express' ).Router(),
     db = require( '../modules/dbQuery' ),
     fs = require( 'fs' ),
+    path = require( 'path' ),
     multer = require( 'multer' ),
     uidSafe = require( 'uid-safe' ),
-    knox = require( 'knox' )
+    knox = require( 'knox' );
 
 
 //_ MUTER & UIDSAFE_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -160,7 +161,7 @@ router.get( '/getUserInfo', ( req, res ) => {
 
 
 // SET USER PROFILE PICTURE PROFILE
-router.post( '/user/:uid/profile_pic', uploader.single( 'image' ), ( req, res ) => {
+router.post( '/user/:uid/profile_pic', uploader.single( 'file' ), ( req, res ) => {
     console.log( 'API: ', 'method: POST ', `/api/user/${req.session.user.uid}/profile_pic` );
     console.log( req.file );
 
@@ -194,13 +195,16 @@ router.post( '/user/:uid/profile_pic', uploader.single( 'image' ), ( req, res ) 
 
             if ( wasSuccessful ) {
 
-                const imageName = req.file.filename;
+                const profilePic = req.file.filename;
                 const uid = req.session.user.uid;
 
-                return db.saveUserProfilePic( uid, imageName )
+                return db.saveUserProfilePic( uid, profilePic )
 
-                    .then( () => {
-                        res.json( { success: wasSuccessful } );
+                    .then( ( userData ) => {
+                        res.json( {
+                            success: wasSuccessful,
+                            userData: userData
+                        } );
                         // remove image from server/uploads
                         fs.unlink( req.file.path, () => {} );
                     } );

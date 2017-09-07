@@ -7,5 +7,6 @@ CREATE TABLE users(
     "firstName" VARCHAR(200) NOT NULL,
     "lastName" VARCHAR (200) NOT NULL,
     "profilePic" VARCHAR(300),
+    bio VARCHAR(300),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

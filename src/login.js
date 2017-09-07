@@ -66,7 +66,7 @@ export default class Login extends React.Component {
 
                     <button type='submit' onClick={e => this.submit(e)}>Log In</button>
                 </form>
-                <p>Not a member? <Link to='/register'>Register</Link></p>
+                <p>Not a member? <Link to='/'>Register</Link></p>
             </div>
         );
     }

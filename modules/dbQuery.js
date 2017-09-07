@@ -9,6 +9,9 @@ const {
     checkPassword
 } = require( './hasher' );
 
+const s3Url = require( '../config/secrets.json' ).s3Url;
+
+
 
 
 // CREATE NEW USER
@@ -102,7 +105,7 @@ module.exports.getUserInfo = ( uid ) => {
                             email,
                             "profilePic"
                     FROM users
-                    WHERE uid= $1;`;
+                    WHERE uid = $1;`;
 
     return db.query( query, [ uid ] )
 
@@ -117,16 +120,24 @@ module.exports.getUserInfo = ( uid ) => {
 
 
 // SET USER PROFILE PICTURE PROFILE
-module.exports.saveUserProfilePic = ( uid ) => {
+module.exports.saveUserProfilePic = ( uid, profilePic ) => {
     console.log( 'fn: "saveUserProfilePic"' );
 
-    const query = '';
+    const query = `UPDATE users SET "profilePic" = $2
+                    WHERE uid = $1
+                    RETURNING   uid,
+                                "firstName",
+                                "lastName",
+                                email,
+                                bio,
+                                "profilePic"`;
 
-    return db.query( query, [ uid ] )
+    return db.query( query, [ uid, profilePic ] )
 
         .then( ( resp ) => {
-            console.log( resp );
-            return resp;
+            console.log( resp.rows[0] );
+            resp.rows[0].profilePic = s3Url + resp.rows[0].profilePic;
+            return resp.rows[0];
         } )
 
         .catch( ( err ) => {
