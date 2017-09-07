@@ -4,7 +4,7 @@ export default class Logo extends React.Component {
     render() {
         return (
             <div style={{
-                border: 'thin dotted red'
+                border: 'medium dotted red'
             }}>
                 <p>Logo</p>
             </div>

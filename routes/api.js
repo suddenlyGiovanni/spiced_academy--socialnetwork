@@ -147,9 +147,12 @@ router.get( '/getUserInfo', ( req, res ) => {
     if ( req.session.user ) {
         return db.getUserInfo( req.session.user.uid )
 
-            .then( ( resp ) => {
+            .then( ( userData ) => {
 
-                return res.json( resp );
+                return res.json( {
+                    success: true,
+                    userData: userData
+                }  );
             } )
 
             .catch( ( err ) => {
@@ -161,8 +164,8 @@ router.get( '/getUserInfo', ( req, res ) => {
 
 
 // SET USER PROFILE PICTURE PROFILE
-router.post( '/user/:uid/profile_pic', uploader.single( 'file' ), ( req, res ) => {
-    console.log( 'API: ', 'method: POST ', `/api/user/${req.session.user.uid}/profile_pic` );
+router.put( '/user/:uid/profile_pic', uploader.single( 'file' ), ( req, res ) => {
+    console.log( 'API: ', 'method: PUT ', `/api/user/${req.session.user.uid}/profile_pic` );
     console.log( req.file );
 
     if ( req.file ) {

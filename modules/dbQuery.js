@@ -110,6 +110,13 @@ module.exports.getUserInfo = ( uid ) => {
     return db.query( query, [ uid ] )
 
         .then( ( results ) => {
+            if ( !results.rows[ 0 ].profilePic ) {
+                const defProfilePic =
+                    `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                results.rows[ 0 ].profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+            } else {
+                results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
+            }
             return results.rows[ 0 ];
         } )
 
@@ -135,9 +142,9 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
     return db.query( query, [ uid, profilePic ] )
 
         .then( ( resp ) => {
-            console.log( resp.rows[0] );
-            resp.rows[0].profilePic = s3Url + resp.rows[0].profilePic;
-            return resp.rows[0];
+            console.log( resp.rows[ 0 ] );
+            resp.rows[ 0 ].profilePic = s3Url + resp.rows[ 0 ].profilePic;
+            return resp.rows[ 0 ];
         } )
 
         .catch( ( err ) => {
