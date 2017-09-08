@@ -52,8 +52,11 @@ export default class App extends React.Component {
 
         axios.put( `/api/user/${this.state.userData.uid}/profile_pic`, formData )
             .then( ( resp ) => {
-                console.log( resp.data );
-                this.setState( resp.data );
+                console.log( 'React Component: App - fn: uploadProfilePic - AXIOS PUT', resp.data );
+                this.setState( {
+                    userData: resp.data.userData,
+                    uploaderIsVisible: false
+                } );
             } )
             .catch( ( err ) => {
                 this.setState( {

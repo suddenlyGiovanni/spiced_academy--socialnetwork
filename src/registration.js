@@ -61,16 +61,16 @@ export default class Registration extends React.Component {
                 <h1>Join Us!</h1>
                 {this.state.error && <div className='error'>Something went wrong. Please try again!</div>}
                 <form>
-                    <label for='firstName'>First Name</label>
+                    <label forHtml='firstName'>First Name</label>
                     <input id='firstName' type="text" name='firstName' autoComplete="given-name" required onChange={this.handleChange}></input>
 
-                    <label for='lastName'>Last Name</label>
+                    <label forHtml='lastName'>Last Name</label>
                     <input id='lastName' type="text" name="lastName" autoComplete="family-name" required onChange={this.handleChange}></input>
 
-                    <label for='email'>Email</label>
+                    <label forHtml='email'>Email</label>
                     <input id='email' type="email" name="email" autoComplete="email" required onChange={this.handleChange}></input>
 
-                    <label for='password'>Password</label>
+                    <label forHtml='password'>Password</label>
                     <input id='password' type="password" name="password" autoComplete="new-password" required
                         onChange={this.handleChange}></input>
 
