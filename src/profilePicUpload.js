@@ -5,7 +5,10 @@ export default class ProfilePicUpload extends React.Component {
 
     constructor( props ) {
         super( props );
-        this.state = { isModalOpen: true };
+        this.state = {
+            isModalOpen: true,
+            hover: false
+        };
     }
 
     openModal() {
@@ -16,12 +19,41 @@ export default class ProfilePicUpload extends React.Component {
         this.setState( { isModalOpen: false } );
     }
 
+    toggleHover() {
+        this.setState( { hover: !this.state.hover } );
+    }
+
     render() {
         console.log( 'React Component: ProfilePicUpload - this.props: ', this.props );
         const {
             hideProfilePicUpload,
             uploadProfilePic
         } = this.props;
+
+        const inputStyle = {
+            width: '0.1px',
+            height: '0.1px',
+            opacity: '0',
+            overflow: 'hidden',
+            position: 'absolute',
+            zIndex: '-1'
+        };
+
+        let labelStyle;
+
+        if ( this.state.hover ) {
+            labelStyle = {
+                backgroundColor: 'red'
+            };
+        } else {
+            labelStyle = {
+                fontSize: '1.25em',
+                fontWeight: '700',
+                color: 'white',
+                backgroundColor: 'black',
+                display: 'inline-block'
+            };
+        }
 
         return (
 
@@ -34,13 +66,17 @@ export default class ProfilePicUpload extends React.Component {
 
 
 
-                    <label for='profilePic'>Profile Picture</label>
+                    <label for='profilePic'
+                        style={labelStyle}
+                        onMouseEnter={this.toggleHover}
+                        onMouseLeave={this.toggleHover}>Profile Picture</label>
                     <input
                         id='profilePic'
                         type="file"
                         name="profilePic"
                         required
-                        onChange={uploadProfilePic} />
+                        onChange={uploadProfilePic}
+                        style={inputStyle}/>
 
                     <p><button onClick={hideProfilePicUpload}>Close</button></p>
                 </Modal>

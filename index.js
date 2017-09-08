@@ -49,8 +49,10 @@ app.use( '/api/', require( './routes/api' ) );
 
 // if no route match then..
 app.get( '*', function ( req, res ) {
-    res.send( 'nothing found' );
+    res.sendFile( path.join( __dirname, 'index.html' ) );
 } );
+
+
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 

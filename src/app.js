@@ -78,6 +78,15 @@ export default class App extends React.Component {
 
         const { error, uploaderIsVisible } = this.state;
 
+        const children = React.cloneElement( this.props.children, {
+            uid,
+            firstName,
+            lastName,
+            email,
+            bio,
+            profilePic
+        } );
+
 
         if ( !uid ) {
             return <div>Loading....</div>;
@@ -139,7 +148,7 @@ export default class App extends React.Component {
                 <p>profilePic: { profilePic }</p>
                 <p>bio: { bio }</p>
 
-                {this.props.children}
+                {children}
 
 
                 <footer></footer>
