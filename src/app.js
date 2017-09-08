@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from './axios';
 import Logo from './logo';
 import ProfilePic from './profilePic';
 import ProfilePicUpload from './profilePicUpload';

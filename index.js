@@ -4,6 +4,8 @@ const express = require( 'express' ),
     path = require( 'path' ),
     bodyParser = require( 'body-parser' ),
     cookieSession = require( 'cookie-session' ),
+    csrf = require( 'csurf' ),
+
     // session = require( 'express-session' ),
     compression = require( 'compression' );
 // favicon = require( 'serve-favicon' );
@@ -18,13 +20,16 @@ const app = express();
 app.use( morgan( 'dev' ) );
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
+
 // compression gZip response before sending them
 app.use( compression() );
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
+
 // BODY PARSER
 app.use( bodyParser.json() );
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
 
 // COOKIE SESSION
 app.use( cookieSession( {
@@ -38,9 +43,21 @@ if ( process.env.NODE_ENV != 'production' ) {
     app.use( require( './build' ) );
 }
 
+
 // set the public folder where client stuff lives
 // app.use( express.static( './public' ) );
 app.use( express.static( path.join( __dirname, '/public' ) ) );
+
+
+// CSURF
+app.use( csrf() );
+
+app.use( ( req, res, next ) => {
+    res.cookie( '__csrf__', req.csrfToken() );
+    next();
+} );
+// _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
 
 // ROUTING _____________________________________________________________________
 //  Connect all our routes to our application
@@ -51,8 +68,6 @@ app.use( '/api/', require( './routes/api' ) );
 app.get( '*', function ( req, res ) {
     res.sendFile( path.join( __dirname, 'index.html' ) );
 } );
-
-
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 

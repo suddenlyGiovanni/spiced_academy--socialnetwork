@@ -9,6 +9,7 @@ export default class ProfilePicUpload extends React.Component {
             isModalOpen: true,
             hover: false
         };
+        this.toggleHover = this.toggleHover.bind( this );
     }
 
     openModal() {
@@ -24,7 +25,7 @@ export default class ProfilePicUpload extends React.Component {
     }
 
     render() {
-        console.log( 'React Component: ProfilePicUpload - this.props: ', this.props );
+        console.log( 'React Component: ProfilePicUpload - this.prop: ', this.prop );
         const {
             hideProfilePicUpload,
             uploadProfilePic
@@ -51,7 +52,8 @@ export default class ProfilePicUpload extends React.Component {
                 fontWeight: '700',
                 color: 'white',
                 backgroundColor: 'black',
-                display: 'inline-block'
+                display: 'inline-block',
+                cursor: 'pointer'
             };
         }
 

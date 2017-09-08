@@ -1,14 +1,13 @@
 import React from 'react';
 import ProfilePic from './profilePic';
 
-export default class Profile extends React.Component {
+export default class ProfileOther extends React.Component {
     constructor( props ) {
         super( props );
     }
 
     render() {
-
-        console.log( 'React Component: Profile - RENDER - this.props: ', this.props );
+        console.log( 'React Component: ProfileOther - RENDER - this.props: ', this.props );
 
         const {
             profilePic,
@@ -20,7 +19,7 @@ export default class Profile extends React.Component {
             <div style={{
                 border:'medium dotted blue'
             }}>
-                <p>Profile</p>
+                <p>ProfileOther</p>
                 <ProfilePic
                     src={profilePic}
                     alt={firstName + ' ' + lastName}/>

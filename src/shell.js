@@ -7,7 +7,9 @@ import Welcome from './welcome';
 import Registration from './registration';
 import Login from './login';
 import App from './app';
-import Profile from './profile';
+import ProfileSelf from './profileSelf';
+import ProfileOther from './profileOther';
+
 
 
 // REACT Router
@@ -29,7 +31,9 @@ if ( location.pathname === '/welcome/' ) {
     router = (
         <Router history={browserHistory}>
             <Route path='/' component={App}>
-                <IndexRoute component={Profile}/>
+                <IndexRoute component={ProfileSelf} />
+                <Route path='user/:id' component={ProfileOther} />
+
 
             </Route>
         </Router>
