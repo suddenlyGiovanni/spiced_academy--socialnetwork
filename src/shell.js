@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router';
 
 // REACT Components
-import Welcome from './welcome';
-import Registration from './registration';
-import Login from './login';
-import App from './app';
-import ProfileSelf from './profileSelf';
-import ProfileOther from './profileOther';
+import Welcome from './containers/welcome';
+import Registration from './components/registration';
+import Login from './components/login';
+import App from './containers/app';
+import ProfileSelf from './components/profileSelf';
+import ProfileOther from './components/profileOther';
 
 
 
@@ -18,7 +18,7 @@ let router;
 
 
 if ( location.pathname === '/welcome/' ) {
-    console.log( 'welcome' );
+    console.log( 'React Component: Shell: ', location.pathname );
     router = (
         <Router history={hashHistory}>
             <Route path='/' component={Welcome}>
@@ -28,6 +28,7 @@ if ( location.pathname === '/welcome/' ) {
         </Router>
     );
 } else if ( location.pathname !== '/welcome/' ) {
+    console.log( 'React Component: Shell: ', location.pathname );
     router = (
         <Router history={browserHistory}>
             <Route path='/' component={App}>

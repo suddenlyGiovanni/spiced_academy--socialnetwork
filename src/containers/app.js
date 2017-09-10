@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from './axios';
-import Logo from './logo';
-import ProfilePic from './profilePic';
-import ProfilePicUpload from './profilePicUpload';
+import axios from '../utils/axios';
+import Logo from '../components/logo';
+import ProfilePic from '../components/profilePic';
+import ProfilePicUpload from '../components/profilePicUpload';
 import { Link } from 'react-router';
 
 
@@ -97,9 +97,7 @@ export default class App extends React.Component {
 
 
         return (
-            <div style={{
-                border : 'thin dashed green'
-            }}>
+            <div style={{border : 'thin dashed green'}}>
                 <header style={{
                     display: 'inline-flex',
                     width: '100%',
@@ -138,10 +136,6 @@ export default class App extends React.Component {
                     />
                 }
 
-                {/* <ProfilePicUploader
-                    uid={this.state.uid}
-                    setImage={this.setImage}
-                closeUploader={this.close}/> */}
 
                 { error && <div>{ error }</div> }
                 <p>uid: { uid }</p>
