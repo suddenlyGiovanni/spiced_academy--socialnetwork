@@ -4,6 +4,9 @@ import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
 function LoginForm( { handleInput, handleSubmit, error } ) {
+    // if (success) {
+    //     location.replace('/');
+    // }
     return (
         <div style={{border: 'thin dotted red'}}>
             <h1>Log in</h1>
@@ -39,7 +42,8 @@ function LoginForm( { handleInput, handleSubmit, error } ) {
 LoginForm.propTypes = {
     handleInput : PropTypes.func,
     handleSubmit: PropTypes.func,
-    error: PropTypes.string
+    error: PropTypes.bool,
+    // success: PropTypes.bool
 };
 
 export default FormWrapper(LoginForm, '/api/login');

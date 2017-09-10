@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from '../utils/axios';
+import PropTypes from 'prop-types';
+// import axios from '../utils/axios';
 
 export default class Welcome extends React.Component {
     constructor( props ) {
@@ -15,3 +16,7 @@ export default class Welcome extends React.Component {
         );
     }
 }
+
+Welcome.propTypes = {
+    children : PropTypes.element
+};

@@ -1,29 +1,28 @@
 import React from 'react';
 import ProfilePic from './profilePic';
+import PropTypes from 'prop-types';
 
-export default class ProfileOther extends React.Component {
-    constructor( props ) {
-        super( props );
-    }
+const ProfileOther = ( props ) => {
+    console.log( 'React Component: ProfileOther - RENDER - this.props: ', props );
+    const {
+        profilePic,
+        firstName,
+        lastName
+    } = props;
+    return (
+        <div style={{border:'medium dotted blue'}}>
+            <p>ProfileOther</p>
+            <ProfilePic
+                src={profilePic}
+                alt={firstName + ' ' + lastName}/>
+        </div>
+    );
+};
 
-    render() {
-        console.log( 'React Component: ProfileOther - RENDER - this.props: ', this.props );
+ProfileOther.propTypes = {
+    profilePic: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string
+};
 
-        const {
-            profilePic,
-            firstName,
-            lastName
-        } = this.props;
-
-        return (
-            <div style={{
-                border:'medium dotted blue'
-            }}>
-                <p>ProfileOther</p>
-                <ProfilePic
-                    src={profilePic}
-                    alt={firstName + ' ' + lastName}/>
-            </div>
-        );
-    }
-}
+export default ProfileOther;

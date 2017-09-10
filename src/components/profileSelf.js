@@ -1,30 +1,59 @@
 import React from 'react';
 import ProfilePic from './profilePic';
+import PropTypes from 'prop-types';
+import ProfileSelfBio from './profileSelfBio';
 
-export default class ProfileSelf extends React.Component {
-    constructor( props ) {
-        super( props );
-    }
 
-    render() {
+const ProfileSelf = ( props ) => {
+    console.log( 'React Component: ProfileSelf - RENDER - this.props: ', props );
+    const {
+        uid,
+        firstName,
+        lastName,
+        email,
+        bio,
+        profilePic
+    } = props;
+    return (
+        <div style={{border:'medium dotted blue'}}>
 
-        console.log( 'React Component: ProfileSelf - RENDER - this.props: ', this.props );
+            <h4>ProfileSelf</h4>
 
-        const {
-            profilePic,
-            firstName,
-            lastName
-        } = this.props;
+            <ProfilePic
+                src={ profilePic }
+                alt={ firstName + ' ' + lastName } />
 
-        return (
-            <div style={{
-                border:'medium dotted blue'
-            }}>
-                <p>ProfileSelf</p>
-                <ProfilePic
-                    src={profilePic}
-                    alt={firstName + ' ' + lastName}/>
-            </div>
-        );
-    }
-}
+
+            {/* <p>uid: { uid }</p> */}
+            <label forHtml='name'>Name </label>
+            <input id='name'
+                type="text"
+                name='name'
+                value={`${ firstName } ${ lastName }`} disabled />
+
+            <label forHtml='mail'>Mail </label>
+            <input id='mail'
+                type="email"
+                name='mail'
+                value={ email } disabled />
+
+
+            <ProfileSelfBio bio={ bio } uid={ uid }/>
+
+
+
+
+        </div>
+    );
+};
+
+ProfileSelf.propTypes = {
+    uid: PropTypes.number,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    bio: PropTypes.string,
+    profilePic: PropTypes.string
+};
+
+export default ProfileSelf;

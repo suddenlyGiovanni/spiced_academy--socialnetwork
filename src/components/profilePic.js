@@ -1,20 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class ProfilePic extends React.Component {
+const ProfilePic = ( props ) => {
+    const { showProfilePicUpload, src, alt } = props;
+    return (
+        <div
+            style={{ border : 'thin dotted blue'}}
+            onClick={showProfilePicUpload}>
 
-    constructor( props ) {
-        super( props );
-    }
+            <img
+                src={src}
+                alt={alt}
+                style={{ width: '40px', height: '40px', borderRadius: '50%'}}/>
 
-    render() {
-        const { showProfilePicUpload, src, alt } = this.props;
-        return (
-            <div style={{ border : 'thin dotted blue'}}
-                onClick={showProfilePicUpload}>
+        </div>
+    );
+};
 
-                <img src={src} alt={alt} style={{ width: '40px', height: '40px', borderRadius: '50%'}}/>
 
-            </div>
-        );
-    }
-}
+ProfilePic.propTypes = {
+    showProfilePicUpload: PropTypes.func,
+    src: PropTypes.string,
+    alt: PropTypes.string
+};
+
+export default ProfilePic;

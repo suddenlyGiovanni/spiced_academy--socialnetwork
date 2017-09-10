@@ -117,9 +117,9 @@ router.post( '/login', ( req, res ) => {
                     // set the session to be true
                     req.session.user = {
                         uid: resp.uid,
-                        firstName: resp.firstName,
-                        lastName: resp.lastName,
-                        email: resp.email
+                        // firstName: resp.firstName,
+                        // lastName: resp.lastName,
+                        // email: resp.email
                     };
 
                     res.json( { success: true } );
@@ -152,7 +152,7 @@ router.get( '/getUserInfo', ( req, res ) => {
                 return res.json( {
                     success: true,
                     userData: userData
-                }  );
+                } );
             } )
 
             .catch( ( err ) => {
@@ -218,6 +218,27 @@ router.put( '/user/:uid/profile_pic', uploader.single( 'file' ), ( req, res ) =>
             success: false
         } );
     }
+
+} );
+
+
+// SET USER Bio
+router.put( '/user/:uid/bio', ( req, res ) => {
+    console.log( 'API: ', 'method: PUT ', `/api/user/${req.params.uid}/bio` );
+    const bio = req.body.bio.toLowerCase();
+
+    return db.saveUserBio( req.params.uid, bio )
+
+        .then( ( userData ) => {
+            res.json( {
+                success: true,
+                userData: userData
+            } );
+        } )
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
 
 } );
 

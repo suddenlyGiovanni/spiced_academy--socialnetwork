@@ -103,6 +103,7 @@ module.exports.getUserInfo = ( uid ) => {
                             "firstName",
                             "lastName",
                             email,
+                            bio,
                             "profilePic"
                     FROM users
                     WHERE uid = $1;`;
@@ -153,6 +154,27 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
 };
 
 
+//  SET USER BIO
+module.exports.saveUserBio = ( uid, bio ) => {
+    const query = `UPDATE users SET bio = $2
+                    WHERE uid = $1
+                    RETURNING   uid,
+                                "firstName",
+                                "lastName",
+                                email,
+                                bio,
+                                "profilePic";`;
+    return db.query( query, [ uid, bio ] )
+        .then( ( resp ) => {
+            console.log( resp.rows[ 0 ] );
+            resp.rows[ 0 ].profilePic = s3Url + resp.rows[ 0 ].profilePic;
+            return resp.rows[ 0 ];
+        } )
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
+};
 
 
 

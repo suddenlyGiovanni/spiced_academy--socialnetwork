@@ -27,6 +27,12 @@ export default ( Component, url ) => {
                     if ( !data.success ) {
                         this.setState( { error: true } );
                     }
+
+                    // else {
+                    //     this.setState({ success: true });
+                    // }
+
+                    // FIXME: find a way to move location.replace outside this el. this is preventing the el to be reusable in every situation
                     location.replace( '/' );
                 } )
 

@@ -127,23 +127,15 @@ export default class App extends React.Component {
 
 
 
-                {
-                    uploaderIsVisible &&
-
+                {uploaderIsVisible &&
                     <ProfilePicUpload
                         uploadProfilePic={ (e) => this.uploadProfilePic(e) }
-                        hideProfilePicUpload={ (e) => this.hideProfilePicUpload(e) }
-                    />
-                }
+                        hideProfilePicUpload={ (e) => this.hideProfilePicUpload(e) }/>
+                } 
 
 
                 { error && <div>{ error }</div> }
-                <p>uid: { uid }</p>
-                <p>firstName: { firstName }</p>
-                <p>lastName: { lastName }</p>
-                <p>email: { email }</p>
-                <p>profilePic: { profilePic }</p>
-                <p>bio: { bio }</p>
+
 
                 {children}
 
