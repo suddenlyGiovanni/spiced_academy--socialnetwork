@@ -22,7 +22,7 @@ export default class App extends React.Component {
         axios.get( '/api/getUserInfo' )
             .then( ( resp ) => {
                 this.setState( resp.data );
-                console.log( 'React Component: App - fn: componentDidMount - this.state', this.state );
+                console.log( 'App - fn: componentDidMount - this.state', this.state );
             } )
             .catch( ( err ) => {
                 this.setState( {
@@ -34,25 +34,25 @@ export default class App extends React.Component {
 
     showProfilePicUpload( e ) {
         e.stopPropagation();
-        console.log( 'React Component: App - fn: showProfilePicUpload' );
+        console.log( 'App - fn: showProfilePicUpload' );
         this.setState( { uploaderIsVisible: true } );
     }
 
     hideProfilePicUpload( e ) {
         e.stopPropagation();
-        console.log( 'React Component: App - fn: hideProfilePicUpload' );
+        console.log( 'App - fn: hideProfilePicUpload' );
         this.setState( { uploaderIsVisible: false } );
     }
 
     uploadProfilePic( e ) {
-        console.log( 'React Component: App - fn: uploadProfilePic' );
+        console.log( 'App - fn: uploadProfilePic' );
         e.stopPropagation();
         const formData = new FormData;
         formData.append( 'file', e.target.files[ 0 ] );
 
         axios.put( `/api/user/${this.state.userData.uid}/profile_pic`, formData )
             .then( ( resp ) => {
-                console.log( 'React Component: App - fn: uploadProfilePic - AXIOS PUT', resp.data );
+                console.log( 'App - fn: uploadProfilePic - AXIOS PUT', resp.data );
                 this.setState( {
                     userData: resp.data.userData,
                     uploaderIsVisible: false
@@ -68,7 +68,7 @@ export default class App extends React.Component {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     render() {
-        console.log( 'React Component: App - RENDER - this.state: ', this.state );
+        console.log( 'App - RENDER - this.state: ', this.state );
 
         const {
             uid,
@@ -131,7 +131,7 @@ export default class App extends React.Component {
                     <ProfilePicUpload
                         uploadProfilePic={ (e) => this.uploadProfilePic(e) }
                         hideProfilePicUpload={ (e) => this.hideProfilePicUpload(e) }/>
-                } 
+                }
 
 
                 { error && <div>{ error }</div> }

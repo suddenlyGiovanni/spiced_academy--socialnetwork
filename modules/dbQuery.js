@@ -16,7 +16,7 @@ const s3Url = require( '../config/secrets.json' ).s3Url;
 
 // CREATE NEW USER
 module.exports.createUser = ( firstName, lastName, email, password ) => {
-    console.log( 'fn: "postUser"' );
+    console.log( 'dbQuery.js - fn: "postUser"' );
     // hash user password with bcrypt ( hashPassword ) before saving
     return hashPassword( password )
 
@@ -45,7 +45,7 @@ module.exports.createUser = ( firstName, lastName, email, password ) => {
 // AUTHENTICATE USER
 module.exports.checkUser = ( email, password ) => {
 
-    console.log( 'fn: "checkUser"' );
+    console.log( 'dbQuery.js - fn: "checkUser"' );
 
     // step 1 - search on db for matching email.
     return db.query( 'SELECT EXISTS ( SELECT email FROM users WHERE email = $1 )', [ email ] )
@@ -95,9 +95,10 @@ module.exports.checkUser = ( email, password ) => {
         } );
 };
 
-// GET USER DATA
+
+// GET LOGGED IN USER DATA
 module.exports.getUserInfo = ( uid ) => {
-    console.log( 'fn: "getUserData"' );
+    console.log( 'dbQuery.js - fn: "getUserData"' );
 
     const query = `SELECT   uid,
                             "firstName",
@@ -127,9 +128,41 @@ module.exports.getUserInfo = ( uid ) => {
 };
 
 
+
+// GET OTHER USER'S DATA
+module.exports.getOtherUserInfo = ( uid ) => {
+    console.log( 'dbQuery.js - fn: "getOtherUserInfo"' );
+    const query = `SELECT   uid,
+                            "firstName",
+                            "lastName",
+                            email,
+                            bio,
+                            "profilePic"
+                    FROM users
+                    WHERE uid = $1;`;
+    return db.query( query, [ uid ] )
+
+        .then( ( results ) => {
+            if ( !results.rows[ 0 ].profilePic ) {
+                const defProfilePic =
+                    `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                results.rows[ 0 ].profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+            } else {
+                results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
+            }
+            return results.rows[ 0 ];
+        } )
+
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
+};
+
+
 // SET USER PROFILE PICTURE PROFILE
 module.exports.saveUserProfilePic = ( uid, profilePic ) => {
-    console.log( 'fn: "saveUserProfilePic"' );
+    console.log( 'dbQuery.js - fn: "saveUserProfilePic"' );
 
     const query = `UPDATE users SET "profilePic" = $2
                     WHERE uid = $1
@@ -156,6 +189,8 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
 
 //  SET USER BIO
 module.exports.saveUserBio = ( uid, bio ) => {
+    console.log( 'dbQuery.js - fn: "saveUserBio"' );
+
     const query = `UPDATE users SET bio = $2
                     WHERE uid = $1
                     RETURNING   uid,

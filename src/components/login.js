@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
 function LoginForm( { handleInput, handleSubmit, error } ) {
-    // if (success) {
-    //     location.replace('/');
-    // }
+
+    console.log( 'LoginForm - RENDER - this.props: ', this.props );
+
     return (
         <div style={{border: 'thin dotted red'}}>
             <h1>Log in</h1>

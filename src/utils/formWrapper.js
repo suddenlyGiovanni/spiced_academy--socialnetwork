@@ -2,7 +2,7 @@ import React from 'react';
 import axios from './axios';
 
 export default ( Component, url ) => {
-    console.log( 'React Utils: fn: formWrapper ' );
+    // console.log( 'React Utils: fn: formWrapper ' );
 
     return class AuthForm extends React.Component {
 
@@ -23,7 +23,7 @@ export default ( Component, url ) => {
             axios.post( this.url, this.state )
                 .then( resp => {
                     const data = resp.data;
-                    console.log( 'formWrapper - fn: Axios.post - data: ', data );
+                    // console.log( 'formWrapper - fn: Axios.post - data: ', data );
                     if ( !data.success ) {
                         this.setState( { error: true } );
                     }

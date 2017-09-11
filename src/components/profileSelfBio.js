@@ -6,7 +6,17 @@ export default class ProfileSelfBio extends React.Component {
 
     constructor( props ) {
         super( props );
-        this.state = {};
+        this.state = {
+            bio: '',
+            editBioIsVisible: false
+
+        };
+    }
+
+    componentDidMount() {
+        if ( this.props.bio ) {
+            this.setState( { bio: this.props.bio } );
+        }
     }
 
     // componentWillReceiveProps( props ) {
@@ -44,7 +54,7 @@ export default class ProfileSelfBio extends React.Component {
             } );
     }
 
-    editBioIsVisible( boolean ) {
+    setBioVisibility( boolean ) {
         console.log( 'fn: editBioIsVisible ' );
         this.setState( { editBioIsVisible: boolean } );
     }
@@ -53,17 +63,23 @@ export default class ProfileSelfBio extends React.Component {
     render() {
         console.log( 'React Component: ProfileSelfBio - RENDER - this.props: ', JSON.stringify( this.props ) );
 
-        const { editBioIsVisible, error } = this.state;
-        const { bio } = this.props;
+        const { bio, editBioIsVisible, error } = this.state;
+        // const { bio } = this.props;
 
         // if no bio found..
         const noBioData = (
-            <p onClick={ () => this.editBioIsVisible(true)}>Add your bio now</p>
+            <p onClick={ () => this.setBioVisibility(true)}>Add your bio now</p>
         );
 
         // if bio is found..
         const bioData = (
-            <p>{bio} <span onClick={ () => this.editBioIsVisible(true)}>Edit</span></p>
+            <div>
+                <label forHtml='bio'>Bio </label>
+                <textarea id='bio-2'
+                    name="bio"
+                    value={bio} disabled />
+                <span onClick={ () => this.setBioVisibility(true)}>Edit</span>
+            </div>
         );
 
         // to edit the bio..
@@ -72,7 +88,7 @@ export default class ProfileSelfBio extends React.Component {
                 <form onSubmit={(e)=>this.handleSubmit(e)}>
 
                     <label forHtml='bio'>Bio </label>
-                    <textarea id='bio'
+                    <textarea id='bio-2'
                         name="bio"
                         value={bio}
                         onChange={(e)=>this.handleInput(e)}/>

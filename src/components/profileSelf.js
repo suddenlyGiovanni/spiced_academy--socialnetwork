@@ -5,7 +5,7 @@ import ProfileSelfBio from './profileSelfBio';
 
 
 const ProfileSelf = ( props ) => {
-    console.log( 'React Component: ProfileSelf - RENDER - this.props: ', props );
+    console.log( 'ProfileSelf - RENDER - this.props: ', props );
     const {
         uid,
         firstName,
@@ -24,7 +24,12 @@ const ProfileSelf = ( props ) => {
                 alt={ firstName + ' ' + lastName } />
 
 
-            {/* <p>uid: { uid }</p> */}
+            <label forHtml='uid'>Uid </label>
+            <input id='uid'
+                type="text"
+                name='uid'
+                value={uid} disabled />
+
             <label forHtml='name'>Name </label>
             <input id='name'
                 type="text"
@@ -39,9 +44,6 @@ const ProfileSelf = ( props ) => {
 
 
             <ProfileSelfBio bio={ bio } uid={ uid }/>
-
-
-
 
         </div>
     );

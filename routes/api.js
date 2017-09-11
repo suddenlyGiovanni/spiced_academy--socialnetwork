@@ -140,7 +140,7 @@ router.post( '/login', ( req, res ) => {
 } );
 
 
-// GET USER DATA
+// GET LOGGED IN USER DATA
 router.get( '/getUserInfo', ( req, res ) => {
     console.log( 'API: ', 'method: GET ', `/api/getUserInfo/${req.session.user.uid}` );
 
@@ -160,6 +160,26 @@ router.get( '/getUserInfo', ( req, res ) => {
             } );
 
     }
+} );
+
+
+// GET OTHER USER'S DATA
+router.get( '/user/:uid', ( req, res ) => {
+    console.log( 'API: ', 'method: GET ', `/api/user/${req.params.uid}` );
+
+    return db.getOtherUserInfo( req.params.uid )
+
+        .then( ( otherUserData ) => {
+            return res.json( {
+                success: true,
+                otherUserData: otherUserData
+            } );
+        } )
+
+        .catch( ( err ) => {
+            console.error( err.stack );
+        } );
+
 } );
 
 

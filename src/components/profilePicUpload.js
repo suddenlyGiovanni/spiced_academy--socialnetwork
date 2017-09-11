@@ -16,7 +16,7 @@ export default class ProfilePicUpload extends React.Component {
     }
 
     render() {
-        console.log( 'React Component: ProfilePicUpload - this.prop: ', this.prop );
+        console.log( 'ProfilePicUpload - RENDER - this.prop: ', this.prop );
 
         const {
             hideProfilePicUpload,

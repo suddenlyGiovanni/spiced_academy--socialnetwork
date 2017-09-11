@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
 function RegistrationForm( { handleInput, handleSubmit, error } ) {
+    console.log( 'RegistrationForm - RENDER - this.state: ', this.state );
+
     return (
         <div style={{
             border: 'thin dotted red'
@@ -11,7 +13,7 @@ function RegistrationForm( { handleInput, handleSubmit, error } ) {
             <h1>Join Us!</h1>
             {error && <div>Something went wrong. Please try again!</div>}
             <form onSubmit={handleSubmit}>
-                
+
                 <label forHtml='firstName'>First Name</label>
                 <input id='firstName'
                     type="text"

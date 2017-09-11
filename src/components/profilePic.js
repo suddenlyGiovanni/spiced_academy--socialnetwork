@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ProfilePic = ( props ) => {
+    // console.log( 'ProfilePic - RENDER - this.props: ', props );
     const { showProfilePicUpload, src, alt } = props;
     return (
         <div
             style={{ border : 'thin dotted blue'}}
             onClick={showProfilePicUpload}>
-
+            
             <img
                 src={src}
                 alt={alt}

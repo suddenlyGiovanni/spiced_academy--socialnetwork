@@ -7,7 +7,7 @@ export default class Welcome extends React.Component {
         super( props );
     }
     render() {
-        console.log(this.props);
+        console.log( 'Welcome - RENDER - this.props: ', this.props );
         return (
             <div style={{ border: 'medium dotted purple' }}>
                 <h1>Welcome Component</h1>

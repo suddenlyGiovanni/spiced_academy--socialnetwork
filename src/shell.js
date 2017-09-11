@@ -18,7 +18,7 @@ let router;
 
 
 if ( location.pathname === '/welcome/' ) {
-    console.log( 'React Component: Shell: ', location.pathname );
+    console.log( 'Shell: ', location.pathname );
     router = (
         <Router history={hashHistory}>
             <Route path='/' component={Welcome}>
@@ -28,12 +28,12 @@ if ( location.pathname === '/welcome/' ) {
         </Router>
     );
 } else if ( location.pathname !== '/welcome/' ) {
-    console.log( 'React Component: Shell: ', location.pathname );
+    console.log( 'Shell: ', location.pathname );
     router = (
         <Router history={browserHistory}>
             <Route path='/' component={App}>
                 <IndexRoute component={ProfileSelf} />
-                <Route path='user/:id' component={ProfileOther} />
+                <Route path='user/:uid' component={ProfileOther} />
 
 
             </Route>
