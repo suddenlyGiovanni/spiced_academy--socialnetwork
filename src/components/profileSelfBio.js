@@ -9,9 +9,9 @@ export default class ProfileSelfBio extends React.Component {
         this.state = {};
     }
 
-    componentWillReceiveProps( props ) {
-        this.setState( { bio: props.bio } );
-    }
+    // componentWillReceiveProps( props ) {
+    //     this.setState( { bio: props.bio } );
+    // }
 
 
     handleInput( e ) {
@@ -51,9 +51,10 @@ export default class ProfileSelfBio extends React.Component {
 
 
     render() {
-        console.log( 'React Component: ProfileSelfBio - RENDER - this.props: ', this.props );
+        console.log( 'React Component: ProfileSelfBio - RENDER - this.props: ', JSON.stringify( this.props ) );
 
-        const { bio, editBioIsVisible, error } = this.state;
+        const { editBioIsVisible, error } = this.state;
+        const { bio } = this.props;
 
         // if no bio found..
         const noBioData = (
