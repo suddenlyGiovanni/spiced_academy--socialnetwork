@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import axios from '../utils/axios';
 import PropTypes from 'prop-types';
 import ProfilePic from './profilePic';
@@ -17,6 +18,11 @@ export default class ProfileOther extends Component {
     }
 
     componentDidMount() {
+        // if the uid (this.props.params.uid) passed to this comp is the same as
+        // the logged in user's (this.props.uid).
+        if ( this.props.uid == this.props.params.uid ) {
+            browserHistory.push( '/' );
+        }
         console.log( 'ProfileOther - fn: componentDidMount', `/api/user/${this.props.params.uid}` );
         axios.get( `/api/user/${this.props.params.uid}` )
 
