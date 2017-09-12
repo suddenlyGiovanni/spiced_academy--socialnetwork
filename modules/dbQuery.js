@@ -187,7 +187,7 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
     return db.query( query, [ uid, profilePic ] )
 
         .then( ( resp ) => {
-            console.log( resp.rows[ 0 ] );
+            // console.log( resp.rows[ 0 ] );
             resp.rows[ 0 ].profilePic = s3Url + resp.rows[ 0 ].profilePic;
             return resp.rows[ 0 ];
         } )
@@ -215,7 +215,7 @@ module.exports.saveUserBio = ( uid, bio ) => {
                                 "profilePic";`;
     return db.query( query, [ uid, bio ] )
         .then( ( resp ) => {
-            console.log( resp.rows[ 0 ] );
+            // console.log( resp.rows[ 0 ] );
             resp.rows[ 0 ].profilePic = s3Url + resp.rows[ 0 ].profilePic;
             return resp.rows[ 0 ];
         } )
@@ -261,7 +261,7 @@ module.exports.readFriendshipStatus = ( fromUserId, toUserId ) => {
 
         .then( ( result ) => {
             console.log( 'dbQuery.js - fn: "readFriendshipStatus" - result', result.rows );
-            return result.rows[ 0 ];
+            return result.rows;
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -275,54 +275,42 @@ module.exports.createFriendship = ( fromUserId, toUserId ) => {
     console.log( `dbQuery.js - fn: "createFriendship" - params:
     fromUserId[${fromUserId}] toUserId[${toUserId}]` );
 
-    // check if the two users are already friends..
-    const query = `SELECT EXISTS (
-		                SELECT "fromUserId", "toUserId", status
-		                FROM friendships
-                        WHERE ("fromUserId" = $1 AND "toUserId" = $2 AND status = 'ACCEPTED')
-		                OR ("fromUserId" = $2 AND "toUserId" = $1 AND status = 'ACCEPTED')
-                    );`;
+    const query = `INSERT INTO friendships
+                    ("fromUserId", "toUserId", status)
+                    VALUES ($1, $2, 'ACCEPTED')`;
+
     return db.query( query, [ fromUserId, toUserId ] )
 
-        .then( ( response ) => {
-            console.log( 'dbQuery.js - fn: "createFriendship" - EXISTS ALREADY? ', response.rows[ 0 ].exists );
-
-            if ( response.rows[ 0 ].exists ) {
-                // FIXME: HOW TO TROW AN ERROR?? IT'S NOT BEEN DISPLAYED BY THE CONSOLE....
-                new Error( 'ERR: dbQuery.js - fn: "createFriendship" - ALREADY FRIENDS!' );
-            }
-
-            const query = `INSERT INTO friendships
-                            ("fromUserId", "toUserId", status)
-                            VALUES ($1, $2, 'ACCEPTED')`;
-
-            return db.query( query, [ fromUserId, toUserId ] )
-
-                .then( () => {
-                    return { success: true };
-                } )
-
-                .catch( err => console.error( err.stack ) );
-
+        .then( () => {
+            return { success: true };
         } )
 
         .catch( err => console.error( err.stack ) );
-
 };
 
 
 
 
 // UPDATE FREINDSHIP STATUS between fromUserId AND toUserId
-module.exports.updateFriendshipStatus = ( fromUserId, toUserId ) => {
+module.exports.updateFriendshipStatus = ( fromUserId, toUserId, status ) => {
     console.log( `dbQuery.js - fn: "updateFriendshipStatus" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+    fromUserId[${fromUserId}] toUserId[${toUserId}] status:${status}` );
 
-    const query = '';
+    const query = ` UPDATE friendships
+                    SET "fromUserId" = $1,
+                        "toUserId" = $2,
+                        status = $3
+                    WHERE ("fromUserId" = $1 AND "toUserId" = $2)
+                    OR ("fromUserId" = $2 and "toUserId" = $1)
+                    RETURNING status;`;
 
-    return db.query( query, [ fromUserId, toUserId ] )
 
-        .then( resp => resp.rows[ 0 ] )
+    return db.query( query, [ fromUserId, toUserId, status ] )
+
+        .then( ( result ) => {
+            console.log( 'dbQuery.js - fn: "updateFriendshipStatus" - result', result.rows );
+            return { success: true };
+        } )
 
         .catch( err => console.error( err.stack ) );
 };
@@ -331,15 +319,26 @@ module.exports.updateFriendshipStatus = ( fromUserId, toUserId ) => {
 
 
 // DELETE FREINDSHIP between fromUserId AND toUserId
-module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
+module.exports.deleteFriendship = ( fromUserId, toUserId, status ) => {
     console.log( `dbQuery.js - fn: "deleteFriendship" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+    fromUserId[${fromUserId}] toUserId[${toUserId}] - status ${status}` );
 
-    const query = '';
+    const newStatus = status === 'TERMINATE' ? 'TERMINATED' : 'CANCELED';
 
-    return db.query( query, [ fromUserId, toUserId ] )
+    const query = ` UPDATE friendships
+                    SET "fromUserId" = $1,
+                        "toUserId" = $2,
+                        status = $3
+                    WHERE ("fromUserId" = $1 AND "toUserId" = $2)
+                    OR ("fromUserId" = $2 and "toUserId" = $1)
+                    RETURNING status;`;
 
-        .then( resp => resp.rows[ 0 ] )
+    return db.query( query, [ fromUserId, toUserId, newStatus ] )
+
+        .then( result => {
+            console.log( 'dbQuery.js - fn: "deleteFriendship" - result', result.rows );
+            return { success: true };
+        } )
 
         .catch( err => console.error( err.stack ) );
 };

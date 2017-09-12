@@ -26,7 +26,7 @@ export default class ProfileOther extends Component {
             .then( ( resp ) => {
                 if ( resp.data.success ) {
                     const otherUserData = resp.data.otherUserData
-                    this.setState( { otherUserData } );
+                    this.setState( otherUserData );
                     console.log( 'ProfileOther - fn: componentDidMount - this.state', this.state );
                 } else {
                     this.setState( {
@@ -52,7 +52,7 @@ export default class ProfileOther extends Component {
             email,
             bio,
             profilePic
-        } = this.state.otherUserData;
+        } = this.state;
         return (
             <div style={{border:'medium dotted blue'}}>
                 <p>ProfileOther</p>
@@ -91,7 +91,7 @@ export default class ProfileOther extends Component {
                 }
                 <FriendshipButtonContainer
                     fromUserId={this.props.uid}
-                    toUserId={this.state.otherUserData.uid}/>
+                    toUserId={this.state.uid}/>
             </div>
         );
     }

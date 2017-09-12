@@ -12,7 +12,6 @@ export default class App extends React.Component {
         super( props );
         this.state = {
             uploaderIsVisible: false,
-            userData: {}
         };
         this.showProfilePicUpload = this.showProfilePicUpload.bind( this );
     }
@@ -20,15 +19,15 @@ export default class App extends React.Component {
     // life-cycle method
     componentDidMount() {
         axios.get( '/api/getUserInfo' )
-            .then( ( resp ) => {
-                this.setState( resp.data );
+
+            .then( resp => {
+                this.setState( resp.data.userData );
                 console.log( 'App - fn: componentDidMount - this.state', this.state );
             } )
-            .catch( ( err ) => {
-                this.setState( {
-                    error: 'Something went wrong. Please try again!'
-                } );
-                console.log( err );
+
+            .catch( err => {
+                this.setState( { error: 'Something went wrong. Please try again!' } );
+                console.err( err.stack );
             } );
     }
 
@@ -50,18 +49,16 @@ export default class App extends React.Component {
         const formData = new FormData;
         formData.append( 'file', e.target.files[ 0 ] );
 
-        axios.put( `/api/user/${this.state.userData.uid}/profile_pic`, formData )
-            .then( ( resp ) => {
-                console.log( 'App - fn: uploadProfilePic - AXIOS PUT', resp.data );
-                this.setState( {
-                    userData: resp.data.userData,
-                    uploaderIsVisible: false
-                } );
+        axios.put( `/api/user/${this.state.uid}/profile_pic`, formData )
+
+            .then( resp => {
+                const userData = Object.assign( resp.data.userData, { uploaderIsVisible: false } );
+                this.setState( userData );
+                console.log( 'App - fn: uploadProfilePic - AXIOS PUT', this.state );
             } )
+
             .catch( ( err ) => {
-                this.setState( {
-                    error: 'Something went wrong. Please try again!'
-                } );
+                this.setState( { error: 'Something went wrong. Please try again!' } );
                 console.error( err.stack );
             } );
     }
@@ -77,7 +74,7 @@ export default class App extends React.Component {
             email,
             bio,
             profilePic
-        } = this.state.userData;
+        } = this.state;
 
         const { error, uploaderIsVisible } = this.state;
 

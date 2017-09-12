@@ -290,11 +290,21 @@ router.get( '/friends/:fromUserId', ( req, res ) => {
 router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
+
     console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}` );
-    res.json( {
-        success: true,
-        action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-    } );
+
+    return db.readFriendshipStatus( fromUserId, toUserId )
+
+        .then( resp => {
+            console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}
+            resp: `, resp );
+            res.json( {
+                success: true,
+                action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+            } );
+        } )
+
+        .catch( err => console.error( err.stack ) );
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
@@ -305,11 +315,13 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
+
     console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}` );
 
     return db.createFriendship( fromUserId, toUserId )
         .then( resp => {
-            console.log( resp );
+            console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}
+            resp: `, resp );
             res.json( {
                 success: resp.success,
                 action: `CREATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
@@ -327,11 +339,22 @@ router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
+    const status = req.body.status;
+
     console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}` );
-    res.json( {
-        success: true,
-        action: `UPDATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-    } );
+
+    return db.updateFriendshipStatus( fromUserId, toUserId, status )
+
+        .then( resp => {
+            console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}
+            resp: `, resp );
+            res.json( {
+                success: true,
+                action: `UPDATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+            } );
+        } )
+
+        .catch( err => console.error( err.stack ) );
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
@@ -339,14 +362,33 @@ router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 
 
 // D:   DELETE  -   DELETE  -   /api/friends/:fromUserId/:toUserId   TERMINATE FREINDSHIP
-router.delete( '/friends/:fromUserId/:toUserId', ( req, res ) => {
+router.put( '/friends/:fromUserId/:toUserId/delete', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
-    console.log( 'API: ', 'method: DELETE ', `/api/friends/${fromUserId}/${toUserId}` );
-    res.json( {
-        success: true,
-        action: `TERMINATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-    } );
+    const status = req.body.status;
+
+    console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - status: ${status}` );
+
+    if ( status == 'TERMINATE' || status == 'CANCEL' ) {
+        return db.deleteFriendship( fromUserId, toUserId, status )
+
+            .then( resp => {
+                console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - resp: `, resp );
+
+                res.json( {
+                    success: true,
+                    action: `TERMINATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+                } );
+            } )
+
+            .catch( err => console.error( err.stack ) );
+    } else {
+        res.json( {
+            success: false,
+            message: 'ERROR: WRONG VERB. ONLY TERMINATE || CANCEL'
+        } );
+    }
+
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
