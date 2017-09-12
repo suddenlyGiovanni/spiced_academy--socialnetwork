@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
 function RegistrationForm( { handleInput, handleSubmit, error } ) {
-    console.log( 'RegistrationForm - RENDER - this.state: ', this.state );
+    console.log( 'RegistrationForm - RENDER ' );
 
     return (
         <div style={{

@@ -3,12 +3,9 @@ import { browserHistory } from 'react-router';
 import axios from '../utils/axios';
 import PropTypes from 'prop-types';
 import ProfilePic from './profilePic';
+import FriendshipButtonContainer from '../containers/friendshipButtonContainer';
 
 export default class ProfileOther extends Component {
-
-    // static propTypes = {
-    //
-    // };
 
     constructor( props ) {
         super( props );
@@ -92,6 +89,9 @@ export default class ProfileOther extends Component {
                                 value={bio} disabled/>
                         </div>)
                 }
+                <FriendshipButtonContainer
+                    fromUserId={this.props.uid}
+                    toUserId={this.state.otherUserData.uid}/>
             </div>
         );
     }

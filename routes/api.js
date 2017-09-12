@@ -242,7 +242,7 @@ router.put( '/user/:uid/profile_pic', uploader.single( 'file' ), ( req, res ) =>
 } );
 
 
-// SET USER Bio
+// SET USER BIO
 router.put( '/user/:uid/bio', ( req, res ) => {
     console.log( 'API: ', 'method: PUT ', `/api/user/${req.params.uid}/bio` );
     const bio = req.body.bio.toLowerCase();
@@ -261,6 +261,94 @@ router.put( '/user/:uid/bio', ( req, res ) => {
         } );
 
 } );
+
+// ____________________________________________________________________________
+// FRIENDSHIP ROUTES:
+// C:   CREATE  -   POST    -   /api/friends/:fromUserId/:toUserId   BECOME FRIEND
+// R:   READ    -   GET     -   /api/friends/:fromUserId/           SEE ALL USERS'S FRIEND
+// U:   UPDATE  -   PUT     -   /api/friends/:fromUserId/:toUserId   UPDATE FRIENDSHIP
+// D:   DELETE  -   DELETE  -   /api/friends/:fromUserId/:toUserId   TERMINATE FREINDSHIP
+
+
+
+
+// R:   READ    -   GET     -   /api/friends/:fromUserId/   SEE ALL USERS'S FRIEND
+router.get( '/friends/:fromUserId', ( req, res ) => {
+    const fromUserId = req.params.fromUserId;
+    console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}` );
+    res.json( {
+        success: true,
+        action: `DISPLAY ALL FRIENDS OF - fromUserId[${fromUserId}]`
+    } );
+} );
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+// R:   READ    -   GET     -   /api/friends/:fromUserId/:toUserI   SEE FRIENDSHIP STATUS OF TWO USERS
+router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
+    const fromUserId = req.params.fromUserId;
+    const toUserId = req.params.toUserId;
+    console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}` );
+    res.json( {
+        success: true,
+        action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+    } );
+} );
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+// C:   CREATE  -   POST    -   /api/friends/:fromUserId/:toUserId   BECOME FRIEND
+router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
+    const fromUserId = req.params.fromUserId;
+    const toUserId = req.params.toUserId;
+    console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}` );
+
+    return db.createFriendship( fromUserId, toUserId )
+        .then( resp => {
+            console.log( resp );
+            res.json( {
+                success: resp.success,
+                action: `CREATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+            } );
+        } )
+
+        .catch( err => console.error( err.stack ) );
+} );
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+// U:   UPDATE  -   PUT     -   /api/friends/:fromUserId/:toUserId   UPDATE FRIENDSHIP
+router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
+    const fromUserId = req.params.fromUserId;
+    const toUserId = req.params.toUserId;
+    console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}` );
+    res.json( {
+        success: true,
+        action: `UPDATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+    } );
+} );
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+// D:   DELETE  -   DELETE  -   /api/friends/:fromUserId/:toUserId   TERMINATE FREINDSHIP
+router.delete( '/friends/:fromUserId/:toUserId', ( req, res ) => {
+    const fromUserId = req.params.fromUserId;
+    const toUserId = req.params.toUserId;
+    console.log( 'API: ', 'method: DELETE ', `/api/friends/${fromUserId}/${toUserId}` );
+    res.json( {
+        success: true,
+        action: `TERMINATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+    } );
+} );
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 
 /* MODULE EXPORTS */

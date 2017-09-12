@@ -5,7 +5,7 @@ import FormWrapper from '../utils/formWrapper';
 
 function LoginForm( { handleInput, handleSubmit, error } ) {
 
-    console.log( 'LoginForm - RENDER - this.props: ', this.props );
+    console.log( 'LoginForm - RENDER');
 
     return (
         <div style={{border: 'thin dotted red'}}>

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
@@ -10,3 +11,10 @@ CREATE TABLE users(
     bio VARCHAR(300),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE friendships(
+    "fId" SERIAL PRIMARY KEY,
+    "fromUserId" INTEGER NOT NULL REFERENCES users(uid),
+    status VARCHAR (200) NOT NULL,
+    "toUserId" INTEGER NOT NULL REFERENCES users(uid)
+)

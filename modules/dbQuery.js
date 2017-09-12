@@ -40,6 +40,9 @@ module.exports.createUser = ( firstName, lastName, email, password ) => {
             console.error( err.stack );
         } );
 };
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
 
 
 // AUTHENTICATE USER
@@ -94,6 +97,9 @@ module.exports.checkUser = ( email, password ) => {
             console.error( err.stack );
         } );
 };
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
 
 
 // GET LOGGED IN USER DATA
@@ -126,6 +132,8 @@ module.exports.getUserInfo = ( uid ) => {
             console.error( err.stack );
         } );
 };
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
 
 
 
@@ -158,6 +166,9 @@ module.exports.getOtherUserInfo = ( uid ) => {
             console.error( err.stack );
         } );
 };
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
 
 
 // SET USER PROFILE PICTURE PROFILE
@@ -185,6 +196,9 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
             console.error( err.stack );
         } );
 };
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
 
 
 //  SET USER BIO
@@ -209,6 +223,125 @@ module.exports.saveUserBio = ( uid, bio ) => {
         .catch( ( err ) => {
             console.error( err.stack );
         } );
+};
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+// READ ALL fromUserId FRIENDS
+module.exports.readAllFriends = ( fromUserId ) => {
+    console.log( `dbQuery.js - fn: "readAllFriends" - params: fromUserId[${fromUserId}]` );
+
+    const query = '';
+
+    return db.query( query, [ fromUserId ] )
+
+        .then( resp => resp.rows[ 0 ] )
+
+        .catch( err => console.error( err.stack ) );
+};
+
+
+
+
+// READ FRIENDSHIP STATUS OF fromUserId AND toUserId
+module.exports.readFriendshipStatus = ( fromUserId, toUserId ) => {
+    console.log( `dbQuery.js - fn: "readFriendshipStatus" - params:
+    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+
+    const query = `SELECT  "fromUserId",
+                            status,
+                            "toUserId"
+                    FROM friendships
+                    WHERE ("fromUserId" = $1 AND "toUserId" = $2)
+                    OR	("fromUserId" = $2 AND "toUserId" = $1);`;
+
+    return db.query( query, [ fromUserId, toUserId ] )
+
+        .then( ( result ) => {
+            console.log( 'dbQuery.js - fn: "readFriendshipStatus" - result', result.rows );
+            return result.rows[ 0 ];
+        } )
+
+        .catch( err => console.error( err.stack ) );
+};
+
+
+
+
+// CREATE FRIENDSHIP between fromUserId AND toUserId
+module.exports.createFriendship = ( fromUserId, toUserId ) => {
+    console.log( `dbQuery.js - fn: "createFriendship" - params:
+    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+
+    // check if the two users are already friends..
+    const query = `SELECT EXISTS (
+		                SELECT "fromUserId", "toUserId", status
+		                FROM friendships
+                        WHERE ("fromUserId" = $1 AND "toUserId" = $2 AND status = 'ACCEPTED')
+		                OR ("fromUserId" = $2 AND "toUserId" = $1 AND status = 'ACCEPTED')
+                    );`;
+    return db.query( query, [ fromUserId, toUserId ] )
+
+        .then( ( response ) => {
+            console.log( 'dbQuery.js - fn: "createFriendship" - EXISTS ALREADY? ', response.rows[ 0 ].exists );
+
+            if ( response.rows[ 0 ].exists ) {
+                // FIXME: HOW TO TROW AN ERROR?? IT'S NOT BEEN DISPLAYED BY THE CONSOLE....
+                new Error( 'ERR: dbQuery.js - fn: "createFriendship" - ALREADY FRIENDS!' );
+            }
+
+            const query = `INSERT INTO friendships
+                            ("fromUserId", "toUserId", status)
+                            VALUES ($1, $2, 'ACCEPTED')`;
+
+            return db.query( query, [ fromUserId, toUserId ] )
+
+                .then( () => {
+                    return { success: true };
+                } )
+
+                .catch( err => console.error( err.stack ) );
+
+        } )
+
+        .catch( err => console.error( err.stack ) );
+
+};
+
+
+
+
+// UPDATE FREINDSHIP STATUS between fromUserId AND toUserId
+module.exports.updateFriendshipStatus = ( fromUserId, toUserId ) => {
+    console.log( `dbQuery.js - fn: "updateFriendshipStatus" - params:
+    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+
+    const query = '';
+
+    return db.query( query, [ fromUserId, toUserId ] )
+
+        .then( resp => resp.rows[ 0 ] )
+
+        .catch( err => console.error( err.stack ) );
+};
+
+
+
+
+// DELETE FREINDSHIP between fromUserId AND toUserId
+module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
+    console.log( `dbQuery.js - fn: "deleteFriendship" - params:
+    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+
+    const query = '';
+
+    return db.query( query, [ fromUserId, toUserId ] )
+
+        .then( resp => resp.rows[ 0 ] )
+
+        .catch( err => console.error( err.stack ) );
 };
 
 
