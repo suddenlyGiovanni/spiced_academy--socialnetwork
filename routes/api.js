@@ -172,7 +172,7 @@ router.get( '/user/:uid', ( req, res ) => {
         .then( ( otherUserData ) => {
             return res.json( {
                 success: true,
-                otherUserData: otherUserData
+                otherUserData
             } );
         } )
 

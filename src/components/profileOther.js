@@ -9,9 +9,7 @@ export default class ProfileOther extends Component {
 
     constructor( props ) {
         super( props );
-        this.state = {
-            otherUserData: {}
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -20,31 +18,28 @@ export default class ProfileOther extends Component {
         if ( this.props.uid == this.props.params.uid ) {
             browserHistory.push( '/' );
         }
-        console.log( 'ProfileOther - fn: componentDidMount', `/api/user/${this.props.params.uid}` );
+
+        // console.log( 'ProfileOther - fn: componentDidMount', `/api/user/${this.props.params.uid}` );
+
         axios.get( `/api/user/${this.props.params.uid}` )
 
-            .then( ( resp ) => {
+            .then( resp => {
                 if ( resp.data.success ) {
-                    const otherUserData = resp.data.otherUserData
-                    this.setState( otherUserData );
+                    this.setState( resp.data.otherUserData );
                     console.log( 'ProfileOther - fn: componentDidMount - this.state', this.state );
-                } else {
-                    this.setState( {
-                        error: 'Something went wrong. Please try again!'
-                    } );
                 }
+                this.setState( { error: 'Something went wrong. Please try again!' } );
             } )
 
-            .catch( ( err ) => {
-                this.setState( {
-                    error: 'Something went wrong. Please try again!'
-                } );
-                console.log( err );
+            .catch( err => {
+                this.setState( { error: 'Something went wrong. Please try again!' } );
+                console.err( err );
             } );
     }
 
     render() {
         console.log( 'ProfileOther - RENDER - this.state: ', this.state );
+
         const {
             uid,
             firstName,
@@ -53,6 +48,7 @@ export default class ProfileOther extends Component {
             bio,
             profilePic
         } = this.state;
+
         return (
             <div style={{border:'medium dotted blue'}}>
                 <p>ProfileOther</p>
