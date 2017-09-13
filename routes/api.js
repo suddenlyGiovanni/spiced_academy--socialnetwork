@@ -273,13 +273,21 @@ router.put( '/user/:uid/bio', ( req, res ) => {
 
 
 // R:   READ    -   GET     -   /api/friends/:fromUserId/   SEE ALL USERS'S FRIEND
-router.get( '/friends/:fromUserId', ( req, res ) => {
-    const fromUserId = req.params.fromUserId;
+router.get( '/friends', ( req, res ) => {
+    const fromUserId = req.session.user.uid;
     console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}` );
-    res.json( {
-        success: true,
-        action: `DISPLAY ALL FRIENDS OF - fromUserId[${fromUserId}]`
-    } );
+
+    return db.readAllFriends( fromUserId )
+
+        .then( resp => {
+            return res.json( resp );
+        } )
+
+        .catch( err => console.log( err ) );
+    // res.json( {
+    //     success: true,
+    //     action: `DISPLAY ALL FRIENDS OF - fromUserId[${fromUserId}]`
+    // } );
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
@@ -291,7 +299,7 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
 
-    console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}` );
+    console.log( `API: method: GET /api/friends/${fromUserId}/${toUserId}` );
 
     return db.readFriendshipStatus( fromUserId, toUserId )
 
@@ -320,7 +328,7 @@ router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const toUserId = req.params.toUserId;
     const status = req.body.status;
 
-    console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}` );
+    console.log( `API: method: POST /api/friends/${fromUserId}/${toUserId}` );
     if ( status === 'PENDING' ) {
         return db.createFriendshipReq( fromUserId, toUserId, status )
 
@@ -367,30 +375,17 @@ router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 
 
 // D:   DELETE  -   DELETE  -   /api/friends/:fromUserId/:toUserId   TERMINATE FREINDSHIP
-router.put( '/friends/:fromUserId/:toUserId/delete', ( req, res ) => {
+router.delete( '/friends/:fromUserId/:toUserId/delete', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
-    const status = req.body.status;
 
-    console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - status: ${status}` );
+    console.log( `API: method: DELETE /api/friends/${fromUserId}/${toUserId}/delete - status: ${status}` );
 
-    if ( status == 'TERMINATED' || status == 'CANCELED' ) {
-        return db.deleteFriendship( fromUserId, toUserId, status )
+    return db.deleteFriendship( fromUserId, toUserId )
 
-            .then( resp => {
-                console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - resp: `, resp );
+        .then( resp => res.json( resp ) )
 
-                // action: `TERMINATED FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-                res.json( resp );
-            } )
-
-            .catch( err => console.error( err.stack ) );
-    } else {
-        res.json( {
-            success: false,
-            message: 'ERROR: WRONG VERB. ONLY TERMINATED || CANCELED'
-        } );
-    }
+        .catch( err => console.error( err.stack ) );
 
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _

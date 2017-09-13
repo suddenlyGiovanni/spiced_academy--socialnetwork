@@ -12,7 +12,9 @@
         "node": "6.10.3"
     },
     "nodemonConfig": {
-        "ignore": ["src/*"],
+        "ignore": [
+            "src/*"
+        ],
         "delay": "2500"
     },
     "dependencies": {

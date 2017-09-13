@@ -27,7 +27,7 @@ export default class App extends React.Component {
 
             .catch( err => {
                 this.setState( { error: 'Something went wrong. Please try again!' } );
-                console.err( err.stack );
+                console.log( err );
             } );
     }
 
@@ -59,7 +59,7 @@ export default class App extends React.Component {
 
             .catch( ( err ) => {
                 this.setState( { error: 'Something went wrong. Please try again!' } );
-                console.error( err.stack );
+                console.log( err );
             } );
     }
 
@@ -101,17 +101,18 @@ export default class App extends React.Component {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     backgroundColor: 'goldenrod'
-
+                    
                 }}>
                     <Logo />
                     <nav>
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/logout">Logout</Link></li>
+                            <li><Link to='/'>Home</Link></li>
+                            <li><Link to='/logout'>Logout</Link></li>
                         </ul>
                     </nav>
 
                     <title><h1>App</h1></title>
+                    <Link to='/friends'>Friends</Link>
 
                     <ProfilePic
                         src={profilePic}

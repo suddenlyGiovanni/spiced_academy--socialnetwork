@@ -118,13 +118,17 @@ module.exports.getUserInfo = ( uid ) => {
     return db.query( query, [ uid ] )
 
         .then( ( results ) => {
+
             if ( !results.rows[ 0 ].profilePic ) {
                 const defProfilePic =
                     `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
                 results.rows[ 0 ].profilePic = s3Url + 'def_profilePic/' + defProfilePic;
-            } else {
+            }
+            //
+            else {
                 results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
             }
+            //
             return results.rows[ 0 ];
         } )
 
@@ -151,13 +155,17 @@ module.exports.getOtherUserInfo = ( uid ) => {
     return db.query( query, [ uid ] )
 
         .then( ( results ) => {
+
             if ( !results.rows[ 0 ].profilePic ) {
                 const defProfilePic =
                     `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
                 results.rows[ 0 ].profilePic = s3Url + 'def_profilePic/' + defProfilePic;
-            } else {
+            }
+            //
+            else {
                 results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
             }
+            //
             return results.rows[ 0 ];
         } )
 
@@ -231,13 +239,36 @@ module.exports.saveUserBio = ( uid, bio ) => {
 
 // READ ALL fromUserId FRIENDS
 module.exports.readAllFriends = ( fromUserId ) => {
-    console.log( `dbQuery.js - fn: "readAllFriends" - params: fromUserId[${fromUserId}]` );
-
-    const query = '';
+    // console.log( 'dbQuery.js - fn: "readAllFriends"' );
+    const query = `SELECT   users.uid,
+                            users."firstName",
+                            users."lastName",
+                            users."profilePic",
+                            users.bio,
+                            friendships.status
+                    FROM friendships
+                    INNER JOIN users
+                    ON (friendships.status = 'PENDING' AND "toUserId" = $1 AND "fromUserId" = users.uid)
+                    OR (friendships.status = 'ACCEPTED' AND "fromUserId" = $1 AND "toUserId" = users.uid)
+                    OR (friendships.status = 'ACCEPTED' AND "toUserId" = $1 AND "fromUserId" = users.uid);`;
 
     return db.query( query, [ fromUserId ] )
 
-        .then( resp => resp.rows[ 0 ] )
+        .then( friends => {
+            console.log( 'dbQuery.js - fn: "readAllFriends"', friends.rows );
+
+            var s3mappedFriends = friends.rows.map( friend => {
+                if ( !friend.profilePic ) {
+                    const defProfilePic =
+                        `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                    friend.profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+                } else {
+                    friend.profilePic = s3Url + friend.profilePic;
+                }
+                return friend;
+            } );
+            return { friends: s3mappedFriends };
+        } )
 
         .catch( err => console.error( err.stack ) );
 };
@@ -247,8 +278,7 @@ module.exports.readAllFriends = ( fromUserId ) => {
 
 // READ FRIENDSHIP STATUS OF fromUserId AND toUserId
 const readFriendshipStatus = ( fromUserId, toUserId ) => {
-    console.log( `dbQuery.js - fn: "readFriendshipStatus" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+    console.log( 'dbQuery.js - fn: "readFriendshipStatus"' );
 
     const query = `SELECT  "fId",
                             "fromUserId",
@@ -287,8 +317,7 @@ module.exports.readFriendshipStatus = readFriendshipStatus;
 
 // CREATE FRIENDSHIP between fromUserId AND toUserId
 module.exports.createFriendshipReq = ( fromUserId, toUserId, status ) => {
-    console.log( `dbQuery.js - fn: "createFriendship" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}]` );
+    console.log( 'dbQuery.js - fn: "createFriendship"' );
 
     const query = `INSERT INTO friendships
                     ("fromUserId", "toUserId", status)
@@ -307,8 +336,7 @@ module.exports.createFriendshipReq = ( fromUserId, toUserId, status ) => {
 
 // UPDATE FREINDSHIP STATUS between fromUserId AND toUserId
 module.exports.updateFriendshipStatus = ( fromUserId, toUserId, status ) => {
-    console.log( `dbQuery.js - fn: "updateFriendshipStatus" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}] status:${status}` );
+    console.log( 'dbQuery.js - fn: "updateFriendshipStatus"' );
 
     const query = ` UPDATE friendships
                     SET "fromUserId" = $1,
@@ -330,19 +358,12 @@ module.exports.updateFriendshipStatus = ( fromUserId, toUserId, status ) => {
 
 
 // DELETE FREINDSHIP between fromUserId AND toUserId
-module.exports.deleteFriendship = ( fromUserId, toUserId, status ) => {
-    console.log( `dbQuery.js - fn: "deleteFriendship" - params:
-    fromUserId[${fromUserId}] toUserId[${toUserId}] - status ${status}` );
+module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
+    console.log( 'dbQuery.js - fn: "deleteFriendship"' );
 
-    const query = ` UPDATE friendships
-                    SET "fromUserId" = $1,
-                        "toUserId" = $2,
-                        status = $3
-                    WHERE ("fromUserId" = $1 AND "toUserId" = $2)
-                    OR ("fromUserId" = $2 and "toUserId" = $1)
-                    RETURNING "fId", "fromUserId", status, "toUserId";`;
+    const query = ``;
 
-    return db.query( query, [ fromUserId, toUserId, status ] )
+    return db.query( query, [ fromUserId, toUserId ] )
 
         .then( result => Object.assign( result.rows[ 0 ], { success: true } ) )
 
