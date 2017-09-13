@@ -302,14 +302,9 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
                     success: true,
                     btnAction: 'MAKE FRIEND REQ'
                 } );
+            } else {
+                return res.json( Object.assign( resp, { success: true } ) );
             }
-            // action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            const response = Object.assign( resp, { success: true } );
-
-            console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}
-            resp: `, response );
-
-            return res.json( response );
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -319,47 +314,52 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 
 
 
-// C:   CREATE  -   POST    -   /api/friends/:fromUserId/:toUserId   BECOME FRIEND
+// C:   CREATE  -   POST    -   /api/friends/:fromUserId/:toUserId   && newStatus === 'PENDING'
 router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
     const status = req.body.status;
 
     console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}` );
+    if ( status === 'PENDING' ) {
+        return db.createFriendshipReq( fromUserId, toUserId, status )
 
-    return db.createFriendshipReq( fromUserId, toUserId, status )
+            .then( resp => res.json( resp ) )
 
-        .then( resp => {
-            console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}
-            resp: `, resp );
-            // action: `CREATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            res.json( resp );
-        } )
-
-        .catch( err => console.error( err.stack ) );
+            .catch( err => console.error( err.stack ) );
+    } else {
+        res.json( { success: false } );
+        throw 'ERROR: WRONG VERB. ONLY PENDING';
+    }
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 
 
 
-// U:   UPDATE  -   PUT     -   /api/friends/:fromUserId/:toUserId   UPDATE FRIENDSHIP
+// U:   UPDATE  -   PUT     -   /api/friends/:fromUserId/:toUserId
+//  UPDATE FRIENDSHIP { PENDING, ACCEPTED, CANCELED, TERMINATED }
 router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
     const status = req.body.status;
 
     console.log( `API: method: PUT /api/friends/${fromUserId}/${toUserId} - status: ${status}` );
+    if ( status === 'PENDING' ||
+        status === 'ACCEPTED' ||
+        status === 'CANCELED' ||
+        status === 'TERMINATED' ) {
 
-    return db.updateFriendshipStatus( fromUserId, toUserId, status )
+        return db.updateFriendshipStatus( fromUserId, toUserId, status )
 
-        .then( resp => {
-            console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}
-            resp: `, resp );
-            res.json( resp );
-        } )
+            .then( resp => res.json( resp ) )
 
-        .catch( err => console.error( err.stack ) );
+            .catch( err => console.error( err.stack ) );
+    } else {
+        res.json( { success: false } );
+        throw 'ERROR: WRONG VERB. ONLY PENDING || ACCEPTED || CANCELED || TERMINATED';
+    }
+
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 

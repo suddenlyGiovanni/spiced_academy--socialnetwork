@@ -95,7 +95,7 @@ export default class FriendshipButtonContainer extends React.Component {
 
         // status == 'PENDING' && btnAction === 'CANCEL' && newStatus === 'CANCELED'
         else if ( btnAction === 'CANCEL' ) {
-            axios.put( `/api/friends/${currentUserId}/${otherUserId}/delete`, { status: 'CANCELED' } )
+            axios.put( `/api/friends/${currentUserId}/${otherUserId}`, { status: 'CANCELED' } )
 
                 .then( resp => {
                     if ( resp.data.success ) {
@@ -127,7 +127,7 @@ export default class FriendshipButtonContainer extends React.Component {
 
         // status == 'ACCEPTED' && btnAction === 'TERMINATE' && newStatus === 'TERMINATED'
         else if ( btnAction === 'TERMINATE' ) {
-            axios.put( `/api/friends/${currentUserId}/${otherUserId}/delete`, { status: 'TERMINATED' } )
+            axios.put( `/api/friends/${currentUserId}/${otherUserId}`, { status: 'TERMINATED' } )
 
                 .then( resp => {
                     if ( resp.data.success ) {
