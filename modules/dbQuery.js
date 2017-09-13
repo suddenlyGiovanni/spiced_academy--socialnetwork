@@ -246,11 +246,12 @@ module.exports.readAllFriends = ( fromUserId ) => {
 
 
 // READ FRIENDSHIP STATUS OF fromUserId AND toUserId
-module.exports.readFriendshipStatus = ( fromUserId, toUserId ) => {
+const readFriendshipStatus = ( fromUserId, toUserId ) => {
     console.log( `dbQuery.js - fn: "readFriendshipStatus" - params:
     fromUserId[${fromUserId}] toUserId[${toUserId}]` );
 
-    const query = `SELECT  "fromUserId",
+    const query = `SELECT  "fId",
+                            "fromUserId",
                             status,
                             "toUserId"
                     FROM friendships
@@ -261,12 +262,24 @@ module.exports.readFriendshipStatus = ( fromUserId, toUserId ) => {
 
         .then( ( result ) => {
             console.log( 'dbQuery.js - fn: "readFriendshipStatus" - result', result.rows );
-            return result.rows;
+
+            if ( result.rows.length > 1 ) {
+                const fId = result.rows[ ( result.rows.length - 1 ) ].fId;
+                const query =   `DELETE FROM friendships
+                                WHERE "fId" = $1`;
+                return db.query( query, [ fId ] )
+
+                    .then( () => readFriendshipStatus(fromUserId, toUserId) )
+
+                    .catch( err => console.error( err.stack ) );
+            }
+
+            return result.rows[0];
         } )
 
         .catch( err => console.error( err.stack ) );
 };
-
+module.exports.readFriendshipStatus = readFriendshipStatus;
 
 
 

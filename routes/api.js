@@ -296,12 +296,16 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     return db.readFriendshipStatus( fromUserId, toUserId )
 
         .then( resp => {
-            console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}
-            resp: `, resp );
-            res.json( {
+            const statusMessage = {
                 success: true,
                 action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            } );
+            };
+            const response = Object.assign(resp, statusMessage);
+
+            console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}
+            resp: `, response );
+
+            return res.json(response);
         } )
 
         .catch( err => console.error( err.stack ) );

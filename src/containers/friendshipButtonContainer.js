@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from '../utils/axios';
-import FriendshipButton from '../components/FriendshipButton';
+import FriendshipButton from '../components/friendshipButton';
 
 export default class FriendshipButtonContainer extends React.Component {
     constructor( props ) {
@@ -18,16 +18,20 @@ export default class FriendshipButtonContainer extends React.Component {
         } );
         // R:   READ    -   GET     -   /api/friends/:fromUserId/:toUserI   SEE FRIENDSHIP STATUS OF TWO USERS
         axios.get( `/api/friends/${this.state.fromUserId}/${this.props.toUserId}` )
-            .then( resp => console.log( resp ) )
+            .then( resp => {
+                if ( resp.data.success ) {
+                    this.setState( resp.data );
+                } else {
+                    throw 'err: did not retrieve data';
+                }
+            } )
             .catch( err => console.error( err ) );
     }
 
 
-
-
     handleClick() {
         console.log( 'FriendshipButtonContainer - fn: handleClick' );
-        axios.put( `/api/friends/${this.state.fromUserId}/${this.props.toUserId}/delete`, { status: 'CANCE' } )
+        axios.put( `/api/friends/${this.state.fromUserId}/${this.props.toUserId}/delete`, { status: 'CANCEL' } )
             .then( resp => console.log( resp.data ) )
             .catch( err => console.error( err.stack ) );
     }
