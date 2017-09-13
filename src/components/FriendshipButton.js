@@ -2,7 +2,7 @@ import React from 'react';
 
 const FriendshipButton = (props) => {
     return(
-        <button onClick={props.onClick}>{props.action}temp</button>
+        <button onClick={props.onClick}>{props.btnAction}</button>
     );
 };
 

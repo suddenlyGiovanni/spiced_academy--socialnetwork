@@ -296,16 +296,20 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     return db.readFriendshipStatus( fromUserId, toUserId )
 
         .then( resp => {
-            const statusMessage = {
-                success: true,
-                action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            };
-            const response = Object.assign(resp, statusMessage);
+
+            if ( !resp ) {
+                res.json( {
+                    success: true,
+                    btnAction: 'MAKE FRIEND REQ'
+                } );
+            }
+            // action: `DISPLAY FRIENDSHIP STATUS OF - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+            const response = Object.assign( resp, { success: true } );
 
             console.log( 'API: ', 'method: GET ', `/api/friends/${fromUserId}/${toUserId}
             resp: `, response );
 
-            return res.json(response);
+            return res.json( response );
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -319,17 +323,17 @@ router.get( '/friends/:fromUserId/:toUserId', ( req, res ) => {
 router.post( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const fromUserId = req.params.fromUserId;
     const toUserId = req.params.toUserId;
+    const status = req.body.status;
 
     console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}` );
 
-    return db.createFriendship( fromUserId, toUserId )
+    return db.createFriendshipReq( fromUserId, toUserId, status )
+
         .then( resp => {
             console.log( 'API: ', 'method: POST ', `/api/friends/${fromUserId}/${toUserId}
             resp: `, resp );
-            res.json( {
-                success: resp.success,
-                action: `CREATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            } );
+            // action: `CREATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+            res.json( resp );
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -345,17 +349,14 @@ router.put( '/friends/:fromUserId/:toUserId', ( req, res ) => {
     const toUserId = req.params.toUserId;
     const status = req.body.status;
 
-    console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}` );
+    console.log( `API: method: PUT /api/friends/${fromUserId}/${toUserId} - status: ${status}` );
 
     return db.updateFriendshipStatus( fromUserId, toUserId, status )
 
         .then( resp => {
             console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}
             resp: `, resp );
-            res.json( {
-                success: true,
-                action: `UPDATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-            } );
+            res.json( resp );
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -373,23 +374,21 @@ router.put( '/friends/:fromUserId/:toUserId/delete', ( req, res ) => {
 
     console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - status: ${status}` );
 
-    if ( status == 'TERMINATE' || status == 'CANCEL' ) {
+    if ( status == 'TERMINATED' || status == 'CANCELED' ) {
         return db.deleteFriendship( fromUserId, toUserId, status )
 
             .then( resp => {
                 console.log( 'API: ', 'method: PUT ', `/api/friends/${fromUserId}/${toUserId}/delete - resp: `, resp );
 
-                res.json( {
-                    success: true,
-                    action: `TERMINATE FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
-                } );
+                // action: `TERMINATED FRIENDSHIP - fromUserId[${fromUserId}] AND toUserId[${toUserId}]`
+                res.json( resp );
             } )
 
             .catch( err => console.error( err.stack ) );
     } else {
         res.json( {
             success: false,
-            message: 'ERROR: WRONG VERB. ONLY TERMINATE || CANCEL'
+            message: 'ERROR: WRONG VERB. ONLY TERMINATED || CANCELED'
         } );
     }
 

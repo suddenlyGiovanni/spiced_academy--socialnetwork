@@ -263,18 +263,20 @@ const readFriendshipStatus = ( fromUserId, toUserId ) => {
         .then( ( result ) => {
             console.log( 'dbQuery.js - fn: "readFriendshipStatus" - result', result.rows );
 
-            if ( result.rows.length > 1 ) {
+            if ( result.rows.length == 0 ) {
+                return;
+            } else if ( result.rows.length > 1 ) {
                 const fId = result.rows[ ( result.rows.length - 1 ) ].fId;
-                const query =   `DELETE FROM friendships
+                const query = `DELETE FROM friendships
                                 WHERE "fId" = $1`;
                 return db.query( query, [ fId ] )
 
-                    .then( () => readFriendshipStatus(fromUserId, toUserId) )
+                    .then( () => readFriendshipStatus( fromUserId, toUserId ) )
 
                     .catch( err => console.error( err.stack ) );
+            } else {
+                return result.rows[ 0 ];
             }
-
-            return result.rows[0];
         } )
 
         .catch( err => console.error( err.stack ) );
@@ -284,19 +286,18 @@ module.exports.readFriendshipStatus = readFriendshipStatus;
 
 
 // CREATE FRIENDSHIP between fromUserId AND toUserId
-module.exports.createFriendship = ( fromUserId, toUserId ) => {
+module.exports.createFriendshipReq = ( fromUserId, toUserId, status ) => {
     console.log( `dbQuery.js - fn: "createFriendship" - params:
     fromUserId[${fromUserId}] toUserId[${toUserId}]` );
 
     const query = `INSERT INTO friendships
                     ("fromUserId", "toUserId", status)
-                    VALUES ($1, $2, 'ACCEPTED')`;
+                    VALUES ($1, $2, $3)
+                    RETURNING "fId", "fromUserId", status, "toUserId";`;
 
-    return db.query( query, [ fromUserId, toUserId ] )
+    return db.query( query, [ fromUserId, toUserId, status ] )
 
-        .then( () => {
-            return { success: true };
-        } )
+        .then( result => Object.assign( result.rows[ 0 ], { success: true } ) )
 
         .catch( err => console.error( err.stack ) );
 };
@@ -315,15 +316,12 @@ module.exports.updateFriendshipStatus = ( fromUserId, toUserId, status ) => {
                         status = $3
                     WHERE ("fromUserId" = $1 AND "toUserId" = $2)
                     OR ("fromUserId" = $2 and "toUserId" = $1)
-                    RETURNING status;`;
+                    RETURNING "fId", "fromUserId", status, "toUserId";`;
 
 
     return db.query( query, [ fromUserId, toUserId, status ] )
 
-        .then( ( result ) => {
-            console.log( 'dbQuery.js - fn: "updateFriendshipStatus" - result', result.rows );
-            return { success: true };
-        } )
+        .then( result => Object.assign( result.rows[ 0 ], { success: true } ) )
 
         .catch( err => console.error( err.stack ) );
 };
@@ -336,22 +334,17 @@ module.exports.deleteFriendship = ( fromUserId, toUserId, status ) => {
     console.log( `dbQuery.js - fn: "deleteFriendship" - params:
     fromUserId[${fromUserId}] toUserId[${toUserId}] - status ${status}` );
 
-    const newStatus = status === 'TERMINATE' ? 'TERMINATED' : 'CANCELED';
-
     const query = ` UPDATE friendships
                     SET "fromUserId" = $1,
                         "toUserId" = $2,
                         status = $3
                     WHERE ("fromUserId" = $1 AND "toUserId" = $2)
                     OR ("fromUserId" = $2 and "toUserId" = $1)
-                    RETURNING status;`;
+                    RETURNING "fId", "fromUserId", status, "toUserId";`;
 
-    return db.query( query, [ fromUserId, toUserId, newStatus ] )
+    return db.query( query, [ fromUserId, toUserId, status ] )
 
-        .then( result => {
-            console.log( 'dbQuery.js - fn: "deleteFriendship" - result', result.rows );
-            return { success: true };
-        } )
+        .then( result => Object.assign( result.rows[ 0 ], { success: true } ) )
 
         .catch( err => console.error( err.stack ) );
 };
