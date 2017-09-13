@@ -88,8 +88,8 @@ export default class ProfileOther extends Component {
                 {
                     this.props.uid && this.state.uid &&
                     <FriendshipButtonContainer
-                        fromUserId={this.props.uid}
-                        toUserId={this.state.uid}/>
+                        currentUserId={this.props.uid}
+                        otherUserId={this.state.uid}/>
                 }
             </div>
         );
