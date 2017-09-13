@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 // REACT Components
 import Welcome from './containers/welcome';
@@ -11,6 +13,7 @@ import ProfileSelf from './components/profileSelf';
 import ProfileOther from './components/profileOther';
 
 
+// const store = createStore(reducer, composeWithDevTools(applyMiddleware(reduxPromise)));
 
 // REACT Router
 

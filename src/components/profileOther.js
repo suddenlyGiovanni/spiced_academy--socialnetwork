@@ -48,7 +48,8 @@ export default class ProfileOther extends Component {
             bio,
             profilePic
         } = this.state;
-
+        console.log('ProfileOther - RENDER = this.props.uid:', this.props.uid);
+        console.log('ProfileOther - RENDER = this.state.uid: ', this.state.uid);
         return (
             <div style={{border:'medium dotted blue'}}>
                 <p>ProfileOther</p>
@@ -85,9 +86,9 @@ export default class ProfileOther extends Component {
                                 value={bio} disabled/>
                         </div>)
                 }
-                <FriendshipButtonContainer
+                {this.props.uid && this.state.uid && <FriendshipButtonContainer
                     fromUserId={this.props.uid}
-                    toUserId={this.state.uid}/>
+                    toUserId={this.state.uid}/>}
             </div>
         );
     }

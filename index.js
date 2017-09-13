@@ -40,7 +40,6 @@ app.use( cookieSession( {
 
 
 if ( process.env.NODE_ENV != 'production' ) {
-    app.use( require( './build' ) );
     app.use( '/bundle.js', require( 'http-proxy-middleware' )( {
         target: 'http://localhost:8081/'
     } ) );
