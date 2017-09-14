@@ -1,31 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { receiveFriends } from '../actions/actions'
+import { fetchFriends } from '../actions/actions'
+import PendingFriendshipsContainer from './pendingFriendshipsContainer';
+import CurrentFriendshipContainer from './currentFriendshipsContainer';
 
-
-
-
-class FriendsContainer extends React.Component {
+class FriendsContainer extends Component {
     constructor( props ) {
         super( props );
+        this.state = {};
     }
 
     componentDidMount() {
-        this.props.dispatch(receiveFriends());
+        this.props.dispatch( fetchFriends() );
+    }
+
+    componentWillReceiveProps( props ) {
+        const { friends } = props;
+        this.setState( {
+            pendingFriendships: friends.filter( friend => friend.status === 'PENDING' ),
+            currentFriendships: friends.filter( friend => friend.status === 'ACCEPTED' )
+        } );
     }
 
     render() {
-        return <div>FriendContainer</div>;
+        const { pendingFriendships, currentFriendships } = this.state;
+        if ( !this.props.friends ) {
+            return null;
+        }
+        return (
+            <div>
+                <h1>FriendContainer</h1>
+                <PendingFriendshipsContainer pendingFriendships={pendingFriendships}/>
+                <CurrentFriendshipContainer currentFriendships={currentFriendships}/>
+            </div>
+        );
     }
 }
 
-const mapStateToProps = function ( state ) {
-    return {
-        friends: state.friends
-    };
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+const mapStateToProps = ( state ) => {
+    return { friends: state.friends.friends };
 };
 
-const connectFriendsContainer = connect( mapStateToProps );
-const ConnectedFriendsContainer = connectFriendsContainer( FriendsContainer );
-export default ConnectedFriendsContainer;
-// exports default connect(mapStateToProps)( FriendsContainer );
+
+export default connect( mapStateToProps )( FriendsContainer );

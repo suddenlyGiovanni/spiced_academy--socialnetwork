@@ -279,9 +279,7 @@ router.get( '/friends', ( req, res ) => {
 
     return db.readAllFriends( fromUserId )
 
-        .then( resp => {
-            return res.json( resp );
-        } )
+        .then( resp => res.json( resp ) )
 
         .catch( err => console.log( err ) );
     // res.json( {

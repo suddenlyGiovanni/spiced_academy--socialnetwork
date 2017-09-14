@@ -7,7 +7,7 @@ import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-ro
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxPromise from 'redux-promise';
-import reducer from './reducers/reducers';
+import allReducers from './reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 
@@ -21,7 +21,7 @@ import ProfileOther from './components/profileOther';
 import FriendsContainer from './containers/friendsContainer';
 
 
-const store = createStore( reducer, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
+const store = createStore( allReducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
 
 // REACT Router
 

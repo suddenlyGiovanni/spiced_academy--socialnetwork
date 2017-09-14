@@ -1,13 +1,13 @@
 import axios from '../utils/axios';
 
-export function receiveFriends() {
+export function fetchFriends() {
     console.log( 'REDUX - ACTION - fn: receiveFriends' );
     return axios.get( '/api/friends' )
 
         .then( result => {
             console.log( 'REDUX - ACTION - fn: receiveFriends - data', result.data.friends );
             return {
-                type: 'RECEIVE_FRIENDS',
+                type: 'FETCH_FRIENDS',
                 friends: result.data.friends
             };
         } )
