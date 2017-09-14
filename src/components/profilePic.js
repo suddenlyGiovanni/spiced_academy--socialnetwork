@@ -8,7 +8,7 @@ const ProfilePic = ( props ) => {
         <div
             style={{ border : 'thin dotted blue'}}
             onClick={showProfilePicUpload}>
-            
+
             <img
                 src={src}
                 alt={alt}

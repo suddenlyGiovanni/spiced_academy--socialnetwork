@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchFriends } from '../actions/actions'
-import PendingFriendshipsContainer from './pendingFriendshipsContainer';
-import CurrentFriendshipContainer from './currentFriendshipsContainer';
+import { fetchFriends, updateFriendship } from '../actions/actions'
+import PendingFriendships from '../components/pendingFriendships';
+import CurrentFriendships from '../components/currentFriendships';
 
 class FriendsContainer extends Component {
     constructor( props ) {
         super( props );
         this.state = {};
+        this.handleFriendshipChange = this.handleFriendshipChange.bind( this );
     }
 
     componentDidMount() {
@@ -22,6 +23,12 @@ class FriendsContainer extends Component {
         } );
     }
 
+    handleFriendshipChange( uid ) {
+        // console.log( `handleFriendshipChange ${uid}` );
+        // note to self "uid" is the target friend uid
+        this.props.dispatch( updateFriendship(uid) );
+    }
+
     render() {
         const { pendingFriendships, currentFriendships } = this.state;
         if ( !this.props.friends ) {
@@ -30,8 +37,12 @@ class FriendsContainer extends Component {
         return (
             <div>
                 <h1>FriendContainer</h1>
-                <PendingFriendshipsContainer pendingFriendships={pendingFriendships}/>
-                <CurrentFriendshipContainer currentFriendships={currentFriendships}/>
+                <PendingFriendships
+                    pendingFriendships={pendingFriendships}
+                />
+                <CurrentFriendships
+                    currentFriendships={currentFriendships}
+                    handleFriendshipChange={ uid => this.handleFriendshipChange( uid )}/>
             </div>
         );
     }
