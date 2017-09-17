@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchFriends, updateFriendship } from '../actions/actions';
 import PendingFriendships from '../components/pendingFriendships';
 import CurrentFriendships from '../components/currentFriendships';
+import BlockedFriendships from '../components/blockedFriendships';
 
 class FriendsContainer extends Component {
     constructor( props ) {
@@ -18,12 +19,12 @@ class FriendsContainer extends Component {
 
     handleFriendshipChange( toUserId, status ) {
         const { updateFriendship, uid } = this.props;
-        updateFriendship( uid, toUserId, status);
+        updateFriendship( uid, toUserId, status );
     }
 
     render() {
         console.log( 'FriendsContainer - RENDER - this.props: ', this.props );
-        const { pendingFriendships, currentFriendships } = this.props;
+        const { pendingFriendships, currentFriendships, blockedFriendships } = this.props;
 
         if ( !pendingFriendships && currentFriendships ) {
             return <div>Loading friendships...</div>;
@@ -48,6 +49,14 @@ class FriendsContainer extends Component {
                             ( toUserId, status) => this.handleFriendshipChange( toUserId, status )
                         }/>
                 }
+                {
+                    blockedFriendships &&
+                    <BlockedFriendships
+                        blockedFriendships={blockedFriendships}
+                        handleFriendshipChange={
+                            ( toUserId, status) => this.handleFriendshipChange( toUserId, status )
+                        }/>
+                }
             </div>
         );
     }
@@ -60,7 +69,9 @@ const mapStateToProps = ( state ) => {
         pendingFriendships: state.friends &&
             state.friends.filter( friend => friend.status === 'PENDING' ),
         currentFriendships: state.friends &&
-            state.friends.filter( friend => friend.status === 'ACCEPTED' )
+            state.friends.filter( friend => friend.status === 'ACCEPTED' ),
+        blockedFriendships: state.friends &&
+            state.friends.filter( friend => friend.status === 'TERMINATED' || friend.status === 'CANCELED' )
     };
 };
 

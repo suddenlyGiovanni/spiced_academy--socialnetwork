@@ -250,7 +250,9 @@ module.exports.readAllFriends = ( fromUserId ) => {
                     INNER JOIN users
                     ON (friendships.status = 'PENDING' AND "toUserId" = $1 AND "fromUserId" = users.uid)
                     OR (friendships.status = 'ACCEPTED' AND "fromUserId" = $1 AND "toUserId" = users.uid)
-                    OR (friendships.status = 'ACCEPTED' AND "toUserId" = $1 AND "fromUserId" = users.uid);`;
+                    OR (friendships.status = 'ACCEPTED' AND "toUserId" = $1 AND "fromUserId" = users.uid)
+                    OR (friendships.status = 'TERMINATED' AND "fromUserId" = $1 AND "toUserId" = users.uid)
+                    OR (friendships.status = 'TERMINATED' AND "toUserId" = $1 AND "fromUserId" = users.uid);`;
 
     return db.query( query, [ fromUserId ] )
 

@@ -5,14 +5,17 @@ const express = require( 'express' ),
     bodyParser = require( 'body-parser' ),
     cookieSession = require( 'cookie-session' ),
     csrf = require( 'csurf' ),
-
-    // session = require( 'express-session' ),
     compression = require( 'compression' );
 // favicon = require( 'serve-favicon' );
 
 
 // EXPRESS
 const app = express();
+
+// SOCKETio
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
 
 // MIDDLEWARE __________________________________________________________________
 
@@ -94,6 +97,6 @@ app.use( ( err, req, res, next ) => {
 
 
 // SERVER ______________________________________________________________________
-const listener = app.listen( process.env.PORT || 8080, () => {
+const listener = server.listen( process.env.PORT || 8080, () => {
     console.log( `listening on port ${listener.address().port}.` );
 } );

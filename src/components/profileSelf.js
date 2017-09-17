@@ -6,6 +6,7 @@ import ProfileSelfBio from './profileSelfBio';
 
 const ProfileSelf = ( props ) => {
     console.log( 'ProfileSelf - RENDER - this.props: ', props );
+
     const {
         uid,
         firstName,
@@ -14,6 +15,7 @@ const ProfileSelf = ( props ) => {
         bio,
         profilePic
     } = props;
+
     return (
         <div style={{border:'medium dotted blue'}}>
 

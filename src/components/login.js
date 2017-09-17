@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
-function LoginForm( { handleInput, handleSubmit, error } ) {
+const LoginForm = ( { handleInput, handleSubmit, error } ) => {
 
     console.log( 'LoginForm - RENDER');
 
@@ -36,7 +36,7 @@ function LoginForm( { handleInput, handleSubmit, error } ) {
             <p>Not a member? <Link to='/'>Register</Link></p>
         </div>
     );
-}
+};
 
 
 LoginForm.propTypes = {

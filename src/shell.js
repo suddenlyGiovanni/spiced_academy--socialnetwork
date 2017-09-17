@@ -11,23 +11,25 @@ import reduxPromise from 'redux-promise';
 import reducers from './reducers/reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+// MY Components:
 
-// MY Components
-import Welcome from './containers/welcome';
+// Containers:
+import App from './containers/app';
+import FriendsContainer from './containers/friendsContainer';
+import ProfileOther from './containers/profileOther';
+
+// Components
+import Welcome from './components/welcome';
 import Registration from './components/registration';
 import Login from './components/login';
-import App from './containers/app';
 import ProfileSelf from './components/profileSelf';
-import ProfileOther from './components/profileOther';
-import FriendsContainer from './containers/friendsContainer';
+import OnlineUsers from './components/onlineUsers';
 
 
 const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
 
 // REACT Router
-
 let router;
-
 
 if ( location.pathname === '/welcome/' ) {
     console.log( 'Shell: ', location.pathname );
@@ -46,8 +48,9 @@ if ( location.pathname === '/welcome/' ) {
             <Router history={browserHistory}>
                 <Route path='/' component={App}>
                     <IndexRoute component={ProfileSelf} />
-                    <Route path='friends' component={FriendsContainer}/>
+                    <Route path='friends' component={FriendsContainer} />
                     <Route path='user/:uid' component={ProfileOther} />
+                    <Route path='online' component={OnlineUsers}/>
                 </Route>
             </Router>
         </Provider>

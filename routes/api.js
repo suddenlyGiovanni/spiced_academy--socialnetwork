@@ -5,7 +5,8 @@ const router = require( 'express' ).Router(),
     path = require( 'path' ),
     multer = require( 'multer' ),
     uidSafe = require( 'uid-safe' ),
-    knox = require( 'knox' );
+    knox = require( 'knox' ),
+    io = require( 'socket.io' );
 
 
 //_ MUTER & UIDSAFE_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -387,6 +388,66 @@ router.delete( '/friends/:fromUserId/:toUserId/delete', ( req, res ) => {
 
 } );
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+function makeSureUserIsLoggedIn( req, res, next ) {
+    next();
+}
+
+
+// SOCKET.IO
+router.get( '/connected/:socketId', ( req, res ) => {
+    const socketId = req.params.socketId;
+    const uid = req.session.user.uid;
+    console.log( `API: method: DELETE /api/connected/:${socketId} - uid: ${uid}` );
+    res.json( {
+        success: false,
+        socketId,
+        uid
+    } );
+} );
+
+// router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
+//     const uid = req.session.user.uid;
+//     const socketId = req.params.socketId;
+//     const socketAlreadyThere = onlineUsers.find( user => user.socketId == socketId );
+//     const userAlreadyThere = onlineUsers.find( user => user.userId == userId );
+//
+//     if ( !socketAlreadyThere && io.sockets.sockets[ socketId ] ) {
+//         online.push( {
+//             socketId,
+//             userId
+//         } )
+//         getUsersById( onlineUsers.map( user => user.userId ) )
+//             .then(
+//                 users => io.sockets.sockets[ socketId ].emit( 'onlineUsers', users )
+//             );
+//         !userAlreadyThere && io.sockets.emit( 'userJoined' );
+//     }
+// } );
+
+
+
+// IO:
+// io.on( 'connection', function ( socket ) {
+//     console.log( `socket with the id ${socket.id} is now connected` );
+//
+//     socket.on( 'disconnect', function () {
+//         console.log( `socket with the id ${socket.id} is now disconnected` );
+//     } );
+//
+//     socket.on( 'thanks', function ( data ) {
+//         console.log( data );
+//     } );
+//
+//     socket.emit( 'welcome', {
+//         message: 'Welcome. It is nice to see you'
+//     } );
+// } );
+
+
+
+
+
 
 
 /* MODULE EXPORTS */

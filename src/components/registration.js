@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import FormWrapper from '../utils/formWrapper';
 
-function RegistrationForm( { handleInput, handleSubmit, error } ) {
+const RegistrationForm = ( { handleInput, handleSubmit, error } ) => {
     console.log( 'RegistrationForm - RENDER ' );
 
     return (
-        <div style={{
-            border: 'thin dotted red'
-        }}>
+        <div style={{border: 'thin dotted red'}}>
+
             <h1>Join Us!</h1>
             {error && <div>Something went wrong. Please try again!</div>}
             <form onSubmit={handleSubmit}>
@@ -22,7 +21,7 @@ function RegistrationForm( { handleInput, handleSubmit, error } ) {
                     required
                     onChange={handleInput}>
                 </input>
-
+                
                 <label forHtml='lastName'>Last Name</label>
                 <input
                     id='lastName'
@@ -56,13 +55,13 @@ function RegistrationForm( { handleInput, handleSubmit, error } ) {
             <p>Already a member? <Link to='/login'>Log In</Link></p>
         </div>
     );
-}
+};
 
 
 RegistrationForm.propTypes = {
-    handleInput : PropTypes.func,
+    handleInput: PropTypes.func,
     handleSubmit: PropTypes.func,
     error: PropTypes.string
 };
 
-export default FormWrapper(RegistrationForm, '/api/register');
+export default FormWrapper( RegistrationForm, '/api/register' );

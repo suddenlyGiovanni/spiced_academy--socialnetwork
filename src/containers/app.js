@@ -5,6 +5,8 @@ import ProfilePic from '../components/profilePic';
 import ProfilePicUpload from '../components/profilePicUpload';
 import { Link } from 'react-router';
 
+// SOCKETio
+import * as io from 'socket.io-client';
 
 export default class App extends React.Component {
 
@@ -101,19 +103,22 @@ export default class App extends React.Component {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     backgroundColor: 'goldenrod'
-                    
+
                 }}>
                     <Logo />
                     <nav>
                         <ul>
                             <li><Link to='/'>Home</Link></li>
+                            <li><Link to='/online'>Online Users</Link></li>
+                            <li><Link to='#'>Chat</Link></li>
+                            <li><Link to='/friends'>Friends</Link></li>
                             <li><Link to='/logout'>Logout</Link></li>
+
                         </ul>
                     </nav>
 
                     <title><h1>App</h1></title>
-                    <Link to='/friends'>Friends</Link>
-
+                    
                     <ProfilePic
                         src={profilePic}
                         alt={firstName + ' ' + lastName}

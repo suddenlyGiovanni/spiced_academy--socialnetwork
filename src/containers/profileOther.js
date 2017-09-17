@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import axios from '../utils/axios';
-import PropTypes from 'prop-types';
-import ProfilePic from './profilePic';
-import FriendshipButtonContainer from '../containers/friendshipButtonContainer';
+// import PropTypes from 'prop-types';
+import ProfilePic from '../components/profilePic';
+import FriendshipButtonContainer from './friendshipButtonContainer';
 
 export default class ProfileOther extends Component {
 
@@ -96,12 +96,3 @@ export default class ProfileOther extends Component {
     }
 
 }
-
-// ProfileOther.propTypes = {
-//     uid: PropTypes.number,
-//     firstName: PropTypes.string,
-//     lastName: PropTypes.string,
-//     email: PropTypes.string,
-//     bio: PropTypes.string,
-//     profilePic: PropTypes.string
-// };
