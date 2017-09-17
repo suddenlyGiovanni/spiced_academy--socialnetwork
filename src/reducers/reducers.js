@@ -2,7 +2,6 @@ export default ( state = {}, action ) => {
     console.log( 'REDUX - REDUCER - Action: ', action );
 
     if ( action.type == 'FETCH_FRIENDS' ) {
-        console.log("THE OLD STATE!!", state);
         state = Object.assign( {}, state, {
             friends: action.friends
         } );

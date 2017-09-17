@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchFriends, updateFriendship } from '../actions/actions'
+// import { bindActionCreators } from 'redux';
+import { fetchFriends, updateFriendship } from '../actions/actions';
 import PendingFriendships from '../components/pendingFriendships';
 import CurrentFriendships from '../components/currentFriendships';
 
@@ -12,37 +13,36 @@ class FriendsContainer extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch( fetchFriends() );
-    }
-
-    componentWillReceiveProps( props ) {
-        const { friends } = props;
-        this.setState( {
-            pendingFriendships: friends.filter( friend => friend.status === 'PENDING' ),
-            currentFriendships: friends.filter( friend => friend.status === 'ACCEPTED' )
-        } );
+        this.props.fetchFriends();
     }
 
     handleFriendshipChange( uid ) {
-        // console.log( `handleFriendshipChange ${uid}` );
-        // note to self "uid" is the target friend uid
-        this.props.dispatch( updateFriendship(uid) );
+        this.props.updateFriendship( uid );
     }
 
     render() {
-        const { pendingFriendships, currentFriendships } = this.state;
-        if ( !this.props.friends ) {
-            return null;
+        console.log( 'FriendsContainer - RENDER - this.props: ', this.props );
+        const { pendingFriendships, currentFriendships } = this.props;
+
+        if ( !pendingFriendships && currentFriendships ) {
+            return <div>Loading friendships...</div>;
         }
+
         return (
             <div>
                 <h1>FriendContainer</h1>
-                <PendingFriendships
-                    pendingFriendships={pendingFriendships}
-                />
-                <CurrentFriendships
-                    currentFriendships={currentFriendships}
-                    handleFriendshipChange={ uid => this.handleFriendshipChange( uid )}/>
+                {
+                    pendingFriendships &&
+                    <PendingFriendships
+                        pendingFriendships={pendingFriendships}
+                    />
+                }
+                {
+                    currentFriendships &&
+                    <CurrentFriendships
+                        currentFriendships={currentFriendships}
+                        handleFriendshipChange={ uid => this.handleFriendshipChange( uid )}/>
+                }
             </div>
         );
     }
@@ -50,8 +50,20 @@ class FriendsContainer extends Component {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const mapStateToProps = ( state ) => {
-    return { friends: state.friends.friends };
+    console.log( 'FriendsContainer - fn: mapStateToProps - state:' );
+    return {
+        pendingFriendships: state.friends &&
+            state.friends.filter( friend => friend.status === 'PENDING' ),
+        currentFriendships: state.friends &&
+            state.friends.filter( friend => friend.status === 'ACCEPTED' )
+    };
 };
 
+// Get actions and pass them as props to to FriendsContainer
+const mapDispatchToProps = ( dispatch ) => ( {
+    fetchFriends: () => dispatch( fetchFriends() ),
+    updateFriendship: ( uid ) => dispatch( updateFriendship( uid ) )
 
-export default connect( mapStateToProps )( FriendsContainer );
+} );
+
+export default connect( mapStateToProps, mapDispatchToProps )( FriendsContainer );

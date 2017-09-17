@@ -2,6 +2,7 @@ import React from 'react';
 import ProfilePicOther from './profilePicOther'
 
 const CurrentFriendship = ( props ) => {
+    console.log('comp: CurrentFriendship. props:', props);
     const { handleFriendshipChange } = props
     console.log( props.currentFriendships );
 

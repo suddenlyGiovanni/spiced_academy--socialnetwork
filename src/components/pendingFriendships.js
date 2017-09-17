@@ -3,8 +3,9 @@ import ProfilePicOther from './profilePicOther'
 
 
 const PendingFriendships = ( props ) => {
-    console.log( props.pendingFriendships );
+    console.log( "lalalalala", props.pendingFriendships );
 
+    // loop over the friends array and create an element for each
     const listPendingFriendships = props.pendingFriendships.map( ( pendingFriend ) => {
         const { uid, firstName, lastName, profilePic } = pendingFriend;
         return (
@@ -18,6 +19,7 @@ const PendingFriendships = ( props ) => {
             </li>
         );
     } );
+
     return (
         <div style={{border: 'thin dashed green'}}>
             PendingFriendshipsContainer
