@@ -16,8 +16,9 @@ class FriendsContainer extends Component {
         this.props.fetchFriends();
     }
 
-    handleFriendshipChange( uid ) {
-        this.props.updateFriendship( uid );
+    handleFriendshipChange( toUserId, status ) {
+        const { updateFriendship, uid } = this.props;
+        updateFriendship( uid, toUserId, status);
     }
 
     render() {
@@ -35,13 +36,17 @@ class FriendsContainer extends Component {
                     pendingFriendships &&
                     <PendingFriendships
                         pendingFriendships={pendingFriendships}
-                    />
+                        handleFriendshipChange={
+                            ( toUserId, status) => this.handleFriendshipChange( toUserId, status )
+                        }/>
                 }
                 {
                     currentFriendships &&
                     <CurrentFriendships
                         currentFriendships={currentFriendships}
-                        handleFriendshipChange={ uid => this.handleFriendshipChange( uid )}/>
+                        handleFriendshipChange={
+                            ( toUserId, status) => this.handleFriendshipChange( toUserId, status )
+                        }/>
                 }
             </div>
         );
@@ -50,7 +55,7 @@ class FriendsContainer extends Component {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const mapStateToProps = ( state ) => {
-    console.log( 'FriendsContainer - fn: mapStateToProps - state:' );
+    console.log( 'FriendsContainer - fn: mapStateToProps' );
     return {
         pendingFriendships: state.friends &&
             state.friends.filter( friend => friend.status === 'PENDING' ),
@@ -62,8 +67,7 @@ const mapStateToProps = ( state ) => {
 // Get actions and pass them as props to to FriendsContainer
 const mapDispatchToProps = ( dispatch ) => ( {
     fetchFriends: () => dispatch( fetchFriends() ),
-    updateFriendship: ( uid ) => dispatch( updateFriendship( uid ) )
-
+    updateFriendship: ( fromUserId, toUserId, status ) => dispatch( updateFriendship( fromUserId, toUserId, status ) )
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( FriendsContainer );

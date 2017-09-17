@@ -18,6 +18,23 @@ export function fetchFriends() {
         } );
 }
 
-export function updateFriendship( uid ) {
-    return console.log( `REDUX - ACTION - fn: updateFriendship ${uid}` );
+export function updateFriendship( fromUserId, toUserId, status ) {
+    console.log( `REDUX - ACTION - fn: updateFriendship
+        fromUserId: ${fromUserId},
+        toUserId: ${toUserId},
+        status: ${status}` );
+    return axios.put( `/api/friends/${fromUserId}/${toUserId}`, { status: status } )
+        .then( result => {
+            console.log( 'REDUX - ACTION - fn: updateFriendship - data', result.data );
+            return {
+                type: 'UPDATE_FRIENDSHIP',
+                status: result.data.status,
+                fromUserId: result.data.fromUserId,
+                toUserId: result.data.toUserId
+            };
+        } )
+        .catch( err => {
+            console.log( err );
+            return { type: 'ERROR' };
+        } );
 }

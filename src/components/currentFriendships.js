@@ -1,11 +1,9 @@
 import React from 'react';
-import ProfilePicOther from './profilePicOther'
+import ProfilePicOther from './profilePicOther';
 
 const CurrentFriendship = ( props ) => {
-    console.log('comp: CurrentFriendship. props:', props);
-    const { handleFriendshipChange } = props
-    console.log( props.currentFriendships );
-
+    console.log( 'CurrentFriendship - RENDER - this.props: ', props );
+    const { handleFriendshipChange } = props;
     const listCurrentFriendships = props.currentFriendships.map( ( currentFriend ) => {
         const { uid, firstName, lastName, profilePic } = currentFriend;
         return (
@@ -15,7 +13,7 @@ const CurrentFriendship = ( props ) => {
                     alt={`${firstName} ${lastName}`}
                     uid={uid}/>
                 <h3>{firstName} {lastName}</h3>
-                <button onClick={e => handleFriendshipChange( uid ) }>END FRIENDSHIP</button>
+                <button onClick={() => handleFriendshipChange( uid, 'TERMINATED' ) }>END FRIENDSHIP</button>
             </li>
         );
     } );
