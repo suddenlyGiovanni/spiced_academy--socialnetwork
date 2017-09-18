@@ -27,17 +27,17 @@ const getSocket = () => {
 
 
         socket.on( 'onlineUsers', ( data ) => {
-            console.log( data );
+            console.log('event: onlineUsers', data );
         } );
 
 
         socket.on( 'userJoined', ( data ) => {
-            console.log( data );
+            console.log('event: userJoined', data );
         } );
 
 
         socket.on( 'userLeft', ( data ) => {
-            console.log( data );
+            console.log('event: userLeft', data );
         } );
 
         // socket.on( 'connect', () => {
