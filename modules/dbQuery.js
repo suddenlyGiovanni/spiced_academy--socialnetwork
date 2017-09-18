@@ -239,16 +239,31 @@ module.exports.saveUserBio = ( uid, bio ) => {
 
 // READ ALL USERS FROM THIS ARRYS OF IDs
 module.exports.readAllUsersByIds = ( arrayOfIds ) => {
-    console.log( 'dbQuery.js - fn: "readAllUsersByIds"' );
-    const query =   `SELECT uid,
+    console.log( 'dbQuery.js - fn: "readAllUsersByIds" -  arrayOfIds: ', arrayOfIds );
+    const query = `SELECT uid,
                             "firstName",
-                            "lastName"
+                            "lastName",
+                            email,
+                            bio,
+                            "profilePic"
                     FROM users
                     WHERE uid = ANY($1)`;
     return db.query( query, [ arrayOfIds ] )
-        .then( results => {
-            console.log( results.rows );
-            return results.rows;
+
+        .then( onlineUsers => {
+            console.log( onlineUsers.rows );
+            let s3mappedOnlineUsers = onlineUsers.rows.map( user => {
+                if ( !user.profilePic ) {
+                    const defProfilePic =
+                        `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                    user.profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+                } else {
+                    user.profilePic = s3Url + user.profilePic;
+                }
+                return user;
+            } );
+            return s3mappedOnlineUsers;
+
         } )
 
         .catch( err => console.log( err ) );

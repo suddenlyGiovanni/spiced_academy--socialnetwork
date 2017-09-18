@@ -2,7 +2,7 @@
 import * as io from 'socket.io-client';
 import axios from './axios';
 import { store } from '../shell';
-// import {} from '../actions/actions';
+import { connectLoggedInUser, createOnlineUsers, addOnlineUser } from '../actions/actions';
 
 let socket;
 
@@ -11,45 +11,27 @@ const getSocket = () => {
         socket = io.connect();
 
 
-        socket.on( 'connect', function () {
-            axios.post( `/ws/connected/${socket.id}` )
-                .then( resp => console.log( resp.data ) )
-                .catch( err => console.log( err ) );
+        socket.on( 'connect', () => {
+            console.log( `Socket.io Event: connect - socketId: ${socket.id}` );
+            store.dispatch( connectLoggedInUser( socket.id ) );
         } );
 
 
-        socket.on( 'welcome', function ( data ) {
-            console.log( data );
-            socket.emit( 'thanks', {
-                message: 'Thank you. It is great to be here.'
-            } );
+        socket.on( 'onlineUsers', ( onlineUsers ) => {
+            console.log( 'Socket.io Event: onlineUsers', onlineUsers );
+            store.dispatch( createOnlineUsers( onlineUsers ) )
         } );
 
 
-        socket.on( 'onlineUsers', ( data ) => {
-            console.log('event: onlineUsers', data );
-        } );
-
-
-        socket.on( 'userJoined', ( data ) => {
-            console.log('event: userJoined', data );
+        socket.on( 'userJoined', ( userJoined ) => {
+            console.log( 'Socket.io Event: userJoined', userJoined );
+            store.dispatch( addOnlineUser( userJoined ) );
         } );
 
 
         socket.on( 'userLeft', ( data ) => {
-            console.log('event: userLeft', data );
+            console.log( 'Socket.io Event: userLeft', data );
         } );
-
-        // socket.on( 'connect', () => {
-        //     axios.post( `/api/connected/${soket.io}` );
-        // } );
-
-        // socket.on( 'userJoined', function ( payload ) {
-        //     store.dispatch( {
-        //         type: 'USER_JOINED',
-        //         user: payload.user
-        //     } )
-        // } );
 
     }
     return socket;

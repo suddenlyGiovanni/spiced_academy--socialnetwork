@@ -44,13 +44,6 @@ io.on( 'connection', ( socket ) => {
 
     } );
 
-    socket.on( 'thanks', function ( data ) {
-        console.log( data );
-    } );
-
-    socket.emit( 'welcome', {
-        message: 'Welcome. It is nice to see you'
-    } );
 } );
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -95,12 +88,7 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
         as the payload: event 'onlineUsers' */
         db.readAllUsersByIds( onlineUsers.map( user => user.uid ) )
 
-            .then( onlineUsers => {
-                // console.log( 'results: readAllUsersByIds - users: \n', users, '\n' );
-                io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers );
-                // res.json( { success: true } );
-                // console.log( 'onlineUsers: \n', onlineUsers, '\n' );
-            } )
+            .then( onlineUsers => io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers ) )
 
             .catch( err => console.log( err ) );
 
@@ -111,11 +99,10 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
         if ( !userAlreadyThere ) {
             db.getUserInfo( uid )
 
-                .then( userInfo => io.sockets.emit( 'userJoined', userInfo ) )
+                .then( userJoined => io.sockets.emit( 'userJoined', userJoined ) )
 
                 .catch( err => console.log( err ) );
         }
-        // !userAlreadyThere && io.sockets.emit( 'userJoined' );
     }
 } );
 
