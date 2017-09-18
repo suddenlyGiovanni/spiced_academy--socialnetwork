@@ -4,14 +4,13 @@ import Logo from '../components/logo';
 import ProfilePic from '../components/profilePic';
 import ProfilePicUpload from '../components/profilePicUpload';
 import { Link } from 'react-router';
-
-// SOCKETio
-import * as io from 'socket.io-client';
+import getSocket from '../utils/socketIo';
 
 export default class App extends React.Component {
 
     constructor( props ) {
         super( props );
+        getSocket();
         this.state = {
             uploaderIsVisible: false,
         };
@@ -118,7 +117,7 @@ export default class App extends React.Component {
                     </nav>
 
                     <title><h1>App</h1></title>
-                    
+
                     <ProfilePic
                         src={profilePic}
                         alt={firstName + ' ' + lastName}

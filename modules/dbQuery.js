@@ -237,6 +237,27 @@ module.exports.saveUserBio = ( uid, bio ) => {
 
 
 
+// READ ALL USERS FROM THIS ARRYS OF IDs
+module.exports.readAllUsersByIds = ( arrayOfIds ) => {
+    console.log( 'dbQuery.js - fn: "readAllUsersByIds"' );
+    const query =   `SELECT uid,
+                            "firstName",
+                            "lastName"
+                    FROM users
+                    WHERE uid = ANY($1)`;
+    return db.query( query, [ arrayOfIds ] )
+        .then( results => {
+            console.log( results.rows );
+            return results.rows;
+        } )
+
+        .catch( err => console.log( err ) );
+};
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
 // READ ALL fromUserId FRIENDS
 module.exports.readAllFriends = ( fromUserId ) => {
     // console.log( 'dbQuery.js - fn: "readAllFriends"' );
@@ -363,7 +384,7 @@ module.exports.updateFriendshipStatus = ( fromUserId, toUserId, status ) => {
 module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
     console.log( 'dbQuery.js - fn: "deleteFriendship"' );
 
-    const query = ``;
+    const query = '';
 
     return db.query( query, [ fromUserId, toUserId ] )
 
@@ -371,11 +392,3 @@ module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
 
         .catch( err => console.error( err.stack ) );
 };
-
-
-
-
-
-
-
-//

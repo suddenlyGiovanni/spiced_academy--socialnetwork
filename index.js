@@ -6,7 +6,8 @@ const express = require( 'express' ),
     cookieSession = require( 'cookie-session' ),
     csrf = require( 'csurf' ),
     compression = require( 'compression' );
-// favicon = require( 'serve-favicon' );
+    // db = require( './modules/dbQuery' );
+    // favicon = require( 'serve-favicon' );
 
 
 // EXPRESS
@@ -15,7 +16,7 @@ const app = express();
 // SOCKETio
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-
+module.exports.io = io;
 
 // MIDDLEWARE __________________________________________________________________
 
@@ -68,6 +69,9 @@ app.use( ( req, res, next ) => {
 //  Connect all our routes to our application
 app.use( '/', require( './routes/root' ) );
 app.use( '/api/', require( './routes/api' ) );
+// load webSocket.js and pass it the socket.io object
+app.use('/ws/', require('./routes/webSocket'));
+
 
 // if no route match then..
 app.get( '*', function ( req, res ) {

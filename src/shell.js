@@ -26,7 +26,7 @@ import ProfileSelf from './components/profileSelf';
 import OnlineUsers from './components/onlineUsers';
 
 
-const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
+export const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
 
 // REACT Router
 let router;
