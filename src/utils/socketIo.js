@@ -1,6 +1,5 @@
 // SOCKETio.js
 import * as io from 'socket.io-client';
-import axios from './axios';
 import { store } from '../shell';
 import { connectLoggedInUser, createOnlineUsers, addOnlineUser, removeOnlineUser } from '../actions/actions';
 

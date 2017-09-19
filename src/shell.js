@@ -23,7 +23,7 @@ import Welcome from './components/welcome';
 import Registration from './components/registration';
 import Login from './components/login';
 import ProfileSelf from './components/profileSelf';
-import OnlineUsers from './components/onlineUsers';
+import OnlineUsersContainer from './containers/onlineUsersContainer';
 
 
 export const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
@@ -50,7 +50,7 @@ if ( location.pathname === '/welcome/' ) {
                     <IndexRoute component={ProfileSelf} />
                     <Route path='friends' component={FriendsContainer} />
                     <Route path='user/:uid' component={ProfileOther} />
-                    <Route path='online' component={OnlineUsers}/>
+                    <Route path='online' component={OnlineUsersContainer}/>
                 </Route>
             </Router>
         </Provider>

@@ -57,20 +57,12 @@ export default ( state = {}, action ) => {
         break;
 
 
-
-
     case 'REMOVE_ONLINE_USER':
         var actionIndex = state.onlineUsers.findIndex( user => user.uid === action.uid );
         var newOnlineUsers = state.onlineUsers.slice();
         newOnlineUsers.splice( actionIndex, 1 );
         state = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
         break;
-
-
-
-
-
-
 
     }
     console.log( 'REDUX - REDUCER - State: ', state );
