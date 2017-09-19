@@ -36,15 +36,27 @@ export default ( state = {}, action ) => {
 
     case 'ADD_ONLINE_USER':
         // BUG: FIX ME!!!!!
-        state = Object.assign( {}, state, {
-            onlineUsers: state.onlineUsers.map( user => {
-                if ( user.uid == action.userJoined.uid ) {
-                    return Object.assign( {}, user, action.userJoined );
-                } else {
-                    return user;
-                }
-            } )
-        } );
+
+        console.log( 'ADD_ONLINE_USER - state:', state );
+        console.log( 'ADD_ONLINE_USER - userjoined:', action.userJoined );
+        var newOnlineUsers = state.onlineUsers.slice();
+        newOnlineUsers.push(action.userJoined);
+
+        console.log( 'ADD_ONLINE_USER - slice: ', newOnlineUsers );
+
+        var newState = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
+        console.log( 'ADD_ONLINE_USER - newState: ', newState );
+        return newState;
+
+        // state = Object.assign( {}, state, {
+        //     onlineUsers: state.onlineUsers.map( user => {
+        //         if ( user.uid == action.userJoined.uid ) {
+        //             return Object.assign( {}, user, action.userJoined );
+        //         } else {
+        //             return user;
+        //         }
+        //     } )
+        // } );
         break;
 
     }

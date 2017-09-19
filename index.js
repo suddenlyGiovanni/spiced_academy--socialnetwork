@@ -21,7 +21,7 @@ module.exports.io = io;
 // MIDDLEWARE __________________________________________________________________
 
 // HTTP request logger middleware
-app.use( morgan( 'dev' ) );
+// app.use( morgan( 'dev' ) );
 // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 

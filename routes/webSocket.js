@@ -86,23 +86,22 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
         /*  When a user is added to the list of online users, the server should
         send a message to that user with the list of all online users
         as the payload: event 'onlineUsers' */
-        db.readAllUsersByIds( onlineUsers.map( user => user.uid ) )
+        return db.readAllUsersByIds( onlineUsers.map( user => user.uid ) )
 
             .then( onlineUsers => io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers ) )
 
+            /*  Also when a user is added to the list of online users,
+            the server should send a message to all online users with information
+            about the user who just came online as the payload, allowing all clients
+            to keep their list of online users updated: event 'userJoined' */
+            .then( () => {
+                if ( !userAlreadyThere ) {
+                    return db.getUserInfo( uid )
+                        .then( userJoined => io.sockets.emit( 'userJoined', userJoined ) );
+                }
+            } )
+
             .catch( err => console.log( err ) );
-
-        /*  Also when a user is added to the list of online users,
-        the server should send a message to all online users with information
-        about the user who just came online as the payload, allowing all clients
-        to keep their list of online users updated: event 'userJoined' */
-        if ( !userAlreadyThere ) {
-            db.getUserInfo( uid )
-
-                .then( userJoined => io.sockets.emit( 'userJoined', userJoined ) )
-
-                .catch( err => console.log( err ) );
-        }
     }
 } );
 
