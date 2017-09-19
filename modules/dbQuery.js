@@ -16,7 +16,7 @@ const s3Url = require( '../config/secrets.json' ).s3Url;
 
 // CREATE NEW USER
 module.exports.createUser = ( firstName, lastName, email, password ) => {
-    console.log( 'dbQuery.js - fn: "postUser"' );
+    console.log( 'dbQuery.js - fn: "postUser"\n' );
     // hash user password with bcrypt ( hashPassword ) before saving
     return hashPassword( password )
 
@@ -48,7 +48,7 @@ module.exports.createUser = ( firstName, lastName, email, password ) => {
 // AUTHENTICATE USER
 module.exports.checkUser = ( email, password ) => {
 
-    console.log( 'dbQuery.js - fn: "checkUser"' );
+    console.log( 'dbQuery.js - fn: "checkUser"\n' );
 
     // step 1 - search on db for matching email.
     return db.query( 'SELECT EXISTS ( SELECT email FROM users WHERE email = $1 )', [ email ] )
@@ -104,7 +104,7 @@ module.exports.checkUser = ( email, password ) => {
 
 // GET LOGGED IN USER DATA
 module.exports.getUserInfo = ( uid ) => {
-    console.log( 'dbQuery.js - fn: "getUserData"' );
+    console.log( 'dbQuery.js - fn: "getUserData"\n' );
 
     const query = `SELECT   uid,
                             "firstName",
@@ -143,7 +143,7 @@ module.exports.getUserInfo = ( uid ) => {
 
 // GET OTHER USER'S DATA
 module.exports.getOtherUserInfo = ( uid ) => {
-    console.log( 'dbQuery.js - fn: "getOtherUserInfo"' );
+    console.log( 'dbQuery.js - fn: "getOtherUserInfo"\n' );
     const query = `SELECT   uid,
                             "firstName",
                             "lastName",
@@ -181,7 +181,7 @@ module.exports.getOtherUserInfo = ( uid ) => {
 
 // SET USER PROFILE PICTURE PROFILE
 module.exports.saveUserProfilePic = ( uid, profilePic ) => {
-    console.log( 'dbQuery.js - fn: "saveUserProfilePic"' );
+    console.log( 'dbQuery.js - fn: "saveUserProfilePic"\n' );
 
     const query = `UPDATE users SET "profilePic" = $2
                     WHERE uid = $1
@@ -211,7 +211,7 @@ module.exports.saveUserProfilePic = ( uid, profilePic ) => {
 
 //  SET USER BIO
 module.exports.saveUserBio = ( uid, bio ) => {
-    console.log( 'dbQuery.js - fn: "saveUserBio"' );
+    console.log( 'dbQuery.js - fn: "saveUserBio"\n' );
 
     const query = `UPDATE users SET bio = $2
                     WHERE uid = $1
@@ -239,7 +239,7 @@ module.exports.saveUserBio = ( uid, bio ) => {
 
 // READ ALL USERS FROM THIS ARRYS OF IDs
 module.exports.readAllUsersByIds = ( arrayOfIds ) => {
-    console.log( 'dbQuery.js - fn: "readAllUsersByIds" -  arrayOfIds: ', arrayOfIds );
+    console.log( `dbQuery.js - fn: "readAllUsersByIds" -  arrayOfIds: ${arrayOfIds} \n` );
     const query = `SELECT uid,
                             "firstName",
                             "lastName",
@@ -251,8 +251,8 @@ module.exports.readAllUsersByIds = ( arrayOfIds ) => {
     return db.query( query, [ arrayOfIds ] )
 
         .then( onlineUsers => {
-            console.log( onlineUsers.rows );
-            let s3mappedOnlineUsers = onlineUsers.rows.map( user => {
+
+            const s3mappedOnlineUsers = onlineUsers.rows.map( user => {
                 if ( !user.profilePic ) {
                     const defProfilePic =
                         `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;

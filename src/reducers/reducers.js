@@ -35,28 +35,34 @@ export default ( state = {}, action ) => {
 
 
     case 'ADD_ONLINE_USER':
-        // BUG: FIX ME!!!!!
+        // // BUG: FIX ME!!!!!
 
-        console.log( 'ADD_ONLINE_USER - state:', state );
-        console.log( 'ADD_ONLINE_USER - userjoined:', action.userJoined );
-        var newOnlineUsers = state.onlineUsers.slice();
-        newOnlineUsers.push(action.userJoined);
+        console.log( 'CASE: ADD_ONLINE_USER: ', '\n state:', state, '\n action: ', action );
+        state = Object.assign( {}, state, {
+            onlineUsers: state.onlineUsers.map( user => {
+                // if userJoined is already in the array
 
-        console.log( 'ADD_ONLINE_USER - slice: ', newOnlineUsers );
+                if ( user.uid === action.userJoined.uid ) {
+                    console.log('user is INSIDE of onlineUsers');
+                    // then replace it with newer version of itself
+                    const replacedUser =  Object.assign( {}, action.userJoined );
+                    console.log('replacedUser', replacedUser);
+                    return replacedUser;
+                }
+                // else just add it to the list of onlineUsers
+                else {
+                    // make a copy of the array
+                    var newOnlineUsers = state.onlineUsers.slice();
+                    // add a new obj to the array
+                    newOnlineUsers.push( action.userJoined );
 
-        var newState = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
-        console.log( 'ADD_ONLINE_USER - newState: ', newState );
-        return newState;
+                    // const newState = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
+                    console.log('newOnlineUsers', newOnlineUsers);
+                    return newOnlineUsers;
+                }
+            } )
+        } );
 
-        // state = Object.assign( {}, state, {
-        //     onlineUsers: state.onlineUsers.map( user => {
-        //         if ( user.uid == action.userJoined.uid ) {
-        //             return Object.assign( {}, user, action.userJoined );
-        //         } else {
-        //             return user;
-        //         }
-        //     } )
-        // } );
         break;
 
     }
