@@ -91,6 +91,7 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
             .then( onlineUsers => io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers ) )
 
             .then( () => {
+                res.json({success: true});
                 /*  Also when a user is added to the list of online users,
                 the server should send a message to all online users with information
                 about the user who just came online as the payload, allowing all clients

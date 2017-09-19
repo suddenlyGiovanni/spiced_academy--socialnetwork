@@ -2,7 +2,7 @@
 import * as io from 'socket.io-client';
 import axios from './axios';
 import { store } from '../shell';
-import { connectLoggedInUser, createOnlineUsers, addOnlineUser } from '../actions/actions';
+import { connectLoggedInUser, createOnlineUsers, addOnlineUser, removeOnlineUser } from '../actions/actions';
 
 let socket;
 
@@ -19,7 +19,7 @@ const getSocket = () => {
 
         socket.on( 'onlineUsers', ( onlineUsers ) => {
             console.log( 'Socket.io Event: onlineUsers', onlineUsers );
-            store.dispatch( createOnlineUsers( onlineUsers ) )
+            store.dispatch( createOnlineUsers( onlineUsers ) );
         } );
 
 
@@ -29,8 +29,9 @@ const getSocket = () => {
         } );
 
 
-        socket.on( 'userLeft', ( data ) => {
-            console.log( 'Socket.io Event: userLeft', data );
+        socket.on( 'userLeft', ( uid ) => {
+            console.log( 'Socket.io Event: userLeft', uid );
+            store.dispatch( removeOnlineUser( uid ) );
         } );
 
     }

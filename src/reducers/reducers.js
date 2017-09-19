@@ -35,8 +35,7 @@ export default ( state = {}, action ) => {
 
 
     case 'ADD_ONLINE_USER':
-        // // BUG: FIX ME!!!!!
-        console.log( 'CASE: ADD_ONLINE_USER: ', '\n state:', state, '\n action: ', action );
+        // console.log( 'CASE: ADD_ONLINE_USER: ', '\n state:', state, '\n action: ', action );
         var onlineUser = state.onlineUsers.find( user => user.uid === action.userJoined.uid );
         // onlineUser return either UNDEFINED || copy of the OBJ
         if ( !onlineUser ) {
@@ -57,37 +56,23 @@ export default ( state = {}, action ) => {
         }
         break;
 
-    }
 
+
+
+    case 'REMOVE_ONLINE_USER':
+        var actionIndex = state.onlineUsers.findIndex( user => user.uid === action.uid );
+        var newOnlineUsers = state.onlineUsers.slice();
+        newOnlineUsers.splice( actionIndex, 1 );
+        state = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
+        break;
+
+
+
+
+
+
+
+    }
     console.log( 'REDUX - REDUCER - State: ', state );
     return state;
 };
-
-
-/*
-
-state = Object.assign( {}, state, {
-    onlineUsers: state.onlineUsers.map( user => {
-        // if userJoined is already in the array
-
-        if ( user.uid === action.userJoined.uid ) {
-            console.log('user is INSIDE of onlineUsers');
-            // then replace it with newer version of itself
-            const replacedUser =  Object.assign( {}, action.userJoined );
-            console.log('replacedUser', replacedUser);
-            return replacedUser;
-        }
-        // else just add it to the list of onlineUsers
-        else {
-            // make a copy of the array
-            var newOnlineUsers = state.onlineUsers.slice();
-            // add a new obj to the array
-            newOnlineUsers.push( action.userJoined );
-
-            // const newState = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
-            console.log('newOnlineUsers', newOnlineUsers);
-            return newOnlineUsers;
-        }
-    } )
-} );
-*/

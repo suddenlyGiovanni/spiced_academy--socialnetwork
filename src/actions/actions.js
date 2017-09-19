@@ -59,9 +59,7 @@ export function connectLoggedInUser( socketId ) {
     console.log( 'REDUX - ACTION - fn: connectLoggedInUser' );
     return axios.post( `/ws/connected/${socketId}` )
 
-        .then( () => {
-            return { type: 'CONNECT_LOGGEDIN_USER' };
-        } )
+        .then( () => { return { type: 'CONNECT_LOGGEDIN_USER' }; } )
 
         .catch( err => console.log( err ) );
 }
@@ -94,7 +92,11 @@ export function addOnlineUser( userJoined ) {
 
 
 
-export function removeOnlineUser() {
+export function removeOnlineUser(uid) {
     console.log( 'REDUX - ACTION - fn: removeOnlineUser' );
+    return {
+        type: 'REMOVE_ONLINE_USER',
+        uid
+    };
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
