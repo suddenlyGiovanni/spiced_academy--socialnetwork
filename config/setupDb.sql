@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS users;
 
@@ -17,4 +18,13 @@ CREATE TABLE friendships(
     "fromUserId" INTEGER NOT NULL REFERENCES users(uid),
     status VARCHAR (200) NOT NULL,
     "toUserId" INTEGER NOT NULL REFERENCES users(uid)
-)
+);
+
+CREATE TABLE messages(
+    mid SERIAL PRIMARY KEY,
+    "fromUserId" INTEGER NOT NULL REFERENCES users(uid),
+    "toUserId" INTEGER REFERENCES users(uid),
+    "toAll" BIT DEFAULT NULL,
+    "messageBody" VARCHAR (300) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

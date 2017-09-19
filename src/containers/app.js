@@ -109,7 +109,7 @@ export default class App extends React.Component {
                         <ul>
                             <li><Link to='/'>Home</Link></li>
                             <li><Link to='/online'>Online Users</Link></li>
-                            <li><Link to='#'>Chat</Link></li>
+                            <li><Link to='/chat'>Chat</Link></li>
                             <li><Link to='/friends'>Friends</Link></li>
                             <li><Link to='/logout'>Logout</Link></li>
 

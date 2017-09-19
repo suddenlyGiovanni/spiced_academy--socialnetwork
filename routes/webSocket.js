@@ -12,7 +12,7 @@ io.on( 'connection', ( socket ) => {
     console.log( `socket with the id ${socket.id} is now connected` );
 
     socket.on( 'disconnect', () => {
-        console.log( `socket with the id ${socket.id} is now disconnected` );
+        console.log( `SocketIo - on: "disconnect" - socket with the id ${socket.id} is now disconnected` );
         // remove here the disconnected socket from the list of online users:
         /*
         it is possible for a single user to appear in the list more than once.
@@ -42,6 +42,25 @@ io.on( 'connection', ( socket ) => {
             io.sockets.emit( 'userLeft', { uid: disconnectedUserSocket.uid } );
         }
 
+    } );
+
+    socket.on( 'chatMessage', ( messageBody ) => {
+        const messengerId = onlineUsers.find( user => user.socketId == socket.id ).uid;
+        console.log( `SocketIo - on: "chatMessage" - messengerId: ${messengerId} - payload:`, messageBody );
+        /*  When the server receives this event, it should broadcast
+        a 'chatMessage' event to all of the connected sockets.
+        The payload for this event should include the message the user sent
+        as well as the user's id, first name, last name, and profile pic.*/
+        return db.createPublicMessage( messengerId, messageBody )
+            .then( messageData => {
+                return db.getOtherUserInfo( messageData.fromUserId )
+                    .then( messengerInfo => {
+                        const payload = { ...messageData, ...messengerInfo };
+                        // console.log( '\n payload: ', payload );
+                        io.sockets.emit( 'chatMessage', payload );
+                    } );
+            } )
+            .catch( err => console.error( err.stack ) );
     } );
 
 } );
@@ -91,7 +110,13 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
             .then( onlineUsers => io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers ) )
 
             .then( () => {
-                res.json({success: true});
+                return db.readAllPublicMessage()
+                    .then( publicMessageList =>
+                        io.sockets.sockets[ socketId ].emit( 'chatMessages', publicMessageList ) );
+            } )
+
+            .then( () => {
+                res.json( { success: true } );
                 /*  Also when a user is added to the list of online users,
                 the server should send a message to all online users with information
                 about the user who just came online as the payload, allowing all clients

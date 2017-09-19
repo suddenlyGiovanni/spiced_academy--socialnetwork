@@ -7,6 +7,7 @@ export default ( state = {}, action ) => {
     case 'FETCH_FRIENDS':
         state = Object.assign( {}, state, { friends: action.friends } );
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
     case 'UPDATE_FRIENDSHIP':
@@ -22,16 +23,20 @@ export default ( state = {}, action ) => {
             } )
         } );
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
     case 'CONNECT_LOGGEDIN_USER':
         // state = Object.assign( {}, state);
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 
     case 'CREATE_ONLINE_USERS':
         state = Object.assign( {}, state, { onlineUsers: action.onlineUsers } );
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
     case 'ADD_ONLINE_USER':
@@ -55,7 +60,7 @@ export default ( state = {}, action ) => {
             state = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
         }
         break;
-
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     case 'REMOVE_ONLINE_USER':
         var actionIndex = state.onlineUsers.findIndex( user => user.uid === action.uid );
@@ -63,8 +68,25 @@ export default ( state = {}, action ) => {
         newOnlineUsers.splice( actionIndex, 1 );
         state = Object.assign( {}, state, { onlineUsers: newOnlineUsers } );
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    case 'CREATE_MESSAGE_LIST':
+        // FIXME: just temp set up to make redux do somethings
+        state = Object.assign( {}, state, { message: action.messagesData } );
+        break;
+
+
+
+    case 'ADD_NEW_MESSAGE':
+        // FIXME: just temp set up to make redux do somethings
+        state = Object.assign( {}, state, { message: action.messageData } );
+        break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     }
+    //--------------------------------------------------------------------------
     console.log( 'REDUX - REDUCER - State: ', state );
     return state;
 };

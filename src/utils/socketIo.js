@@ -1,7 +1,14 @@
 // SOCKETio.js
 import * as io from 'socket.io-client';
 import { store } from '../shell';
-import { connectLoggedInUser, createOnlineUsers, addOnlineUser, removeOnlineUser } from '../actions/actions';
+import {
+    connectLoggedInUser,
+    createOnlineUsers,
+    addOnlineUser,
+    removeOnlineUser,
+    createMessageList,
+    addNewMessage
+} from '../actions/actions';
 
 let socket;
 
@@ -31,6 +38,17 @@ const getSocket = () => {
         socket.on( 'userLeft', ( uid ) => {
             console.log( 'Socket.io Event: userLeft', uid );
             store.dispatch( removeOnlineUser( uid ) );
+        } );
+
+        socket.on( 'chatMessages', ( messagesData ) => {
+            console.log( 'Socket.io Event: chatMessages', messagesData );
+            store.dispatch( createMessageList( messagesData ) );
+        } );
+
+
+        socket.on( 'chatMessage', ( messageData ) => {
+            console.log( 'Socket.io Event: chatMessage' );
+            store.dispatch( addNewMessage( messageData ) );
         } );
 
     }

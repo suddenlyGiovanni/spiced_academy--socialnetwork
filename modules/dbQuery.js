@@ -407,3 +407,62 @@ module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
 
         .catch( err => console.error( err.stack ) );
 };
+
+
+
+
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+// CHAT RELATED METHODS:
+
+module.exports.readAllPublicMessage = () => {
+    console.log( 'dbQuery.js - fn: "readAllPublicMessage"\n' );
+    const query = `SELECT   users.uid,
+                            users."firstName",
+                            users."lastName",
+                            users."profilePic",
+                            messages.mid,
+                            messages."fromUserId",
+                            messages."toAll",
+                            messages."messageBody",
+                            messages.timestamp
+                    FROM messages
+                    INNER JOIN users
+                    ON users.uid = messages."fromUserId"
+                    WHERE messages."toAll" = '1'
+                    ORDER BY timestamp asc
+                    LIMIT 10;`;
+
+    return db.query( query )
+        .then( results => {
+            console.log( results.rows );
+        } )
+        .catch( err => console.error( err.stack ) );
+};
+
+
+
+module.exports.createPublicMessage = ( uid, messageBody ) => {
+    console.log( 'dbQuery.js - fn: "createMessage"\n' );
+    const query = `INSERT INTO messages
+                    ("fromUserId", "messageBody", "toAll")
+                    VALUES ($1, $2, '1')
+                    RETURNING   mid,
+                                "fromUserId",
+                                "toAll",
+                                "messageBody",
+                                timestamp;`;
+
+    return db.query( query, [ uid, messageBody ] )
+        .then( result => result.rows[ 0 ] )
+        .catch( err => console.error( err.stack ) );
+};
+
+
+
+
+
+
+
+
+
+//s

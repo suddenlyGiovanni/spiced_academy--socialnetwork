@@ -24,6 +24,7 @@ import Registration from './components/registration';
 import Login from './components/login';
 import ProfileSelf from './components/profileSelf';
 import OnlineUsersContainer from './containers/onlineUsersContainer';
+import ChatContainer from './containers/chatContainer';
 
 
 export const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
@@ -51,6 +52,7 @@ if ( location.pathname === '/welcome/' ) {
                     <Route path='friends' component={FriendsContainer} />
                     <Route path='user/:uid' component={ProfileOther} />
                     <Route path='online' component={OnlineUsersContainer}/>
+                    <Route path='chat' component={ChatContainer}/>
                 </Route>
             </Router>
         </Provider>

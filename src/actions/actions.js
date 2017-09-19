@@ -92,11 +92,35 @@ export function addOnlineUser( userJoined ) {
 
 
 
-export function removeOnlineUser(uid) {
+export function removeOnlineUser( uid ) {
     console.log( 'REDUX - ACTION - fn: removeOnlineUser' );
     return {
         type: 'REMOVE_ONLINE_USER',
         uid
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+export function createMessageList( messagesData ) {
+    console.log( 'REDUX - ACTION - fn: createMessageList' );
+    return {
+        type: 'CREATE_MESSAGE_LIST',
+        messagesData
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+export function addNewMessage( messageData ) {
+    console.log( 'REDUX - ACTION - fn: addNewMessage' );
+    return {
+        type: 'ADD_NEW_MESSAGE',
+        messageData
     };
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
