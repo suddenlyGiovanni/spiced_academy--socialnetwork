@@ -52,14 +52,7 @@ io.on( 'connection', ( socket ) => {
         The payload for this event should include the message the user sent
         as well as the user's id, first name, last name, and profile pic.*/
         return db.createPublicMessage( messengerId, messageBody )
-            .then( messageData => {
-                return db.getOtherUserInfo( messageData.fromUserId )
-                    .then( messengerInfo => {
-                        const payload = { ...messageData, ...messengerInfo };
-                        // console.log( '\n payload: ', payload );
-                        io.sockets.emit( 'chatMessage', payload );
-                    } );
-            } )
+            .then( newPublicMessage => io.sockets.emit( 'chatMessage', newPublicMessage ) )
             .catch( err => console.error( err.stack ) );
     } );
 

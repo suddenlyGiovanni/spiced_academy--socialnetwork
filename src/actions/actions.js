@@ -104,11 +104,11 @@ export function removeOnlineUser( uid ) {
 
 
 
-export function createMessageList( messagesData ) {
-    console.log( 'REDUX - ACTION - fn: createMessageList' );
+export function createPublicMessageList( publicMessageList ) {
+    console.log( 'REDUX - ACTION - fn: createPublicMessageList' );
     return {
-        type: 'CREATE_MESSAGE_LIST',
-        messagesData
+        type: 'CREATE_PUBLIC_MESSAGE_LIST',
+        publicMessageList
     };
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,11 +116,11 @@ export function createMessageList( messagesData ) {
 
 
 
-export function addNewMessage( messageData ) {
-    console.log( 'REDUX - ACTION - fn: addNewMessage' );
+export function addNewPublicMessage( newPublicMessage ) {
+    console.log( 'REDUX - ACTION - fn: addNewPublicMessage' );
     return {
-        type: 'ADD_NEW_MESSAGE',
-        messageData
+        type: 'ADD_NEW_PUBLIC_MESSAGE',
+        newPublicMessage
     };
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

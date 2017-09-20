@@ -71,16 +71,16 @@ export default ( state = {}, action ) => {
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-    case 'CREATE_MESSAGE_LIST':
+    case 'CREATE_PUBLIC_MESSAGE_LIST':
         // FIXME: just temp set up to make redux do somethings
-        state = Object.assign( {}, state, { message: action.messagesData } );
+        state = Object.assign( {}, state, { message: action.publicMessageList } );
         break;
 
 
 
-    case 'ADD_NEW_MESSAGE':
+    case 'ADD_NEW_PUBLIC_MESSAGE':
         // FIXME: just temp set up to make redux do somethings
-        state = Object.assign( {}, state, { message: action.messageData } );
+        state = Object.assign( {}, state, { message: action.newPublicMessage } );
         break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -6,8 +6,8 @@ import {
     createOnlineUsers,
     addOnlineUser,
     removeOnlineUser,
-    createMessageList,
-    addNewMessage
+    createPublicMessageList,
+    addNewPublicMessage
 } from '../actions/actions';
 
 let socket;
@@ -40,15 +40,15 @@ const getSocket = () => {
             store.dispatch( removeOnlineUser( uid ) );
         } );
 
-        socket.on( 'chatMessages', ( messagesData ) => {
-            console.log( 'Socket.io Event: chatMessages', messagesData );
-            store.dispatch( createMessageList( messagesData ) );
+        socket.on( 'chatMessages', ( publicMessageList ) => {
+            console.log( 'Socket.io Event: chatMessages', publicMessageList );
+            store.dispatch( createPublicMessageList( publicMessageList ) );
         } );
 
 
-        socket.on( 'chatMessage', ( messageData ) => {
+        socket.on( 'chatMessage', ( newPublicMessage ) => {
             console.log( 'Socket.io Event: chatMessage' );
-            store.dispatch( addNewMessage( messageData ) );
+            store.dispatch( addNewPublicMessage( newPublicMessage ) );
         } );
 
     }
