@@ -46,8 +46,8 @@ const getSocket = () => {
         } );
 
 
-        socket.on( 'chatMessage', ( newPublicMessage ) => {
-            console.log( 'Socket.io Event: chatMessage' );
+        socket.on( 'publicChatMessages', ( newPublicMessage ) => {
+            console.log( 'Socket.io Event: publicChatMessages' );
             store.dispatch( addNewPublicMessage( newPublicMessage ) );
         } );
 

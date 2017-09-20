@@ -1,6 +1,6 @@
 export default ( state = {}, action ) => {
     console.log( 'REDUX - REDUCER - Action: ', action );
-    /*
+/*    
         state = {
             loggedInUser: {
                 uid: '1',

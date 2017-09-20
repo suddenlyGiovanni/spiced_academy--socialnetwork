@@ -103,8 +103,13 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
             .then( onlineUsers => io.sockets.sockets[ socketId ].emit( 'onlineUsers', onlineUsers ) )
 
             .then( () => {
-                return db.readAllPublicMessage()
-                    .then( publicMessageList => io.sockets.sockets[ socketId ].emit( 'chatMessages', publicMessageList ) );
+                return db.readAllPublicMessages()
+                    .then( publicMessageList => io.sockets.sockets[ socketId ].emit( 'publicChatMessages', publicMessageList ) );
+            } )
+
+            .then( () => {
+                return db.readAllPrivateMessages( uid )
+                    .then( privateMessageList => io.sockets.sockets[ socketId ].emit( 'privateChatMessages', privateMessageList ) );
             } )
 
             .then( () => {

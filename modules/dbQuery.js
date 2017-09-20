@@ -414,8 +414,8 @@ module.exports.deleteFriendship = ( fromUserId, toUserId ) => {
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 // CHAT RELATED METHODS:
 
-module.exports.readAllPublicMessage = () => {
-    console.log( 'dbQuery.js - fn: "readAllPublicMessage"\n' );
+module.exports.readAllPublicMessages = () => {
+    console.log( 'dbQuery.js - fn: "readAllPublicMessages"\n' );
     const query = `SELECT   users.uid,
                             users."firstName",
                             users."lastName",
@@ -449,6 +449,37 @@ module.exports.readAllPublicMessage = () => {
         } )
         .catch( err => console.error( err.stack ) );
 };
+
+
+
+
+module.exports.readAllPrivateMessages = ( uid ) => {
+    console.log( 'dbQuery.js - fn: "readAllPrivateMessages"\n' );
+    const query = `SELECT   users.uid,
+                            users."firstName",
+                            users."lastName",
+                            users."profilePic",
+                            messages.mid,
+                            messages."fromUserId",
+                            messages."toUserId",
+                            messages."toAll",
+                            messages."messageBody",
+                            messages.timestamp
+                    FROM messages
+                    JOIN users
+                    ON (users.uid = messages."fromUserId" AND messages."toUserId" = $1)
+                    OR (users.uid = messages."toUserId" AND messages."fromUserId" = $1)
+                    WHERE messages."toAll" = '0' AND messages."fromUserId" = $1 OR messages."toUserId" = $1
+                    ORDER BY timestamp asc
+                    LIMIT 10;`;
+
+    return db.query( query, [ uid ] )
+        .then( results => {
+            console.log('dbQuery.js - fn: "readAllPrivateMessages"\n - results: ' , results.rows);
+        } )
+        .catch( err => console.error( err.stack ) );
+};
+
 
 
 

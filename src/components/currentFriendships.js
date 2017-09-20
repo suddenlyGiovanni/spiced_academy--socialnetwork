@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfilePicOther from './profilePicOther';
+import { Link } from 'react-router';
 
 const CurrentFriendship = ( props ) => {
     console.log( 'CurrentFriendship - RENDER - this.props: ', props );
@@ -14,6 +15,7 @@ const CurrentFriendship = ( props ) => {
                     uid={uid}/>
                 <h3>{firstName} {lastName}</h3>
                 <button onClick={() => handleFriendshipChange( uid, 'TERMINATED' ) }>END FRIENDSHIP</button>
+                <Link to={`/chat/private/${uid}`}><button>Chat with {`${firstName} ${lastName}`}</button></Link>
             </li>
         );
     } );
