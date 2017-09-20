@@ -104,8 +104,7 @@ router.post( '/connected/:socketId', makeSureUserIsLoggedIn, ( req, res ) => {
 
             .then( () => {
                 return db.readAllPublicMessage()
-                    .then( publicMessageList =>
-                        io.sockets.sockets[ socketId ].emit( 'chatMessages', publicMessageList ) );
+                    .then( publicMessageList => io.sockets.sockets[ socketId ].emit( 'chatMessages', publicMessageList ) );
             } )
 
             .then( () => {

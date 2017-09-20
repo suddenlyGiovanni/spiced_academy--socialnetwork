@@ -1,6 +1,55 @@
 export default ( state = {}, action ) => {
     console.log( 'REDUX - REDUCER - Action: ', action );
-
+    /*
+        state = {
+            loggedInUser: {
+                uid: '1',
+                firstName: 'bat',
+                lastName: 'man',
+                mail: 'bat@man.com',
+                profilePic: 's3.lalala.jpg',
+                bio: 'bruce wayne bio'
+            },
+            onlineUsers: [
+                {
+                    uid: '1',
+                    firstName: 'bat',
+                    lastName: 'man',
+                },
+                {
+                    uid: '2',
+                    firstName: 'super',
+                    lastName: 'man',
+                },
+            ],
+            globalMessages: [
+                {
+                    mid: '',
+                    fromUserId: '',
+                    firstName: '',
+                    lastName: '',
+                    profilePic: '',
+                    toAll: '1',
+                    messageBody: '',
+                    timestamp: ''
+                }
+            ],
+            privateMessages: [
+                {
+                    mid: '',
+                    fromUserId: '',
+                    toUserId: '',
+                    firstName: '',
+                    lastName: '',
+                    profilePic: '',
+                    toAll: '0',
+                    messageBody: '',
+                    timestamp: '',
+                    read: false
+                }
+            ]
+        };
+    */
     switch ( action.type ) {
 
 
@@ -72,15 +121,18 @@ export default ( state = {}, action ) => {
 
 
     case 'CREATE_PUBLIC_MESSAGE_LIST':
-        // FIXME: just temp set up to make redux do somethings
-        state = Object.assign( {}, state, { message: action.publicMessageList } );
+        state = Object.assign( {}, state, { globalMessages: action.publicMessageList } );
         break;
 
 
 
     case 'ADD_NEW_PUBLIC_MESSAGE':
         // FIXME: just temp set up to make redux do somethings
-        state = Object.assign( {}, state, { message: action.newPublicMessage } );
+        var newPublicMessageList = state.globalMessages.slice();
+        newPublicMessageList.splice( ( newPublicMessageList.length ), 0, action.newPublicMessage );
+        state = Object.assign( {}, state, { globalMessages: newPublicMessageList } );
+
+
         break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
