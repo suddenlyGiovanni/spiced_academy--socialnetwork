@@ -444,7 +444,7 @@ module.exports.readAllPublicMessage = () => {
                 }
                 return messageData;
             } );
-            console.log( 'dbQuery.js - fn: "readAllPublicMessage"\n - results:', s3mappedPublicMessages );
+            // console.log( 'dbQuery.js - fn: "readAllPublicMessage"\n - results:', s3mappedPublicMessages );
             return s3mappedPublicMessages;
         } )
         .catch( err => console.error( err.stack ) );
@@ -485,8 +485,7 @@ module.exports.createPublicMessage = ( uid, messageBody ) => {
                     } else {
                         results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
                     }
-                    console.log( 'dbQuery.js - fn: "createPublicMessage"\n - result:',
-                        results.rows[ 0 ] );
+                    // console.log( 'dbQuery.js - fn: "createPublicMessage"\n - result:',results.rows[ 0 ] );
                     return results.rows[ 0 ];
                 } );
         } )
