@@ -52,6 +52,11 @@ export default ( state = {}, action ) => {
         */
     switch ( action.type ) {
 
+    case 'STORE_LOGGEDIN_USER_DATA':
+        state = Object.assign( {}, state, { user: action.user } );
+        break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     case 'FETCH_FRIENDS':
         state = Object.assign( {}, state, { friends: action.friends } );
@@ -133,10 +138,9 @@ export default ( state = {}, action ) => {
 
 
     case 'ADD_NEW_PUBLIC_MESSAGE':
-        // FIXME: just temp set up to make redux do somethings
-        var newPublicMessageList = state.globalMessages.slice();
+        var newPublicMessageList = state.publicMessages.slice();
         newPublicMessageList.splice( ( newPublicMessageList.length ), 0, action.newPublicMessage );
-        state = Object.assign( {}, state, { globalMessages: newPublicMessageList } );
+        state = Object.assign( {}, state, { publicMessages: newPublicMessageList } );
         break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

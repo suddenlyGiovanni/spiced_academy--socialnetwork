@@ -58,7 +58,7 @@ if ( location.pathname === '/welcome/' ) {
                     <Route path='chat' component={ChatContainer}>
                         <IndexRoute component={ChatListContainer} />
                         <Route path='public' component={ChatPublicContainer} />
-                        <Route path='private/:uid' component={ChatPrivateContainer} />
+                        <Route path='private/:otherUid' component={ChatPrivateContainer} />
                     </Route>
                 </Route>
             </Router>

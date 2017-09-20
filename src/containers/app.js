@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from '../utils/axios';
+import { store } from '../shell';
+import { persistThisUserDataOnce } from '../actions/actions';
 import Logo from '../components/logo';
 import ProfilePic from '../components/profilePic';
 import ProfilePicUpload from '../components/profilePicUpload';
@@ -23,6 +25,8 @@ export default class App extends React.Component {
 
             .then( resp => {
                 this.setState( resp.data.userData );
+                const user = resp.data.userData
+                store.dispatch( persistThisUserDataOnce(  user ) );
                 console.log( 'App - fn: componentDidMount - this.state', this.state );
             } )
 

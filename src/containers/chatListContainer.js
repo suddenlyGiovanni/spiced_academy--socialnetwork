@@ -17,7 +17,7 @@ class ChatListContainer extends Component {
                         <Link to='/chat/public'>PUBLIC CHAT</Link>
                     </li>
                     <li>
-                        <Link to='/chat/private/2'>PRIVATE CHAT: toUserId:2</Link>
+                        <Link to='/chat/private/2'>PRIVATE CHAT: chat with the JOKER toUserId:2</Link>
                     </li>
                 </ul>
             </div>

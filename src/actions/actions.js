@@ -3,6 +3,16 @@ import axios from '../utils/axios';
 
 
 
+export function persistThisUserDataOnce( user ) {
+    console.log( 'REDUX - ACTION - fn: persistThisUserDataOnce' );
+    return {
+        type: 'STORE_LOGGEDIN_USER_DATA',
+        user
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 export function fetchFriends() {
     console.log( 'REDUX - ACTION - fn: fetchFriends' );
 
@@ -116,7 +126,7 @@ export function createPublicMessageList( publicMessageList ) {
 
 
 
-export function createPrivateMessageList(privateMessageList) {
+export function createPrivateMessageList( privateMessageList ) {
     console.log( 'REDUX - ACTION - fn: createPrivateMessageList' );
     return {
         type: 'CREATE_PRIVATE_MESSAGE_LIST',

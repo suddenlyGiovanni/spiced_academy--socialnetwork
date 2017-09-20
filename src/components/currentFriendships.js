@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 const CurrentFriendship = ( props ) => {
     console.log( 'CurrentFriendship - RENDER - this.props: ', props );
-    const { handleFriendshipChange } = props;
+    const { handleFriendshipChange, uidSelf } = props;
     const listCurrentFriendships = props.currentFriendships.map( ( currentFriend ) => {
         const { uid, firstName, lastName, profilePic } = currentFriend;
         return (

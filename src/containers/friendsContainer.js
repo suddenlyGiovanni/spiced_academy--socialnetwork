@@ -44,6 +44,7 @@ class FriendsContainer extends Component {
                 {
                     currentFriendships &&
                     <CurrentFriendships
+                        uidSelf={this.props.uid}
                         currentFriendships={currentFriendships}
                         handleFriendshipChange={
                             ( toUserId, status) => this.handleFriendshipChange( toUserId, status )

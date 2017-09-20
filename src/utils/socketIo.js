@@ -41,10 +41,12 @@ const getSocket = () => {
             store.dispatch( removeOnlineUser( uid ) );
         } );
 
+
         socket.on( 'publicChatMessages', ( publicMessageList ) => {
             console.log( 'Socket.io Event: publicChatMessages', publicMessageList );
             store.dispatch( createPublicMessageList( publicMessageList ) );
         } );
+
 
         socket.on( 'privateChatMessages', ( privateMessageList ) => {
             console.log( 'Socket.io Event: privateChatMessages', privateMessageList );
