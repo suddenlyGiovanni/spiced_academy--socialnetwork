@@ -1,55 +1,55 @@
 export default ( state = {}, action ) => {
     console.log( 'REDUX - REDUCER - Action: ', action );
-/*    
-        state = {
-            loggedInUser: {
-                uid: '1',
-                firstName: 'bat',
-                lastName: 'man',
-                mail: 'bat@man.com',
-                profilePic: 's3.lalala.jpg',
-                bio: 'bruce wayne bio'
-            },
-            onlineUsers: [
-                {
+    /*
+            state = {
+                loggedInUser: {
                     uid: '1',
                     firstName: 'bat',
                     lastName: 'man',
+                    mail: 'bat@man.com',
+                    profilePic: 's3.lalala.jpg',
+                    bio: 'bruce wayne bio'
                 },
-                {
-                    uid: '2',
-                    firstName: 'super',
-                    lastName: 'man',
-                },
-            ],
-            globalMessages: [
-                {
-                    mid: '',
-                    fromUserId: '',
-                    firstName: '',
-                    lastName: '',
-                    profilePic: '',
-                    toAll: '1',
-                    messageBody: '',
-                    timestamp: ''
-                }
-            ],
-            privateMessages: [
-                {
-                    mid: '',
-                    fromUserId: '',
-                    toUserId: '',
-                    firstName: '',
-                    lastName: '',
-                    profilePic: '',
-                    toAll: '0',
-                    messageBody: '',
-                    timestamp: '',
-                    read: false
-                }
-            ]
-        };
-    */
+                onlineUsers: [
+                    {
+                        uid: '1',
+                        firstName: 'bat',
+                        lastName: 'man',
+                    },
+                    {
+                        uid: '2',
+                        firstName: 'super',
+                        lastName: 'man',
+                    },
+                ],
+                globalMessages: [
+                    {
+                        mid: '',
+                        fromUserId: '',
+                        firstName: '',
+                        lastName: '',
+                        profilePic: '',
+                        toAll: '1',
+                        messageBody: '',
+                        timestamp: ''
+                    }
+                ],
+                privateMessages: [
+                    {
+                        mid: '',
+                        fromUserId: '',
+                        toUserId: '',
+                        firstName: '',
+                        lastName: '',
+                        profilePic: '',
+                        toAll: '0',
+                        messageBody: '',
+                        timestamp: '',
+                        read: false
+                    }
+                ]
+            };
+        */
     switch ( action.type ) {
 
 
@@ -121,9 +121,15 @@ export default ( state = {}, action ) => {
 
 
     case 'CREATE_PUBLIC_MESSAGE_LIST':
-        state = Object.assign( {}, state, { globalMessages: action.publicMessageList } );
+        state = Object.assign( {}, state, { publicMessages: action.publicMessageList } );
         break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+    case 'CREATE_PRIVATE_MESSAGE_LIST':
+        state = Object.assign( {}, state, { privateMessages: action.privateMessageList } );
+        break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
     case 'ADD_NEW_PUBLIC_MESSAGE':
@@ -131,8 +137,6 @@ export default ( state = {}, action ) => {
         var newPublicMessageList = state.globalMessages.slice();
         newPublicMessageList.splice( ( newPublicMessageList.length ), 0, action.newPublicMessage );
         state = Object.assign( {}, state, { globalMessages: newPublicMessageList } );
-
-
         break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

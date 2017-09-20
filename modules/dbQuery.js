@@ -464,18 +464,29 @@ module.exports.readAllPrivateMessages = ( uid ) => {
                             messages."toUserId",
                             messages."toAll",
                             messages."messageBody",
-                            messages.timestamp
+                            messages.timestamp,
+                            messages.read
                     FROM messages
                     JOIN users
-                    ON (users.uid = messages."fromUserId" AND messages."toUserId" = $1)
-                    OR (users.uid = messages."toUserId" AND messages."fromUserId" = $1)
+                    ON (users.uid = messages."fromUserId")
                     WHERE messages."toAll" = '0' AND messages."fromUserId" = $1 OR messages."toUserId" = $1
                     ORDER BY timestamp asc
                     LIMIT 10;`;
 
     return db.query( query, [ uid ] )
         .then( results => {
-            console.log('dbQuery.js - fn: "readAllPrivateMessages"\n - results: ' , results.rows);
+            const s3mappedPrivateMessages = results.rows.map( messageData => {
+                if ( !messageData.profilePic ) {
+                    const defProfilePic =
+                        `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                    messageData.profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+                } else {
+                    messageData.profilePic = s3Url + messageData.profilePic;
+                }
+                return messageData;
+            } );
+            console.log( 'dbQuery.js - fn: "readAllPrivateMessages"\n - results:', s3mappedPrivateMessages );
+            return s3mappedPrivateMessages;
         } )
         .catch( err => console.error( err.stack ) );
 };

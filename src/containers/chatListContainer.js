@@ -28,7 +28,7 @@ class ChatListContainer extends Component {
 const mapStateToProps = ( state ) => {
     console.log( 'ChatListContainer - fn: mapStateToProps' );
     return {
-        globalMessages: state.globalMessages && state.globalMessages,
+        publicMessages: state.publicMessages && state.publicMessages,
         privateMessages: state.privateMessages && state.privateMessages,
     };
 };

@@ -7,6 +7,7 @@ import {
     addOnlineUser,
     removeOnlineUser,
     createPublicMessageList,
+    createPrivateMessageList,
     addNewPublicMessage
 } from '../actions/actions';
 
@@ -40,14 +41,19 @@ const getSocket = () => {
             store.dispatch( removeOnlineUser( uid ) );
         } );
 
-        socket.on( 'chatMessages', ( publicMessageList ) => {
-            console.log( 'Socket.io Event: chatMessages', publicMessageList );
+        socket.on( 'publicChatMessages', ( publicMessageList ) => {
+            console.log( 'Socket.io Event: publicChatMessages', publicMessageList );
             store.dispatch( createPublicMessageList( publicMessageList ) );
         } );
 
+        socket.on( 'privateChatMessages', ( privateMessageList ) => {
+            console.log( 'Socket.io Event: privateChatMessages', privateMessageList );
+            store.dispatch( createPrivateMessageList( privateMessageList ) );
+        } );
 
-        socket.on( 'publicChatMessages', ( newPublicMessage ) => {
-            console.log( 'Socket.io Event: publicChatMessages' );
+
+        socket.on( 'chatMessage', ( newPublicMessage ) => {
+            console.log( 'Socket.io Event: chatMessage' );
             store.dispatch( addNewPublicMessage( newPublicMessage ) );
         } );
 

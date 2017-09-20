@@ -116,6 +116,18 @@ export function createPublicMessageList( publicMessageList ) {
 
 
 
+export function createPrivateMessageList(privateMessageList) {
+    console.log( 'REDUX - ACTION - fn: createPrivateMessageList' );
+    return {
+        type: 'CREATE_PRIVATE_MESSAGE_LIST',
+        privateMessageList
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
 export function addNewPublicMessage( newPublicMessage ) {
     console.log( 'REDUX - ACTION - fn: addNewPublicMessage' );
     return {
