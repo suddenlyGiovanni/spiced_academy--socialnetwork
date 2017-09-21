@@ -11,10 +11,7 @@ export default class ChatPublic extends Component {
         if ( e.keyCode === 13 ) {
             e.preventDefault();
             console.log( e.target.value );
-            getSocket().emit( 'chatMessagePrivate', {
-                toUserId: this.props.otherUid,
-                messageBody: e.target.value
-            } );
+            getSocket().emit( 'chatMessage', e.target.value );
             e.target.value = '';
         }
     }
