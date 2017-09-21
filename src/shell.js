@@ -18,7 +18,7 @@ import App from './containers/app';
 import FriendsContainer from './containers/friendsContainer';
 import ProfileOther from './containers/profileOther';
 import ChatChildrenContainer from './containers/chat-children-container';
-import ChatListContainer from './containers/chatListContainer';
+import ChatListContainer from './containers/chat-list-container';
 import ChatPublicContainer from './containers/chat-public-container';
 import ChatPrivateContainer from './containers/chat-private-container';
 import OnlineUsersContainer from './containers/onlineUsersContainer';
