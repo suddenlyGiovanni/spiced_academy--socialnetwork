@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Chat from '../components/chat';
+import ChatPrivate from '../components/chat-private';
+import { store } from '../shell';
+import { persistOtherUid } from '../actions/actions';
 
 class ChatPrivateContainer extends Component {
     constructor( props ) {
         super( props );
     }
 
+    componentDidMount() {
+        const otherUid = this.props.routeParams.otherUid;
+        store.dispatch( persistOtherUid( otherUid ) );
+    }
+
     render() {
         console.log( 'ChatPrivateContainer - RENDER - this.props: ', this.props );
         const { privateMessages } = this.props;
-        const { otherUid } = this.props.routeParams;
-        console.log( `otherUid: ${otherUid}` );
-
-        const filteredPrivateMessages = privateMessages && privateMessages.filter( messenger => {
-            return ( messenger.fromUserId === otherUid || messenger.toUserId === otherUid )
-        } );
         return (
             <div>
                 ChatPrivateContainer.js
                 {
                     privateMessages &&
-                    <Chat globalMessageList={privateMessages}/>
+                    <ChatPrivate privateMessagesList={privateMessages}/>
                 }
-
-
             </div>
         );
     }
@@ -33,8 +32,11 @@ class ChatPrivateContainer extends Component {
 const mapStateToProps = ( state ) => {
     console.log( 'ChatPrivateContainer - fn: mapStateToProps' );
     return {
-        privateMessages: state.privateMessages && state.privateMessages,
-        currentUser: state.user && state.user
+        currentUser: state.user,
+        otherUid: state.otherUid,
+        privateMessages: state.privateMessages && state.privateMessages.filter( message => {
+            return ( message.fromUserId == state.otherUid || message.toUserId == state.otherUid);
+        } )
     };
 };
 

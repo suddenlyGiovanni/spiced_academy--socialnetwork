@@ -145,6 +145,11 @@ export default ( state = {}, action ) => {
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
+    case 'PERSIST_OTHER_UID':
+        state = Object.assign( {}, state, { otherUid: action.otherUid } );
+        break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     }
     //--------------------------------------------------------------------------
     console.log( 'REDUX - REDUCER - State: ', state );

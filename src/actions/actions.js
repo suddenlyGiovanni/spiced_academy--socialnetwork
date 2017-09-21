@@ -146,3 +146,20 @@ export function addNewPublicMessage( newPublicMessage ) {
     };
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+export function persistOtherUid( otherUid ) {
+    console.log( 'REDUX - ACTION - fn: persistOtherUid' );
+    return {
+        type: 'PERSIST_OTHER_UID',
+        otherUid
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

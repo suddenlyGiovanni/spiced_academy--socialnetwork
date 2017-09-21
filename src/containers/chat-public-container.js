@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Chat from '../components/chat';
+import ChatPublic from '../components/chat-public';
 
 class ChatPublicContainer extends Component {
     constructor( props ) {
@@ -14,7 +14,7 @@ class ChatPublicContainer extends Component {
                 ChatPublicContainer.js
                 {
                     this.props.publicMessages &&
-                    <Chat globalMessageList={this.props.publicMessages}/>
+                    <ChatPublic publicMessagesList={this.props.publicMessages}/>
                 }
             </div>
         );

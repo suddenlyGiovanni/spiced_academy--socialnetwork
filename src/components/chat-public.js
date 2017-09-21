@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import getSocket from '../utils/socketIo';
 import ProfilePicOther from './profilePicOther';
 
-export default class Chat extends Component {
+export default class ChatPublic extends Component {
     constructor( props ) {
         super( props );
     }
@@ -22,9 +22,9 @@ export default class Chat extends Component {
     }
 
     render() {
-        console.log( 'Chat - RENDER - this.props: ', this.props );
+        console.log( 'ChatPublic - RENDER - this.props: ', this.props );
 
-        const chatMessages = this.props.globalMessageList && this.props.globalMessageList.map( message => {
+        const chatMessages = this.props.publicMessagesList && this.props.publicMessagesList.map( message => {
             const { mid, fromUserId, firstName, lastName, profilePic, messageBody, timestamp } = message;
             return (
                 <li key={mid}>

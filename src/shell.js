@@ -17,17 +17,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './containers/app';
 import FriendsContainer from './containers/friendsContainer';
 import ProfileOther from './containers/profileOther';
+import ChatChildrenContainer from './containers/chat-children-container';
+import ChatListContainer from './containers/chatListContainer';
+import ChatPublicContainer from './containers/chat-public-container';
+import ChatPrivateContainer from './containers/chat-private-container';
+import OnlineUsersContainer from './containers/onlineUsersContainer';
 
 // Components
 import Welcome from './components/welcome';
 import Registration from './components/registration';
 import Login from './components/login';
 import ProfileSelf from './components/profileSelf';
-import OnlineUsersContainer from './containers/onlineUsersContainer';
-import ChatContainer from './containers/chatContainer';
-import ChatListContainer from './containers/chatListContainer';
-import ChatPublicContainer from './containers/chatPublicContainer';
-import ChatPrivateContainer from './containers/chatPrivateContainer';
 
 
 export const store = createStore( reducers, composeWithDevTools( applyMiddleware( reduxPromise ) ) );
@@ -55,7 +55,7 @@ if ( location.pathname === '/welcome/' ) {
                     <Route path='friends' component={FriendsContainer} />
                     <Route path='user/:uid' component={ProfileOther} />
                     <Route path='online' component={OnlineUsersContainer} />
-                    <Route path='chat' component={ChatContainer}>
+                    <Route path='chat' component={ChatChildrenContainer}>
                         <IndexRoute component={ChatListContainer} />
                         <Route path='public' component={ChatPublicContainer} />
                         <Route path='private/:otherUid' component={ChatPrivateContainer} />
