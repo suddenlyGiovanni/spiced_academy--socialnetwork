@@ -470,8 +470,7 @@ module.exports.readAllPrivateMessages = ( uid ) => {
                     JOIN users
                     ON (users.uid = messages."fromUserId")
                     WHERE messages."toAll" = '0' AND messages."fromUserId" = $1 OR messages."toUserId" = $1
-                    ORDER BY timestamp asc
-                    LIMIT 10;`;
+                    ORDER BY timestamp asc;`;
 
     return db.query( query, [ uid ] )
         .then( results => {
@@ -485,7 +484,7 @@ module.exports.readAllPrivateMessages = ( uid ) => {
                 }
                 return messageData;
             } );
-            console.log( 'dbQuery.js - fn: "readAllPrivateMessages"\n - results:', s3mappedPrivateMessages );
+            // console.log( 'dbQuery.js - fn: "readAllPrivateMessages"\n - results:', s3mappedPrivateMessages );
             return s3mappedPrivateMessages;
         } )
         .catch( err => console.error( err.stack ) );
@@ -537,7 +536,49 @@ module.exports.createPublicMessage = ( uid, messageBody ) => {
 
 
 
+module.exports.createPrivateMessage = ( fromUserId, toUserId, messageBody ) => {
+    console.log( 'dbQuery.js - fn: "createPrivateMessage"\n' );
+    const query = `INSERT INTO messages
+                    ("fromUserId", "toUserId", "messageBody", "toAll")
+                    VALUES ($1, $2, $3, '0')
+                    RETURNING   mid;`;
 
+    return db.query( query, [ fromUserId, toUserId, messageBody ] )
+
+        .then( results => {
+            const mid = results.rows[ 0 ].mid;
+            const query = `SELECT   users.uid,
+                                    users."firstName",
+                                    users."lastName",
+                                    users."profilePic",
+                                    messages.mid,
+                                    messages."fromUserId",
+                                    messages."toUserId",
+                                    messages."toAll",
+                                    messages."messageBody",
+                                    messages.timestamp,
+                                    messages.read
+                            FROM messages
+                            JOIN users
+                            ON (users.uid = messages."fromUserId")
+                            WHERE messages."toAll" = '0' AND messages.mid = $1;`;
+            return db.query( query, [ mid ] )
+
+                .then( results => {
+                    if ( !results.rows[ 0 ].profilePic ) {
+                        const defProfilePic =
+                            `def_profilePic_${(Math.floor(Math.random()*(12-1+1)+1))}.svg`;
+                        results.rows[ 0 ].profilePic = s3Url + 'def_profilePic/' + defProfilePic;
+                    } else {
+                        results.rows[ 0 ].profilePic = s3Url + results.rows[ 0 ].profilePic;
+                    }
+                    console.log( 'dbQuery.js - fn: "createPrivateMessage"\n - result:',results.rows[ 0 ] );
+                    return results.rows[ 0 ];
+                } );
+        } )
+
+        .catch( err => console.error( err.stack ) );
+};
 
 
 

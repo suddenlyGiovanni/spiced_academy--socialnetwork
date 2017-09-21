@@ -56,6 +56,30 @@ io.on( 'connection', ( socket ) => {
             .catch( err => console.error( err.stack ) );
     } );
 
+
+    socket.on( 'chatMessagePrivate', privateMessage => {
+        const fromUserId = onlineUsers.find( user => user.socketId == socket.id ).uid;
+        const { toUserId, messageBody } = privateMessage;
+
+        const toUserIdOnline = onlineUsers.find( user => user.uid == toUserId );
+
+        const fromUserSocketId = socket.id;
+        const toUserSocketId = toUserIdOnline && toUserIdOnline.socketId;
+
+        console.log( `SocketIo - on: "chatMessagePrivate"
+        - fromUserId: ${fromUserId} - toUserId: ${toUserId}
+        - payload:`, privateMessage );
+        return db.createPrivateMessage( fromUserId, toUserId, messageBody )
+
+            .then( newPrivateMessage => {
+                console.log('emitting private messaging - fromUserSocketId', fromUserSocketId);
+                io.sockets.sockets[ fromUserSocketId ].emit('privateChatMessage', newPrivateMessage);
+                toUserSocketId && io.sockets.sockets[ toUserSocketId ].emit('privateChatMessage', newPrivateMessage);
+            } )
+
+            .catch(err=>console.error(err.stack));
+    } );
+
 } );
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -150,6 +150,18 @@ export function addNewPublicMessage( newPublicMessage ) {
 
 
 
+export function addNewPrivateMessage( newPrivateMessage ) {
+    console.log( 'REDUX - ACTION - fn: addNewPrivateMessage', newPrivateMessage );
+    return {
+        type: 'ADD_NEW_PRIVATE_MESSAGE',
+        newPrivateMessage
+    };
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
 export function persistOtherUid( otherUid ) {
     console.log( 'REDUX - ACTION - fn: persistOtherUid' );
     return {

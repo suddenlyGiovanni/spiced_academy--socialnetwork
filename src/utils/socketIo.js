@@ -8,7 +8,8 @@ import {
     removeOnlineUser,
     createPublicMessageList,
     createPrivateMessageList,
-    addNewPublicMessage
+    addNewPublicMessage,
+    addNewPrivateMessage
 } from '../actions/actions';
 
 let socket;
@@ -57,6 +58,11 @@ const getSocket = () => {
         socket.on( 'chatMessage', ( newPublicMessage ) => {
             console.log( 'Socket.io Event: chatMessage' );
             store.dispatch( addNewPublicMessage( newPublicMessage ) );
+        } );
+
+        socket.on( 'privateChatMessage', ( newPrivateMessage ) => {
+            console.log( 'Socket.io Event: privateChatMessage' );
+            store.dispatch( addNewPrivateMessage( newPrivateMessage ) );
         } );
 
     }

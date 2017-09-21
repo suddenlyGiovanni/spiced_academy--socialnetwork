@@ -7,15 +7,19 @@ export default class ChatPrivate extends Component {
         super( props );
     }
 
-    componentDidMount() {
-        this.newMessage.addEventListener( 'keydown', ( e ) => {
-            if ( e.keyCode === 13 ) {
-                e.preventDefault();
-                console.log( e.target.value );
-                getSocket().emit( 'chatMessage', e.target.value );
-            }
-        } );
+
+    handleSubmit( e ) {
+        if ( e.keyCode === 13 ) {
+            e.preventDefault();
+            console.log( e.target.value );
+            getSocket().emit( 'chatMessagePrivate', {
+                toUserId: this.props.otherUid,
+                messageBody: e.target.value
+            } );
+            e.target.value = '';
+        }
     }
+
 
     componentDidUpdate() {
         this.messageArea.scrollTop = this.messageArea.scrollHeight;
@@ -56,7 +60,8 @@ export default class ChatPrivate extends Component {
                     name='newMessage'
                     maxLength='300'
                     placeholder='Please somebody answer me..'
-                    ref={newMessage => this.newMessage = newMessage}>
+                    ref={newMessage => this.newMessage = newMessage}
+                    onKeyDown={e=>this.handleSubmit(e)}>
                 </textarea>
             </div>
         );

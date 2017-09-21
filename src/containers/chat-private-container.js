@@ -16,13 +16,15 @@ class ChatPrivateContainer extends Component {
 
     render() {
         console.log( 'ChatPrivateContainer - RENDER - this.props: ', this.props );
-        const { privateMessages } = this.props;
+        const { privateMessages, otherUid } = this.props;
         return (
             <div>
                 ChatPrivateContainer.js
                 {
                     privateMessages &&
-                    <ChatPrivate privateMessagesList={privateMessages}/>
+                    <ChatPrivate
+                        privateMessagesList={privateMessages}
+                        otherUid={otherUid}/>
                 }
             </div>
         );

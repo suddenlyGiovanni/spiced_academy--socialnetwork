@@ -138,9 +138,17 @@ export default ( state = {}, action ) => {
 
 
     case 'ADD_NEW_PUBLIC_MESSAGE':
-        var newPublicMessageList = state.publicMessages.slice();
-        newPublicMessageList.splice( ( newPublicMessageList.length ), 0, action.newPublicMessage );
-        state = Object.assign( {}, state, { publicMessages: newPublicMessageList } );
+        var newPublicMessagesList = state.publicMessages.slice();
+        newPublicMessagesList.splice( ( newPublicMessagesList.length ), 0, action.newPublicMessage );
+        state = Object.assign( {}, state, { publicMessages: newPublicMessagesList } );
+        break;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    case 'ADD_NEW_PRIVATE_MESSAGE':
+        var newPrivateMessagesList = state.privateMessages.slice();
+        newPrivateMessagesList.splice( ( newPrivateMessagesList.length ), 0, action.newPrivateMessage );
+        state = Object.assign( {}, state, { privateMessages: newPrivateMessagesList } );
         break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
