@@ -24,8 +24,8 @@ CREATE TABLE messages(
     mid SERIAL PRIMARY KEY,
     "fromUserId" INTEGER NOT NULL REFERENCES users(uid),
     "toUserId" INTEGER REFERENCES users(uid),
-    "toAll" BIT DEFAULT 0,
+    "toAll" BIT DEFAULT B'0'::"bit",
     "messageBody" VARCHAR (300) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    read BIT DEFAULT 0
+    read BIT DEFAULT B'0'::"bit"
 );
