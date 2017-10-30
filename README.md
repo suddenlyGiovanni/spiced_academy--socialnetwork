@@ -1,7 +1,22 @@
 # Social Network
 Mock social network project for superheros and villans. 
 ## Context
-Social Network was **the third Full Stack Project** that I had to build at **[Spiced Academy]**, a 12 week intensive Full Stack Web Development boot camp in Berlin.
+Between July and October 2017, I attend **[Spiced Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
+During this program, I built a portfolio of web applications.
+1. **[Reichstag]** - a static landing page
+2. **[Kitty Carousel]** - a carousel/slideshow element that displays kitties picture
+3. **[Resizable Panes]** - an element to display before and after photos
+4. **[Incremental Search]** - search field that allows users to select matching results
+5. **[Connect Four]** - the vertical checkers game
+6. **[Spotify API Search]**
+7. **[Github API Search]**
+8. **[Ticker Twitter API]** - a sliding twitter news feed element
+9. **[Petition]** - A server-side render app for collecting signatures for a pledge.
+10. **[Imageboard]** - An app that allows users to upload images, comment, and like images.
+11. **[Social Network]** - Mock social network project for superheroes and villains.
+12. Final Project - one-week coding challenge - **[P2P Chat]**
+
+**Social Network** was my last big full stack project before the graduation coding challenge. This project taught me how to build single page applications with React and Redux.
 ###### Time frame:  _**Three weeks**_
 ###### New Technologies:  
 - React.js
@@ -19,9 +34,10 @@ temp.
 **[Socket.io - client]** | **[Socket.io - server]**  
 ## Installation
 ```bash
-$ npm install suddenlyGiovanni/socialnetwork
-$ cd socialnetwork/config
-$ touch secrets.json
+$ git clone https://github.com/suddenlyGiovanni/socialnetwork.git
+$ cd socialnetwork
+$ npm install
+$ cd config && touch secrets.json
 ```
 ##### Secret.json
 Paste in the following code and remember to configure it accordingly... 
@@ -76,3 +92,16 @@ MIT © [suddenlyGiovanni]
    [AWS S3]: <https://aws.amazon.com/documentation/s3/>
    [Socket.io - client]: <https://socket.io/docs/server-api/>
    [Socket.io - server]: <https://socket.io/docs/server-api/>
+   [Reichstag]: <https://github.com/suddenlyGiovanni/reichstag>
+   [Kitty Carousel]: <https://github.com/suddenlyGiovanni/kitty_carousel>
+   [Resizable Panes]: <https://github.com/suddenlyGiovanni/resizable_panes>
+   [Incremental Search]: <https://github.com/suddenlyGiovanni/incremental_search>
+   [Connect Four]: <https://github.com/suddenlyGiovanni/connect_four>
+   [Spotify API Search]: <https://github.com/suddenlyGiovanni/spotify_api_search>
+   [Github API Search]: <https://github.com/suddenlyGiovanni/github_api_search>
+   [Ticker Twitter API]: <https://github.com/suddenlyGiovanni/ticker_twitter_api>
+   [Petition]: <https://github.com/suddenlyGiovanni/petition>
+   [Imageboard]: <https://github.com/suddenlyGiovanni/imageboard>
+   [Social Network]: <https://github.com/suddenlyGiovanni/socialnetwork>
+   [P2P Chat]: <https://github.com/suddenlyGiovanni/p2p-chat>
+   
