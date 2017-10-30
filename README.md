@@ -1,5 +1,5 @@
 # Social Network
-Mock social network project for superheros and villans. 
+Mock social network for superheroes and villains.
 ## Context
 Between July and October 2017, I attend **[Spiced Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
 During this program, I built a portfolio of web applications.
@@ -22,10 +22,8 @@ During this program, I built a portfolio of web applications.
 - React.js
 - Redux
 - Socket.io
-
 ## Summary:
 temp.
-
 ### Tech Stack:
 | **Frontend** | **Backend** | **Database** |
 | ------ | ------ | ------ |
@@ -52,8 +50,7 @@ Paste in the following code and remember to configure it accordingly...
     "s3Url": "https://s3.amazonaws.com/XXXXXXX/"
 }
 ```
-
-### Features: 
+## Features: 
 - Registration | Authentication | Login
 - Users can personalize their page by adding bio and profile picture.
 - Users can see who is online.
@@ -61,7 +58,7 @@ Paste in the following code and remember to configure it accordingly...
 - Users can use the private chat to talk to individual online and offline users.
 - Users can see a list of friends as well as make, cancel, end, and receive friend requests.
 
-### Todos of additional features:
+## Todos of additional features:
  - [ ] User Search
  - [ ] Wall Posts
  - [ ] Friend Request Notifications
@@ -72,7 +69,6 @@ Paste in the following code and remember to configure it accordingly...
 * e-mail: ravalico.giovanni@gmail.com
 * Twitter: [@superspacezova](https://twitter.com/superspacezova "twitterhandle on twitter")
 * LinkdeIn: [/giovanni-ravalico]
-
 License
 ----
 MIT © [suddenlyGiovanni] 
