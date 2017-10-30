@@ -62,11 +62,11 @@ Paste in the following code and remember to configure it accordingly...
 - Users can see a list of friends as well as make, cancel, end, and receive friend requests.
 
 ### Todos of additional features:
- - User Search
- - Wall Posts
- - Friend Request Notifications
- - Friends on Profile Pages
- - Reduxyfication of all the application.
+ - [ ] User Search
+ - [ ] Wall Posts
+ - [ ] Friend Request Notifications
+ - [ ] Friends on Profile Pages
+ - [ ] Reduxyfication of all the application.
 
 ## Contact
 * e-mail: ravalico.giovanni@gmail.com
