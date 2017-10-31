@@ -3,6 +3,4 @@ node_modules
 bundle.js
 package-lock.json
 secrets.json
-.tern-project
-.eslintrc.json
 /tests

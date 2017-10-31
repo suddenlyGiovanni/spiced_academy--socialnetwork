@@ -1,0 +1,29 @@
+{
+    "ecmaVersion": 6,
+    "libs": [
+    "browser"
+  ],
+    "loadEagerly": [],
+    "dontLoad": [
+    "node_modules/**"
+  ],
+    "plugins": {
+        "doc_comment": true,
+        "node": {
+            "dontLoad": "",
+            "load": "",
+            "modules": ""
+        },
+        "modules": {
+            "dontLoad": "",
+            "load": "",
+            "modules": ""
+        },
+        "node_resolve": {},
+        "node-express": {},
+        "complete_strings": {
+            "maxLength": 15
+        },
+        "es_modules": {}
+    }
+}
