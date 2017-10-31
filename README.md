@@ -49,7 +49,7 @@ $ npm install
 $ cd config && touch secrets.json
 ```
 ##### Secret.json
-Paste in the following code and remember to configure it accordingly... 
+Paste in the following code and remember to configure it accordingly...
 ```javascript
 {
     "psqlConfig": "postgres:postgres:postgres@localhost:5432/socialnetwork",
@@ -64,22 +64,22 @@ Paste in the following code and remember to configure it accordingly...
 ##### Map of client-side compoinents:
 ![social_network_structure]
 
-## Features: 
+## Features:
 > As a user, I can **register and login**. If I am already login, I can skip this step.
 
 The user can create or submit its credentials: Passwords are hashed using the bcrypt library.
 Forms include CSRF protection using the csurf npm package.
 
 > As a user, I can **personalize my page** by adding a bio and profile picture.
-> I can also update this information whenever I want. 
+> I can also update this information whenever I want.
 
 > As a user, I can **see who is online** now.
 
-> As a user, I can **see a list of all of my friends**. I can also **manage friendship status**: 
+> As a user, I can **see a list of all of my friends**. I can also **manage friendship status**:
 > I can send a friendship request,
 > I can cancel ann erroneous friendship request,
 > I can accept friends requests,
-> I can terminate friendships, 
+> I can terminate friendships,
 
 > As a user, I can **use the group chat** feature to chat with everyone that is online.
 
@@ -97,7 +97,7 @@ Forms include CSRF protection using the csurf npm package.
 * LinkdeIn: [/giovanni-ravalico]
 License
 ----
-MIT © [suddenlyGiovanni] 
+MIT © [suddenlyGiovanni]
 **Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
@@ -126,6 +126,5 @@ MIT © [suddenlyGiovanni]
    [Imageboard]: <https://github.com/suddenlyGiovanni/imageboard>
    [Social Network]: <https://github.com/suddenlyGiovanni/socialnetwork>
    [P2P Chat]: <https://github.com/suddenlyGiovanni/p2p-chat>
-   
-   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/social_network_structure.png>
-   
+
+   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network_structure.png>
