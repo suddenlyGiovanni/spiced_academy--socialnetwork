@@ -144,7 +144,7 @@ MIT © [suddenlyGiovanni]
    [Socket.io - server]: <https://socket.io/docs/server-api/>
 
 [//]: # (Picture references:)
-   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/social_network_structure.png>
+   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network_structure.png>
    [social_network-register]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-register.png>
    [social_network-login]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-login.png>
    [social_network-profile_pic]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-profile_pic.png>
