@@ -99,7 +99,7 @@ Forms include CSRF protection using the csurf npm package.
  - [ ] **User Search:**
 > This should be implemented as an incremental search field. Input events should result in ajax requests and the route hit should do database queries with pattern matching to find matches. Note that if the users gives more input before the previous request is complete, you should probably abort it. You probably also should come up with a way to throttle the requests to avoid overloading your server if you have fast typers. It would be real nice if the results did not just show matching users' names but their profile pics as well.
 - [x] **Private Messages:**
-> Use [socket.io] to allow users to conduct private, one-on-one chats with other users who are their friends (but disallow private chats between two users who are not friends).
+> Use [Socket.io - server] to allow users to conduct private, one-on-one chats with other users who are their friends (but disallow private chats between two users who are not friends).
  - [ ] **Wall Posts:**
 > Allow users to add textual messages to their own and their friends' profile screens. These should be shown in reverse chronological order and should only be visible to friends of the user whose profile the post appears on. Posts should show the author of the post, the time and date it was created, and the text. You can take this even further by allowing users to post images or links. For link posts you could crawl the submitted url to find the page's title and an image to display. Yet another enhancement would be to allow friends to comment on posts.
  - [ ] **Friend Request Notifications:**
