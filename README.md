@@ -1,5 +1,16 @@
 # Social Network
 Mock social network for superheroes and villains.
+
+### Table of contents
+* [Context](#context)
+* [Summary](#summary)
+* [Tech Stack](#tech-stack)
+* [Installation](#installation)
+* [Features](#features)
+* [Todos](#todos-of-additional-features)
+* [Contact && License](#contact)
+
+
 ## Context
 Between July and October 2017, I attend **[SPICED Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
 During this program, I built a portfolio of web applications.
@@ -24,12 +35,14 @@ During this program, I built a portfolio of web applications.
 - Socket.io
 ## Summary:
 temp.
-### Tech Stack:
+## Tech Stack:
 | **Frontend** | **Backend** | **Database** |
 | ------ | ------ | ------ |
 **[React.js]** | **[Node.js]** |  **[PostgreSQL]**
 **[Redux.js]** | **[Express.js]** | **[AWS S3]**
 **[Socket.io - client]** | **[Socket.io - server]**  
+
+
 ## Installation
 ```bash
 $ git clone https://github.com/suddenlyGiovanni/socialnetwork.git
@@ -54,13 +67,25 @@ Paste in the following code and remember to configure it accordingly...
 ![social_network_structure]
 
 ## Features: 
-- Registration | Authentication | Login
-- Users can personalize their page by adding bio and profile picture.
-- Users can see who is online.
-- Users can use the group chat feature to chat with everyone that is online.
-- Users can use the private chat to talk to individual online and offline users.
-- Users can see a list of friends as well as make, cancel, end, and receive friend requests.
+> As a user, I can **register and login**. If I am already login, I can skip this step.
 
+The user can create or submit its credentials: Passwords are hashed using the bcrypt library.
+Forms include CSRF protection using the csurf npm package.
+
+> As a user, I can **personalize my page** by adding a bio and profile picture.
+> I can also update this information whenever I want. 
+
+> As a user, I can **see who is online** now.
+
+> As a user, I can **see a list of all of my friends**. I can also **manage friendship status**: 
+> I can send a friendship request,
+> I can cancel ann erroneous friendship request,
+> I can accept friends requests,
+> I can terminate friendships, 
+
+> As a user, I can **use the group chat** feature to chat with everyone that is online.
+
+>As a user, I can **use the private chat** to talk to other friends that can be **either online or offline**.
 ## Todos of additional features:
  - [ ] User Search
  - [ ] Wall Posts
