@@ -96,11 +96,18 @@ Forms include CSRF protection using the csurf npm package.
 >As a user, I can **use the private chat** to talk to other friends that can be **either online or offline**.
 
 ## Todos of additional features:
- - [ ] User Search
- - [ ] Wall Posts
- - [ ] Friend Request Notifications
- - [ ] Friends on Profile Pages
- - [ ] Reduxyfication of all the application.
+ - [ ] **User Search:**
+> This should be implemented as an incremental search field. Input events should result in ajax requests and the route hit should do database queries with pattern matching to find matches. Note that if the users gives more input before the previous request is complete, you should probably abort it. You probably also should come up with a way to throttle the requests to avoid overloading your server if you have fast typers. It would be real nice if the results did not just show matching users' names but their profile pics as well.
+- [x] **Private Messages:**
+> Use [socket.io] to allow users to conduct private, one-on-one chats with other users who are their friends (but disallow private chats between two users who are not friends).
+ - [ ] **Wall Posts:**
+> Allow users to add textual messages to their own and their friends' profile screens. These should be shown in reverse chronological order and should only be visible to friends of the user whose profile the post appears on. Posts should show the author of the post, the time and date it was created, and the text. You can take this even further by allowing users to post images or links. For link posts you could crawl the submitted url to find the page's title and an image to display. Yet another enhancement would be to allow friends to comment on posts.
+ - [ ] **Friend Request Notifications:**
+> Use socket.io to alert users when they receive a friend request if the request occurs while they are using the site. You could modify the Friends link in your navigation to show in parentheses the number of open requests and increment this number every time a friend request happens. Alternatively, you could make some sort of pop up message appear.
+ - [ ] **Friends on Profile Pages:**
+> When users view the profile page of a user with whom they are friends, show them a selection of other users that are also friends with the user whose profile is being viewed.
+ - [ ] **Extend the use of Redux to all the application:**
+> If you do this, you'll have to create a whole bunch of new actions, and your reducer will get a lot bigger. It would be a good time to try [splitting up your reducer logic].
 
 ## Contact
 * e-mail: ravalico.giovanni@gmail.com
@@ -142,6 +149,7 @@ MIT © [suddenlyGiovanni]
    [AWS S3]: <https://aws.amazon.com/documentation/s3/>
    [Socket.io - client]: <https://socket.io/docs/server-api/>
    [Socket.io - server]: <https://socket.io/docs/server-api/>
+   [splitting up your reducer logic]: <http://redux.js.org/docs/recipes/reducers/SplittingReducerLogic.html>
 
 [//]: # (Picture references:)
    [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network_structure.png>
