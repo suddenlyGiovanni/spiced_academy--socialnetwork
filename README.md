@@ -1,7 +1,7 @@
 # Social Network
 Mock social network for superheroes and villains.
 ## Context
-Between July and October 2017, I attend **[Spiced Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
+Between July and October 2017, I attend **[SPICED Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
 During this program, I built a portfolio of web applications.
 1. **[Reichstag]** - a static landing page
 2. **[Kitty Carousel]** - a carousel/slideshow element that displays kitties picture
@@ -50,6 +50,9 @@ Paste in the following code and remember to configure it accordingly...
     "s3Url": "https://s3.amazonaws.com/XXXXXXX/"
 }
 ```
+##### Map of client-side compoinents:
+![social_network_structure]
+
 ## Features: 
 - Registration | Authentication | Login
 - Users can personalize their page by adding bio and profile picture.
@@ -100,4 +103,6 @@ MIT © [suddenlyGiovanni]
    [Imageboard]: <https://github.com/suddenlyGiovanni/imageboard>
    [Social Network]: <https://github.com/suddenlyGiovanni/socialnetwork>
    [P2P Chat]: <https://github.com/suddenlyGiovanni/p2p-chat>
+   
+   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/social_network_structure.png>
    
