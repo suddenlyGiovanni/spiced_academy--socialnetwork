@@ -9,7 +9,6 @@ Mock social network for superheroes and villains.
 * [Todos](#todos-of-additional-features)
 * [Contact && License](#contact)
 
-
 ## Context
 Between July and October 2017, I attend **[SPICED Academy]**, an intensive 12-week coding program focused on Full Stack JavaScript Web Development in Berlin.
 During this program, I built a portfolio of web applications.
@@ -49,7 +48,7 @@ $ npm install
 $ cd config && touch secrets.json
 ```
 ##### Secret.json
-Paste in the following code and remember to configure it accordingly...
+Paste in the following code and remember to configure it accordingly... 
 ```javascript
 {
     "psqlConfig": "postgres:postgres:postgres@localhost:5432/socialnetwork",
@@ -64,26 +63,38 @@ Paste in the following code and remember to configure it accordingly...
 ##### Map of client-side compoinents:
 ![social_network_structure]
 
-## Features:
+## Features: 
 > As a user, I can **register and login**. If I am already login, I can skip this step.
 
 The user can create or submit its credentials: Passwords are hashed using the bcrypt library.
 Forms include CSRF protection using the csurf npm package.
+![social_network-register]
+![social_network-login]
 
 > As a user, I can **personalize my page** by adding a bio and profile picture.
 > I can also update this information whenever I want.
 
+![social_network-profile_pic]
+![social_network-profile_edit]
+
 > As a user, I can **see who is online** now.
 
-> As a user, I can **see a list of all of my friends**. I can also **manage friendship status**:
+![social_network-online_users]
+
+> As a user, I can **see a list of all of my friends**. I can also **manage friendship status**: 
 > I can send a friendship request,
 > I can cancel ann erroneous friendship request,
 > I can accept friends requests,
-> I can terminate friendships,
+> I can terminate friendships
+
+![social_network-friend_list]
 
 > As a user, I can **use the group chat** feature to chat with everyone that is online.
 
+![social_network-public_chat]
+
 >As a user, I can **use the private chat** to talk to other friends that can be **either online or offline**.
+
 ## Todos of additional features:
  - [ ] User Search
  - [ ] Wall Posts
@@ -97,23 +108,18 @@ Forms include CSRF protection using the csurf npm package.
 * LinkdeIn: [/giovanni-ravalico]
 License
 ----
-MIT © [suddenlyGiovanni]
+MIT © [suddenlyGiovanni] 
 **Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
+[//]: # (Contact references:)
    [Spiced Academy]: <https://www.spiced-academy.com/>
    [suddenlyGiovanni]: <https://github.com/suddenlyGiovanni/>
    [/giovanni-ravalico]: <https://www.linkedin.com/in/giovanni-ravalico/>
    [@superspacezova]: <https://twitter.com/superspacezova>
-   [React.js]: <https://reactjs.org/docs/installation.html>
-   [Node.js]: <https://nodejs.org/dist/latest-v8.x/docs/api/>
-   [PostgreSQL]: <https://www.postgresql.org/docs/10/static/index.html>
-   [Redux.js]: <http://redux.js.org/>
-   [Express.js]: <http://expressjs.com/en/4x/api.html>
-   [AWS S3]: <https://aws.amazon.com/documentation/s3/>
-   [Socket.io - client]: <https://socket.io/docs/server-api/>
-   [Socket.io - server]: <https://socket.io/docs/server-api/>
+   
+[//]: # (Context references:)
    [Reichstag]: <https://github.com/suddenlyGiovanni/reichstag>
    [Kitty Carousel]: <https://github.com/suddenlyGiovanni/kitty_carousel>
    [Resizable Panes]: <https://github.com/suddenlyGiovanni/resizable_panes>
@@ -126,5 +132,23 @@ MIT © [suddenlyGiovanni]
    [Imageboard]: <https://github.com/suddenlyGiovanni/imageboard>
    [Social Network]: <https://github.com/suddenlyGiovanni/socialnetwork>
    [P2P Chat]: <https://github.com/suddenlyGiovanni/p2p-chat>
+ 
+[//]: # (Tech Stack references:)
+   [React.js]: <https://reactjs.org/docs/installation.html>
+   [Node.js]: <https://nodejs.org/dist/latest-v8.x/docs/api/>
+   [PostgreSQL]: <https://www.postgresql.org/docs/10/static/index.html>
+   [Redux.js]: <http://redux.js.org/>
+   [Express.js]: <http://expressjs.com/en/4x/api.html>
+   [AWS S3]: <https://aws.amazon.com/documentation/s3/>
+   [Socket.io - client]: <https://socket.io/docs/server-api/>
+   [Socket.io - server]: <https://socket.io/docs/server-api/>
 
-   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network_structure.png>
+[//]: # (Picture references:)
+   [social_network_structure]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/social_network_structure.png>
+   [social_network-register]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-register.png>
+   [social_network-login]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-login.png>
+   [social_network-profile_pic]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-profile_pic.png>
+   [social_network-profile_edit]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-profile_edit.png>
+   [social_network-online_users]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-online_users.png>
+   [social_network-friend_list]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-friend_list.png>
+   [social_network-public_chat]: <https://github.com/suddenlyGiovanni/socialnetwork/blob/master/readme/social_network-public_chat.png>
