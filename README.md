@@ -3,7 +3,6 @@ Mock social network for superheroes and villains.
 
 ### Table of contents
 * [Context](#context)
-* [Summary](#summary)
 * [Tech Stack](#tech-stack)
 * [Installation](#installation)
 * [Features](#features)
@@ -27,14 +26,13 @@ During this program, I built a portfolio of web applications.
 11. **[Social Network]** - Mock social network project for superheroes and villains.
 12. Final Project - one-week coding challenge - **[P2P Chat]**
 
-**Social Network** was my last big full stack project before the graduation coding challenge. This project taught me how to build single page applications with React and Redux.
+**Social Network** was my last big full stack project before the graduation coding challenge. This project taught me how to build single page applications with React, Redux and Socket.Io.
 ###### Time frame:  _**Three weeks**_
 ###### New Technologies:  
 - React.js
 - Redux
 - Socket.io
-## Summary:
-temp.
+
 ## Tech Stack:
 | **Frontend** | **Backend** | **Database** |
 | ------ | ------ | ------ |
